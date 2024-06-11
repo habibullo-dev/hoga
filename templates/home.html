@@ -1,0 +1,171 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root{
+            --fontMain:
+            --fontColor: rgba(255, 255, 255, 0.8);
+            --currentBG: url("./static/joshua-bresler-cafescreenshot-01.jpg");
+            --colorMain: cornflowerblue;
+            --gradMain: linear-gradient(180deg, rgba(222,222,222,0.6) 13%, rgba(0,0,0,0.02) 55%, rgba(0,0,0,0));
+            --colorSub:
+            --colorBorder:
+            
+            
+        }
+        button{
+            height: 10rem;
+            
+        }
+        body{
+            height:100vh;
+            width: 100vw;  
+            overflow-y: hidden;
+            overflow-x: hidden;
+            margin: 0;
+            
+        }
+        #bodyCover{
+            height: 100%;
+            width: 100%;
+            background-image: var(--currentBG);
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            
+        }
+        #parallaxCont{
+            height: 100%;
+            width: 100%;
+            position: relative;
+            display: grid;
+            grid-template-columns: auto repeat(18, 5%) auto;
+            grid-template-rows: repeat(20, 5%);
+        }
+        .parallax{
+            height: 100%;
+            width: 100%;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            position: absolute;
+            z-index: 5;
+        }
+        #parallaxBG{
+            background-image: url("./static/parallax/fujiSky.png");
+            grid-column: 1 / span 20;
+            grid-row: 1 / span 20;
+        }
+        #parallaxElem1{
+            background-image: url("./static/parallax/fujiDusk.png");
+        }
+        #parallaxElem2{
+            background-image: url("./static/parallax/kombiniBG.png");
+        }
+        #clockBox{
+            display: flex;
+            position: absolute;
+            z-index: 10;
+            min-height: 10rem;
+            max-height: 16rem;
+            width: 26rem;
+            flex-direction: row;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            background: var(--gradMain);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 1);
+        }
+        #clockCont{
+            display: grid;
+            grid-template-columns: auto 5rem 5rem 1.2rem 5rem 5rem auto;
+            justify-content: center;
+            align-items: center;
+            grid-template-rows: repeat(5,20%);
+            flex-direction: row;    
+            height: 10rem;
+            width: 100%;    
+        }
+        .digits{
+            font-size: 5rem;
+            grid-row: 3;
+            display: flex;
+        }
+        #displayMilisec{
+            font-size: 2rem;
+        }
+
+        #clockSettingsWidget{
+            display: flex;
+            flex-direction: column;
+            grid-row: 3;
+            grid-column: 1 /span 2;
+            height: 250%;
+
+        }
+
+        .btnPT1{
+            height: 3rem;
+            border: rgba(255, 255, 255, 0.3) 4px solid;
+            background: var(--gradMain);
+            color: rgba(255, 255, 255, 1);
+            font-size: 2rem;
+        }
+
+        #clockSetMain{
+            background-color: rgba(0,0,0,0);
+            background-image: url("./static/icons/gear-solid (1).svg");
+            background-size: contain;
+            width: 2rem;
+            height: 2rem;
+            margin: 0.2rem
+        }
+        #clockSetQS{
+            background-color: rgba(0,0,0,0);
+            background-image: url("./static/icons/icons8-clock.svg");
+            background-size: contain;
+            width: 2rem;
+            height: 2rem;
+            margin: 0.2rem
+        }
+    </style>
+</head>
+<body>
+    <div id="bodyCover">
+        <div id="parallaxCont">
+            <div id="parallaxBG" class="parallax"></div>
+            <div id="parallaxElem1" class="parallax"></div>
+            <div id="parallaxElem2" class="parallax"></div>
+        </div>
+        <div id="clockBox">
+            <div id="clockCont">
+                <div id="clockSettingsWidget">
+                    <button id="clockSetMain"></button>
+                    <button id="clockSetQS"></button>
+                </div>
+                <div class="digits" style="grid-column: 3">
+                    <p id="displayMinutes">0</p>
+                </div>
+                <p id="trema" class="digits" style="grid-column: 4">:</p>
+                <div id="secTotal" class="digits" style="grid-column: 5">
+                    <p id="secondXtraDigit">0</p><p id="displaySeconds">0</p>
+                </div>
+                <div class="digits" style="grid-column: 6">
+                    <p id="displayMilisec">0</p>
+                </div>
+            </div>
+            <button id="clockStartBtn" class="btnPT1 btnToggleStart">Start</button>
+            <button id="clockStopBtn" class="btnPT1 btnToggleStart">Stop</button>
+            <button id="clockResetBtn" class="btnPT1 btnToggleStart">Reset</button>
+        </div>   
+    </div>
+</body>
+<script src="{{url_for('static',filename='DOM.js')}}"></script>
+<script src="{{url_for('static',filename='feats.js')}}"></script>
+<script src="{{url_for('static',filename='main.js')}}"></script>
+
+</html>
