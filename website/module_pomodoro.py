@@ -108,12 +108,12 @@ def pause_clock():
     global running_tracker
     ts_pause = timestamp_make()
     running_tracker = False
-    return ({"pausePkg" : { #shows when pause was made, and if it was made.
+    return ({"pausePkg" : { #shows when pause was made, and if it was made. currently not doing anything with it.
             "minutes": ts_start[1] - ts_pause[1],
             "seconds": ts_start[2] - ts_pause[2],
             "miliseconds": ts_start[3] - ts_pause[3],
             "runStatus" : running_tracker,
-    }}) #⚠️can we do a req. without return? simply send information to back-end.
+    }}) 
 
 
 #Unpauses the timer. Do not call it resume as it is a different function entirely.
@@ -173,4 +173,3 @@ def grabTime():
     user_setup_sec = _payload["chosenSec"]
     return ({})
 
-#@timer_bp.route("/userSaveData") #⚠️does it need to be a req? prolly can just run from PY and thats it bitch

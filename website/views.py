@@ -8,6 +8,8 @@ views_bp = Blueprint('views', __name__)
 def redir_home_dashboard():
     return render_template("home.html")
 
+
+
 #Auth page (login, register...)
 """
 @views_bp.route("/BE auth route")
