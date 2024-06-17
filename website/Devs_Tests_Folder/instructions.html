@@ -1,0 +1,98 @@
+To create the different widget components, you need to do the following: 
+
+Create a separate html file for the widget you are assigned to. In the html file, you should create the div class that corresponds to your component. For example, for music player: 
+
+<!-- <div class="player">
+    <div class="player__album">
+      <img src="https://www.billboard.com/wp-content/uploads/2023/07/SZA-SOS-album-art-billboard-1240.jpg?w=800" alt="Album Art" />
+    </div>
+    <div class="player__info">
+      <div class="player__details">
+        <h2 class="player__song-title">Now Playing: Song Title</h2>
+        <p class="player__artist">Artist Name</p>
+      </div>
+      <div class="player__controls">
+        <button class="player__btn player__btn--play">&#9658;</button>
+        <button class="player__btn player__btn--pause">&#10074;&#10074;</button>
+        <button class="player__btn player__btn--next">&#9899</button> 
+      </div>
+    </div>
+  </div> -->
+
+Then separately, create the logic conditions that will determine the layout of your widget. For instance, in the music widget, it's something like below. The JS code, you can just add in the same html file and mark it. I will then fix the logic to work with the JS code i've created. 
+
+  <!-- if (width < 190 && height < 199) {
+    musicPlayer.addClass("super-small-music-player");
+    console.log("Added super small-music-player class");
+  } else if (width < 200 && height < 250) {
+    musicPlayer.addClass("small-music-player");
+    console.log("Added small-music-player class");
+  } else if (width < 300 && height < 400) {
+    musicPlayer.addClass("medium-music-player");
+    console.log("Added medium-music-player class");
+  } else {
+    musicPlayer.addClass("large-music-player");
+    console.log("Added large-music-player class"); -->
+
+Then after this, you need to create the CSS that will adjust the layout. So for the music example, it's something like below. Note that you need to do this for each different layout. The CSS code you can also just put here also and I will combine it later, or you can provide a separate file too. Either way works for me. 
+
+<!-- /* Styles for small-sized music player */
+
+.super-small-music-player .player {
+  flex-direction: column;
+  height: auto;
+}
+
+.super-small-music-player .player__album {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.super-small-music-player .player__album img {
+  display: none;
+}
+
+.super-small-music-player .player__info {
+  flex: 1;
+  width: 100%;
+  padding: 10px 0 0 0;
+}
+
+.super-small-music-player .player__details {
+  flex: 0 0 auto;
+}
+
+.super-small-music-player .player__controls {
+  flex: 0 0 auto;
+  justify-content: space-around;
+}
+
+.small-music-player .player {
+  flex-direction: column;
+  height: auto;
+}
+
+.small-music-player .player__album {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small-music-player .player__album img {
+  width: 50%;
+  height: auto;
+  border-radius: 5px;
+  margin-left: 0px;
+}
+
+.small-music-player .player__info {
+  flex: 1;
+  width: 100%;
+  padding: 10px 0 0 0;
+}
+
+.small-music-player .player__details {
+  flex: 0 0 auto;
+} -->
+

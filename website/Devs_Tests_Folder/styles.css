@@ -1,0 +1,856 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Albert Sans";
+}
+
+#dashboard {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#grid-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+  /* background-color: #5a6268; */
+  background-image: url("city.webp");
+  background-size: cover;
+}
+
+#grid-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  pointer-events: none; /* Allow interactions with elements behind the overlay */
+}
+
+.music-player {
+  background-color: #ffffff;
+}
+
+.calendar {
+  background-color: #333;
+}
+
+.tasks-list {
+  background-color: #1c1c1e;
+}
+
+.stopwatch {
+  background-color: #ffcc99;
+}
+
+.youtube-player {
+  background-color: #cc99ff;
+}
+
+.weather {
+  background-color: #99ccff;
+}
+
+/* Base styles for all widgets */
+.widget {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  word-wrap: break-word;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 0 20px 10px rgba(248, 236, 105, 0.2);
+}
+
+.widget-content {
+  overflow: auto; /* Allow scrolling if content overflows */
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.buttons {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+}
+
+#edit-panel {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  font-size: 0.8rem;
+  box-sizing: border-box;
+  display: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 20px; /* Gap between columns */
+}
+
+#edit-btn,
+#save-btn {
+  font-size: 0.7rem;
+  padding: 7px 15px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#edit-btn {
+  margin: 10px;
+}
+
+.add-buttons,
+.delete-buttons {
+  margin-bottom: 10px;
+}
+
+.add-buttons button,
+.delete-buttons button {
+  margin-right: 10px;
+}
+
+#save-btn {
+  margin: 50% auto;
+}
+
+.add-buttons button,
+.delete-buttons button {
+  background-color: #5a6268;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Music */
+h2 {
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+p {
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+/* Tasks list widget */
+.tasks-list-content {
+  font-family: "Albert Sans", sans-serif;
+  font-size: 0.7rem;
+  padding: 10px;
+  text-align: left;
+}
+
+.tasks-list-content input[type="text"] {
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  font-family: "Albert Sans", sans-serif;
+  font-size: 0.7rem;
+}
+
+.tasks-list-content button {
+  border-radius: 3px;
+  font-size: 0.7rem;
+}
+
+.tasks-list-content button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tasks-list-content button:hover {
+  background-color: #0056b3;
+}
+
+/* Stopwatch widget */
+.stopwatch-content {
+  font-family: "Albert Sans", sans-serif;
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+.stopwatch-content button {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.stopwatch-content button:hover {
+  background-color: #0056b3;
+}
+
+/* Calendar */
+
+/* Base calendar content styles */
+.calendar-content {
+  font-family: "Albert Sans";
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.calendar-header {
+  font-size: 0.9rem;
+  border-radius: 20px;
+  background: white;
+  color: black;
+  padding: 5px;
+  text-transform: uppercase;
+  margin-top: 20px;
+}
+
+.day-item.current-day {
+  background-color: #007bff; 
+  color: white; 
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+  font-weight: bold; 
+  font-size: 1.5rem;
+}
+
+/* General styles for calendar grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for a week */
+  gap: 5px;
+  padding: 10px;
+}
+
+.day-label {
+  font-weight: 400;
+  text-align: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.calendar-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-view .calendar-grid {
+  grid-template-columns: repeat(1, 1fr); /* 1 column for day view */
+  gap: 5px;
+}
+
+.three-day-view .calendar-grid {
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for 3-day view */
+  gap: 5px;
+}
+
+.seven-day-view .calendar-grid {
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for 7-day view */
+  gap: 5px;
+}
+
+.two-weeks-view .calendar-grid {
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for 2-weeks view */
+  gap: 5px;
+}
+
+.full-month-view .calendar-grid {
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for full month view */
+  gap: 5px;
+}
+
+.day-item {
+  padding: 10px;
+  border: none;
+  text-align: center;
+  margin: auto;
+}
+
+/* Specific styles for each view */
+.day-view .day-item {
+  grid-column: span 1;
+}
+
+.three-day-view .day-item {
+  grid-column: span 1;
+}
+
+.seven-day-view .day-item {
+  grid-column: span 1;
+}
+
+.two-weeks-view .day-item {
+  grid-column: span 1;
+}
+
+.full-month-view .day-item {
+  grid-column: span 1;
+}
+
+/* YouTube player widget */
+.youtube-player-content {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.youtube-player-content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Weather widget */
+.weather-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  font-family: "Albert Sans", sans-serif;
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+.weather-day {
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.weather-day .day-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.weather-day .weather-icon img {
+  width: 50px;
+  height: 50px;
+}
+
+.weather-day .temperature {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+
+.music-player-content {
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.player {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.player__album {
+  flex: 0 0 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player__album img {
+  max-width: 100%;
+  height: auto;
+  margin-left: 30px;
+  border-radius: 5px;
+}
+
+.player__info {
+  flex: 1;
+  /* display: flex; */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between;
+  margin: auto;
+}
+
+.player__details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  height: min-content;
+}
+
+.player__controls {
+  display: flex;
+  justify-content: center;
+  padding: 5px 5px;
+}
+
+.player__btn {
+  background-color: #5694d5;
+  border: none;
+  color: white;
+  padding: 8px;
+  margin: 0 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.player__btn--pause,
+.player__btn--next {
+  background-color: #6c757d;
+}
+
+.player__btn:hover {
+  background-color: #0056b3;
+}
+
+.player__btn--pause:hover,
+.player__btn--next:hover {
+  background-color: #5a6268;
+}
+
+/* Styles for small-sized music player */
+
+.super-small-music-player .player {
+  flex-direction: column;
+  height: auto;
+}
+
+.super-small-music-player .player__album {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.super-small-music-player .player__album img {
+  display: none;
+}
+
+.super-small-music-player .player__info {
+  flex: 1;
+  width: 100%;
+  padding: 10px 0 0 0;
+}
+
+.super-small-music-player .player__details {
+  flex: 0 0 auto;
+}
+
+.super-small-music-player .player__controls {
+  flex: 0 0 auto;
+  justify-content: space-around;
+}
+
+.small-music-player .player {
+  flex-direction: column;
+  height: auto;
+}
+
+.small-music-player .player__album {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small-music-player .player__album img {
+  width: 50%;
+  height: auto;
+  border-radius: 5px;
+  margin-left: 0px;
+}
+
+.small-music-player .player__info {
+  flex: 1;
+  width: 100%;
+  padding: 10px 0 0 0;
+}
+
+.small-music-player .player__details {
+  flex: 0 0 auto;
+}
+
+.small-music-player .player__controls {
+  flex: 0 0 auto;
+  justify-content: space-around;
+}
+
+.widget.music-player.medium-music-player {
+  width: 200px;
+  height: 250px;
+  background-color: #ffffff;
+}
+
+/* Styles for large-sized music player */
+.widget.music-player.large-music-player {
+  width: 300px;
+  height: 350px;
+  background-color: #d0d0d0;
+}
+
+/* Task List */
+
+.tasks-list-content {
+  background-color: #1c1c1e;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.task-item {
+  margin-bottom: 10px;
+}
+
+.task-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.new-task-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  background-color: #2c2c2e;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.add-task-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #007aff; /* Apple's default blue color */
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+}
+
+.add-task-btn:hover {
+  background-color: #0056b3; /* Darker shade for hover effect */
+}
+
+/* Fonts */
+
+.barlow-thin {
+  font-family: "Barlow", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.barlow-extralight {
+  font-family: "Barlow", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.barlow-light {
+  font-family: "Barlow", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.barlow-regular {
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.barlow-medium {
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.barlow-semibold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.barlow-bold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.barlow-extrabold {
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.barlow-black {
+  font-family: "Barlow", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.barlow-thin-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.barlow-extralight-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.barlow-light-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.barlow-regular-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.barlow-medium-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.barlow-semibold-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.barlow-bold-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.barlow-extrabold-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.barlow-black-italic {
+  font-family: "Barlow", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.albert-sans as-thin {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.albert-sans as-light {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.albert-sans as-regular {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.albert-sans as-semibold {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.albert-sans as-bold {
+  font-family: "Albert Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.old-standard tt-regular {
+  font-family: "Old Standard TT", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.old-standard tt-bold {
+  font-family: "Old Standard TT", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.old-standard tt-regular-italic {
+  font-family: "Old Standard TT", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.be-vietnam pro-thin {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.be-vietnam pro-extralight {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.be-vietnam pro-light {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.be-vietnam pro-regular {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.be-vietnam pro-medium {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.be-vietnam pro-semibold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.be-vietnam pro-bold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.be-vietnam pro-extrabold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.be-vietnam pro-black {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.be-vietnam pro-thin-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.be-vietnam pro-extralight-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.be-vietnam pro-light-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.be-vietnam pro-regular-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.be-vietnam pro-medium-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.be-vietnam pro-semibold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.be-vietnam pro-bold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.be-vietnam pro-extrabold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.be-vietnam pro-black-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* font family styles */
+
+button,
+.add-buttons {
+  font-size: 0.8rem;
+  letter-spacing: 0rem;
+  font-weight: 300;
+  font-family: "Albert Sans";
+}

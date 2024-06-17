@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <!-- <script async src="https://cse.google.com/cse.js?cx=751b434fadc3c4123"> -->
+    </script>
+</head>
+
+<body>
+    <form action="/userlogin" method="post">
+        <input type="email" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password">
+        <!-- <input type="text" name="name" placeholder="name"> -->
+        <button>Send</button>
+    </form>
+    <!-- <div class="gcse-search"></div> -->
+
+</body>
+<script>
+    const getlocation = () => {
+        navigator.geolocation.watchPosition(async (pos) => {
+            var lat = pos.coords.latitude;
+            var long = pos.coords.longitude;
+            console.log("LAT:", lat, "LONG:", long)
+            const url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + long;
+            const response = await fetch(url);
+            const data = await response.json();
+            elem1 = data.current.temp
+            elem2 = data.current.weather[0].main
+
+
+            console.log(data);
+        });
+    }
+
+    getlocation()
+
+    //⚠️WIP - NEEDS TESTING - Session restore
+    let tempUserSettings = [] //temporary storage from the session fetch, replace with appropriate objects/arrays.
+    function sessionRestore(){ // 🚧TBA to app start-up function checklist
+        fetch("/secure_token_req", { method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                //back-end is set to automatically fetch browser cookies for session auth.
+            },
+            body: "session restore attempt",
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error){
+                console.log(res.error) 
+            } else if (res.message) {
+                console.log(res.message) //engages login process and stores user settings-related column info in an array (for now)
+                fetch("/userLogin", { method: "POST",
+                headers: { "Content-Type": "application/json"},
+                body: {"email": res.email, "password": res.password}
+                }).then(tempUserSettings.push(res.name, res.youtube, res.spotify, res.calendar, res.weather, res.tasklist))
+            }
+        })
+    }
+
+    function cookieDelete(_cookie){ // run when you need to delete specific cookies. parameter is for cookie Key.
+        console.log("Deleted cookie for:", cookieCheck("username"))
+        document.cookie = `${_cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    }
+
+    function logOutHandle(){
+        fetch("/userlogout", { method: "POST",
+        headers: {"Content-Type": "application/json",},
+        body: "token deletion",
+    }).then(cookieDelete("session_token"))
+    }
+
+    //⚠️WIP END
+
+</script>
+
+</html>

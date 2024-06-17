@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="result"></div>
+
+
+
+    <script>
+        //document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/"; -> expiration date and path can be customized
+    
+    document.cookie = "userName=John Doe"; //add a K/V pair to the cookies list
+    document.cookie = "userName=Dohn Joe"; //same Key results in overwriting
+    document.cookie = "Crash=BigBoi"; //different key will add it. the cookies list will "SORT OF" looks like an array BUT it's not!!!!
+    let x = document.cookie
+
+    console.log(document.cookie)
+    console.log("x ", document.cookie)
+
+    //cookie creator function
+    function cookieCreate(_tempName, _tempValue, _tempExpire){
+        const _d = new Date();
+        _d.setTime(_d.getTime() + (_tempExpire*24*60*60*1000)) //turn days from expiration into date
+        let expiry = "expiration=" + _d.toUTCString();
+        document.cookie = _tempName + "=" + _tempValue + ";" + expiry + ";path=/" //concetenate to form a normal Cookie format.
+        console.log(document.cookie)
+    }
+
+    //cookie value fetcher function
+    function cookieCheck(_tempName){ 
+        let _name = _tempName + "="; //find the name(VALUE) of the cookie you wanna fetch
+        let _decodedCookies = decodeURIComponent(document.cookie); //wotefok is this - allows handling of special cookie characters (%,&...)
+        let _cookiesList = _decodedCookies.split(';'); //turn the entire string of cookies K/V into an iterable array
+        for (let i = 0; i < _cookiesList.length; i++){
+            let _cookie = _cookiesList[i];
+            while (_cookie.charAt(0) == ' '){ //"trims" any spaces at the start. 
+                _cookie = _cookie.substring(1); //if the first char is a space, let the cookie be defined again from next char.
+            }
+            if (_cookie.indexOf(_name) === 0){ //if current iteration of cookies array index is same as name we search for, bring it out
+                return _cookie.substring(_name.length, _cookie.length);
+            }
+        }
+        return ""; //if after all iteration through the cookies array nothing turned up, return void string
+    }
+
+    //set cookie checker function
+    function cookieSet(){
+        let username = cookieCheck("username"); //runs cookieCheck function
+        if (username != ""){
+            alert(`Welcome back ${username}`)
+        } else {
+            username = prompt("Please enter your name", "");
+            if (username != "" && username != null){
+                cookieCreate("username", username, 365)
+            }
+        }
+    }
+
+    function cookieDelete(_cookie){ // run when you need to delete specific cookies. parameter is for cookie Key.
+        console.log("Deleted cookie for:", cookieCheck("username"))
+        document.cookie = `${_cookie}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+    }
+    cookieDelete("username")
+    
+    cookieSet()//onstart function to force someone to identify themselves, then stores that identification as "username" within local cookies.
+    
+
+    //--- Local Storage Alternative ---//
+
+    //item storage function
+    //similar to cookies (K/V pairs), just shittier syntax
+    localStorage.setItem("lastname", "Smith");
+    //or directly access it like an object's key:
+    localStorage.lastname = "Smoth"
+
+    //retrieve item function
+    document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+
+    //remove item function
+    localStorage.removeItem("lastname");
+
+    //🚩Note: Name/value pairs are always stored as strings. Remember to convert them to another format when needed!
+
+    //sessionStorage (as opposed to localStorage) do the same thing but disappear when tab closed. so same as local vars really....
+    
+
+    </script>
+</body>
+</html>
