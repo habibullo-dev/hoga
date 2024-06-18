@@ -11,6 +11,14 @@ tasklist_bp = Blueprint('tasklist_bp', __name__)
 email_TEST = {"email": "caca@gmail.fr"}
 task_nodes_TEST = [{"task_name1":{"BLABLA (see below)"}}, {"task_name2":{"BLABLA (see below)"}}, "etc..."] #list containing the dict for each node title, their full content, and their order of display.
 
+
+task_nodes_TEST = [
+    {"to_do_list":[
+    {"task_name1":{"BLABLA (see below)"}}, 
+    {"task_name2":{"BLABLA (see below)"}},
+    ]}
+    ]
+
 {"task_name1": { #dict with another dict as value, that contains 5 K/V pairs: one for the task title, one for its description, one for customization, 2 for time-related stuff
     "title (optional)": "Do groceries", 
     "internal": "<p>Milk</p><p>Eggs</p>",

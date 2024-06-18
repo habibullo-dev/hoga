@@ -37,6 +37,7 @@
     }
 
     getlocation()
+    sessionRestore()
 
     //⚠️WIP - NEEDS TESTING - Session restore
     let tempUserSettings = [] //temporary storage from the session fetch, replace with appropriate objects/arrays.
@@ -57,7 +58,7 @@
                 fetch("/userLogin", { method: "POST",
                 headers: { "Content-Type": "application/json"},
                 body: {"email": res.email, "password": res.password}
-                }).then(tempUserSettings.push(res.name, res.youtube, res.spotify, res.calendar, res.weather, res.tasklist))
+                }).then(tempUserSettings.push(res.name, res.youtube, res.spotify, res.calendar, res.weather, res.tasklist_setting, res.tasklist_list))
             }
         })
     }

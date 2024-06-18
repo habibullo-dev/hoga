@@ -123,7 +123,7 @@ def userlogin():
                 conn.execute(text("UPDATE user SET latest_login=NOW(), logged_in=1 WHERE email=:email"), {
                     "email": email
                 })
-                conn.execute(text(f"INSERT INTO tokens SET created_at=NOW(), last_accessed=NOW(), expiration_date=(NOW(), INTERVAL 3 DAY), token=:token_create, user_id=:ref_id_create"), {
+                conn.execute(text(f"INSERT INTO tokens (created_at, last_accessed, expiration_date, token, user_id) VALUES (NOW(), NOW(), NOW() + INTERVAL 3 DAY, :token_create, :ref_id_create)"), {
                     "token_create": user_token,
                     "ref_id_create": info.user_id,
                 }) #☢️token storage process
@@ -183,27 +183,29 @@ def adminlogout():
         return "GOOD"
     
 #Session restore through token identification
-@auth_bp.route("/secure_token_req", methods=["POST"]) #method has to be GET to get the HTTPS headers.
+@auth_bp.route("/secure_token_req", methods=["POST"]) 
 def secure_cookie(): #can be used to RESTORE a pertinent session. This is user only. Admin should get a separate route.
     session_token = request.cookies.get('session_token')
     #email = request.json.get("email")
     if session_token:
-        print("!!result of token: ", session_token)
+        print(f"!!result of session_token: {session_token}")
         with db.begin() as conn:         
             try:
                 token_check = conn.execute(text("SELECT user_id FROM tokens WHERE token=:user_token"),{
                     "user_token": session_token
                 }).fetchone()
-                print("!!result of token_check: ", token_check)
-                if token_check:
-                    login = conn.execute(text("SELECT * FROM user WHERE id=:foreign_id"),{
-                         "foreign_id": token_check[0]
-                    })#⚠️was the table user, or users?
-                    #⚙️keep working, slave!
-                    #☢️get the token and compare it to token table. then grab the token's foreign key and log him automatically using data.
-                    if login:
-                        response = {"message" : "user token validated, access granted!", "email": login.email, "name": login.name, "password": login.password, "widgetYoutube": login.youtube, "widgetSpotify": login.spotify, "widgetCalendar": login.calendar, "widgetWeather": login.weather, "widgetTasklist": login.tasklist}#⚙️list for settings can expand.
-                        return response #☢️We are accessing 2 tables here, first the token table to grab the foreign key of user_id, then use user_id to identify the user and bring back the info.
+                print("!!result of token_check: ", token_check[0])
+                for item in token_check:
+                    if item:
+                        login = conn.execute(text("SELECT * FROM user WHERE user_id=:foreign_id"),{
+                            "foreign_id": item.user_id
+                        })#⚠️was the table user, or users?
+                        #⚙️keep working, slave!
+                        #☢️get the token and compare it to token table. then grab the token's foreign key and log him automatically using data.
+                    for item in login:
+                        if item:
+                            response = {"message" : "user token validated, access granted!", "email": login.email, "name": login.name, "password": login.password, "widgetYoutube": login.youtube, "widgetSpotify": login.spotify, "widgetCalendar": login.calendar, "widgetWeather": login.weather, "widgetTasklist": login.tasklist}#⚙️list for settings can expand.
+                            return response #☢️We are accessing 2 tables here, first the token table to grab the foreign key of user_id, then use user_id to identify the user and bring back the info.
                     else:
                         return {"error" : "user login and settings information invalid"}, 403
             except: 
@@ -219,5 +221,3 @@ def secure_cookie(): #can be used to RESTORE a pertinent session. This is user o
 # This will create session permanence for users. 
 
 # Additionally, cookies can be used by temporary users to store their settings, being able to set and use the clock and restore its state even if they reopen the tab.
-
-
