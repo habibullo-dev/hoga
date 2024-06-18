@@ -33,12 +33,7 @@
       const taskList = document.getElementById('taskList');
       const completedList = document.getElementById('completedList');
 
-      let customTaskLists = {
-            "taskListSetup":"",
-            "completedListSetup":"",
-        } //object full of K/V pairs that would hold onto current and custom task tabs.
-
-      let taskOrderFetch; //Timed out and cancellable fetch order
+      let taskListSetup = [] //local taskListSetup 👞
 
       if (completedList) {
           taskList.style.display = 'block';
@@ -86,16 +81,15 @@
                   checkedOff.addEventListener('click', function(e) {
                       const taskItem = e.currentTarget.parentNode;
                       taskItem.querySelector('.checked-off').remove();
+
                       completedList.appendChild(taskItem);
-                      customTaskLists.completedListSetup=completedList.innerHTML;
                   })
 
-                  //send data for fetch:
-//⚠️Important: later as we add more "features" to this widget, this format needs to be changed by adding more of the individual task customizations.           
-                  li.dataset.ref = `${taskList.childElementCount+1}`;              
+                  //send data for fetch: 👞
+                  taskListSetup.push(taskInput.value) //⚠️Important: later as we add more "features" to this widget, this format needs to be changed by adding more of the individual task customizations.
+
                   taskList.appendChild(li);
-                  customTaskLists.taskListSetup=taskList.innerHTML;
-                  taskInput.value = '';                
+                  taskInput.value = '';                 
               }
 
                   draggables = document.querySelectorAll('.draggable') //re-selects all draggable elements
@@ -149,11 +143,8 @@
               } else {
               container.insertBefore(draggable, afterElement)
               }
-
-              clearTimeout(taskOrderFetch)
-              taskOrderFetch = setTimeout(()=>{
-                saveTaskListSetup();
-                console.log("fetch complete.")
+              const dataProcessing = setTimeout(()=>{
+                clearTimeout
               }, 5000)
           })
           })
@@ -180,8 +171,12 @@
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({"task_nodes": customTaskLists,})
-          })}
+            body: JSON.stringify({"task_settings": taskListSetup,})
+            
+        })
+        .then(res=>res.json())
+        .then()
+          }
     </script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 from flask import jsonify, request, render_template, session, make_response, Blueprint
 from datetime import datetime
 from time import time
+import json
 import sqlalchemy
 from sqlalchemy import text
 db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
@@ -37,7 +38,7 @@ def create_or_edit_task():
                 "email": res_email
             })
             exec2 = conn.execute(text("UPDATE user SET tasklist_list=:tasknode"),{
-                "tasknode": res
+                "tasknode": json.dumps(res)
             })
             if exec2:
                 return {"message" : "Task widget data update success"}
