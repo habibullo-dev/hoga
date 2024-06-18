@@ -33,6 +33,13 @@
       const taskList = document.getElementById('taskList');
       const completedList = document.getElementById('completedList');
 
+      let customTaskLists = {
+            "taskListSetup":"",
+            "completedListSetup":"",
+        } //object full of K/V pairs that would hold onto current and custom task tabs.
+
+      let taskOrderFetch; //Timed out and cancellable fetch order
+
       if (completedList) {
           taskList.style.display = 'block';
           completedList.style.display = 'none';
@@ -78,12 +85,16 @@
                   checkedOff.addEventListener('click', function(e) {
                       const taskItem = e.currentTarget.parentNode;
                       taskItem.querySelector('.checked-off').remove();
-
                       completedList.appendChild(taskItem);
+                      customTaskLists.completedListSetup=completedList.innerHTML;
                   })
 
+                  //send data for fetch:
+//⚠️Important: later as we add more "features" to this widget, this format needs to be changed by adding more of the individual task customizations.           
+                  li.dataset.ref = `${taskList.childElementCount+1}`;              
                   taskList.appendChild(li);
-                  taskInput.value = '';
+                  customTaskLists.taskListSetup=taskList.innerHTML;
+                  taskInput.value = '';                
               }
 
                   draggables = document.querySelectorAll('.draggable') //re-selects all draggable elements
@@ -137,6 +148,12 @@
               } else {
               container.insertBefore(draggable, afterElement)
               }
+
+              clearTimeout(taskOrderFetch)
+              taskOrderFetch = setTimeout(()=>{
+                saveTaskListSetup();
+                console.log("fetch complete.")
+              }, 5000)
           })
           })
 
@@ -154,6 +171,14 @@
               }
           }, { offset: Number.NEGATIVE_INFINITY }).element //initial value of the acc. it will be -infinity to guarantee all other elements are considered as closer and thus, influencable by the reduce.
           }
+
+          function saveTaskListSetup(){
+            fetch("/taskDataGrab", {method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({"task_nodes": customTaskLists,})
+          })}
         // ----------------------------- SIZING -----------------------------
         // default: width = 310, height = 300 to show 3 tasks
         // if (width == 310 && height == 150) {
