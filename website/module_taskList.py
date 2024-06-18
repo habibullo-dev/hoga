@@ -53,11 +53,9 @@ def settings_tasks_grab():
     res = request.json.get("task_settings", "")#receive the settings for the widget.
     with db.begin() as conn:
         try:
-            exec1 = conn.execute(text("SELECT * FROM user WHERE email=:email"),{
-                "email": res_email
-            })
-            exec2 = conn.execute(text("UPDATE user SET tasklist_settings=:tasknode"),{
-                "tasknode": res
+            exec2 = conn.execute(text("UPDATE user SET tasklist_settings=:tasknode WHERE email=:email"),{
+                "tasknode": res,
+                "email": res_email,
             })
             if exec2:
                 return {"message" : "Task widget settings update success"}
