@@ -1,3 +1,4 @@
+//⚠️Untested - 6/19/2024
 
 let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
 /* name for each setting keys: 
@@ -10,7 +11,14 @@ tasklist_setting
 mood_setting
 */
 
+//retrieving settings from widgetSettingsBulk for individual widgets, example:
+if (widgetSettingsBulk.spotify_setting){
+    //spotifyWidgetSize = widgetSettingsBulk.spotify_setting.size
+}
+
+
 //⚠️Create loading wheel pop-up, EX: loadingPopUp.style.display = "block"
+localStorage.hogaWidgetData = widgetSettingsBulk //store settings in local machine for future quick access. turns into string
 let _fetcher = await fetch("/widget_all_settings", {
     method: "POST",
     body: JSON.stringify({
@@ -22,4 +30,7 @@ let _fetcher = await fetch("/widget_all_settings", {
         },
 })
 //⚠️Remove loading wheel pop-up, EX: loadingPopUp.style.display = "none"
+
+
+
 
