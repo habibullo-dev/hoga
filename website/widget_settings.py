@@ -14,7 +14,7 @@ def widgets_grab():
         try:
             #Query 1 - spotify_setting ⚠️does not exist yet.
             if bulk_widgets["spotify_setting"]:
-                query2 = conn.execute(text("UPDATE user SET spotify_setting=:user_spotify_setting WHERE email=:email"),{
+                query1 = conn.execute(text("UPDATE user SET spotify_setting=:user_spotify_setting WHERE email=:email"),{
                     "email": email,
                     "user_spotify_setting": bulk_widgets["spotify_setting"]
                 })
@@ -74,6 +74,15 @@ def widgets_grab():
                 })
             else:
                 print("No change in moods preferences detected")
+
+            #Query 8 - Gemini_setting ⚠️does not exist yet.
+            if bulk_widgets["mgemini_setting"]:
+                query8 = conn.execute(text("UPDATE user SET gemini_setting=:user_gemini_setting WHERE email=:email"),{
+                    "email": email,
+                    "gemini_mood_setting": bulk_widgets["gemini_setting"]
+                })
+            else:
+                print("No change in gemini setup detected")
 
             return {"message" : "user widget settings successfully saved!"}
         
