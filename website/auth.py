@@ -12,6 +12,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
 import secrets
+import google.generativeai as genai
+import os
 
 auth_bp = Blueprint("auth", __name__) #required to be exported and registered as blueprint.
 db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
@@ -24,6 +26,17 @@ smtp_obj = smtplib.SMTP('smtp.gmail.com')
 smtp_obj.ehlo()
 smtp_obj.starttls()
 smtp_obj.login("hogadashboard@gmail.com", "rarv jjoq frpr tbxh") #can use the variable password instead of the actual password
+
+#GEMINI RELATED CONTENT
+os.environ["API_KEY"] = "AIzaSyAWSgpgHCZ-LyCPGTkvvX_OBP1H9RSEDhI"
+api_key = os.environ["API_KEY"]
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+@auth_bp.post("/geminicall")
+def geminicall():
+    response = model.generate_content(request.json.get("question"))
+    return(response.text)
 
 #SENDING USER INFORMATION TO HOMEPAGE
 @auth_bp.post("/savesettings")
@@ -165,8 +178,8 @@ def userlogin():
                     msg.attach(message)
 
                     smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                return {"error": "email sent to activate user's account"}
-        return {"error": "user inputted wrong email or password"}
+                return {"message": "email sent to activate user's account"}
+            else: return {"error": "user inputted wrong email or password"}
 
 #ADMIN LOG-IN
 @auth_bp.post("/adminlogin")
@@ -220,7 +233,7 @@ def passwordrecovery():
                     msg.attach(message)
 
                     smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                    return {"message": "Your password has been resetted"}
+                    return {"message": "Your password has been reset"}
                 else:
                     return {"error": "Account does not exist"}
     except:

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .google-img {
+            display: inline-block;
+        }
+
+        #gemini-container {
+            border-radius: 10px;
+            width: 30vw;
+            height: 80vh;
+            border: 3px solid black;
+            position: relative;
+            overflow: auto;
+            background-image: linear-gradient(#FFC5C5, #FFEBD8);
+        }
+
+        #gemini-request {
+            width: -webkit-fill-available;
+            height: 5%;
+            border-radius: 10px;
+            border: 1px solid black;
+            position: sticky;
+            top: 100%;
+            margin-top: 0.5rem;
+        }
+
+        #gemini-logo {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+        }
+
+        .user-question {
+            margin-top: 1rem;
+            margin-right: 1rem;
+            border: 1px solid black;
+            background-color: #FFF5E1;
+            padding: 10px;
+            width: auto;
+            max-width: 75%;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 20px;
+            float: right;
+        }
+
+        .gemini-response {
+            margin-top: 5rem;
+            margin-left: 1rem;
+            border: 1px solid black;
+            background-color: #FFEFEF;
+            padding: 10px;
+            width: auto;
+            max-width: 75%;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 20px;
+            overflow-wrap: anywhere;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="gemini-container">
+        <div id="gemini-logo">
+            <img width="38" height="38" src="https://img.icons8.com/color/48/google-logo.png" alt="google-logo"
+                class="google-img" />
+            <p class="google-img">Gemini</p>
+        </div>
+        <hr>
+        <input type="text" id="gemini-request">
+    </div>
+
+    <script>
+        const inputElem = document.querySelector("#gemini-request");
+
+        inputElem.addEventListener("keydown", (evt) => {
+            if (evt.key === 'Enter') {
+                const userQuestion = document.createElement("p");
+                const userQuestionContainer = document.createElement("div")
+                userQuestion.innerHTML = inputElem.value;
+                userQuestionContainer.className = "user-question";
+                userQuestionContainer.append(userQuestion);
+                inputElem.before(userQuestionContainer);
+
+                fetch("/geminicall", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        "question": inputElem.value
+                    })
+                })
+                    .then(res => res.text())
+                    .then(res => {
+                        const geminiResponse = document.createElement("p");
+                        const geminiResponseContainer = document.createElement("div")
+                        console.log(res)
+                        res = replaceAsterisks(res);
+                        console.log(res)
+                        geminiResponse.innerHTML = res;
+                        geminiResponseContainer.className = "gemini-response";
+                        geminiResponseContainer.append(geminiResponse);
+                        inputElem.before(geminiResponseContainer);
+                    })
+                inputElem.value = "";
+            }
+        })
+
+        function replaceAsterisks(text) {
+            // Step 1: Replace double asterisks ** with a placeholder
+            let placeholder = 'PLACEHOLDER';
+            let result = text.replace(/\*\*/g, placeholder);
+
+            // Step 2: Replace single asterisks * with <br>
+            result = result.replace(/\*/g, '<br>');
+
+            // Step 3: Replace placeholder with alternating <strong> and </strong> tags
+            let strongToggle = true;
+            result = result.replace(new RegExp(placeholder, 'g'), function () {
+                if (strongToggle) {
+                    strongToggle = false;
+                    return '<br><strong>';
+                } else {
+                    strongToggle = true;
+                    return '</strong>';
+                }
+            });
+
+            return result;
+        }
+    </script>
+</body>
+
+</html>
