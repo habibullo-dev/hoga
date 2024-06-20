@@ -316,20 +316,20 @@ def secure_cookie(): #can be used to RESTORE a pertinent session. This is user o
 
 
 def bring_user_settings(_item, _res):
-    res_set = _item #🚧take the entire response from DB, trim out confidential information, and send the settings. 
+    #🚧take the entire response from DB, trim out confidential information, and send the settings. 
     #This way even if columns for settings are added, we dont need to manually add them to this endpoint each time.
     try:
-        del res_set["created_at"]
-        del res_set["email"]
-        del res_set["name"]
-        del res_set["password"]
-        del res_set["user_id"]
-        del res_set["logged_in"]
-        del res_set["user_activated"]
-        del res_set["hash"]
-        del res_set["hash_expiration"]
-        del res_set["latest_login"] 
-        _res.update(res_set) #🚧merge trimmed response with only settings, to the main response.
+        _item.pop("created_at", "")
+        _item.pop("email", "")
+        _item.pop("name", "")
+        _item.pop("password", "")
+        _item.pop("user_id", "")
+        _item.pop("logged_in", "")
+        _item.pop("user_activated", "")
+        _item.pop("hash", "")
+        _item.pop("hash_expiration", "")
+        _item.pop("latest_login", "")
+        _res.update(_item) #🚧merge trimmed response with only settings, to the main response.
     except: 
         print("error trimming settings object. cancelling process.")
 
