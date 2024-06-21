@@ -1,6 +1,6 @@
 //⚠️Untested - 6/19/2024
 
-let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
+//let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
 /* name for each setting keys: 
 spotify_setting
 gemini_setting
@@ -34,24 +34,17 @@ async function saveSettings(){
     //⚠️Remove loading wheel pop-up, EX: loadingPopUp.style.display = "none"
 }
 
-//⚠️⚠️⚠️ Move these to higher authority for decoupling!
-let user = {
-    "loggedIn": false,
-    "email": "",
-    "name": "",
-}
-let dbSettingsBulk = {}
-//let widgetSettingsBulk = {}
 
 
 async function sessRegenTry(){
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData){
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData)
-        settingsDistribute(widgetSettingsBulk)
+        settingsDistribute(widgetSettingsBulk) //⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
+        sessDBCompare() //at later date, compare.
         return
     }
-    console.log("Local settings data not found. Resorting to database fetch")
+    console.log("Local settings data not found. Resorting to database fetch") //if no local settings, grab from DB directly
     if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0){
         await autoLogin();
     }
@@ -59,7 +52,7 @@ async function sessRegenTry(){
 }
 
 async function sessDBCompare(){
-    await autoLogin().then(console.log("haha"))
+    await autoLogin().then(console.log("haha")) //🚧WIP
         
     if (widgetSettingsBulk){
         if (dbSettingsBulk){
@@ -73,7 +66,6 @@ async function sessDBCompare(){
         //if not, ignore.
         console.log("User settings are in sync.")
     }
-    
 }
 
 

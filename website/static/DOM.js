@@ -1,3 +1,5 @@
+//pomodo variables
+
 const clockStartBtn = document.getElementById("clockStartBtn")
 const clockStopBtn = document.getElementById("clockStopBtn")
 const clockResetBtn = document.getElementById("clockResetBtn")
@@ -10,7 +12,6 @@ const milisecXtraDigit = document.getElementById("milisecXtraDigit")
 const secondXtraDigit = document.getElementById("secondXtraDigit")
 
 let currentMinutes = displayMinutes.innerHTML 
-
 let currentMilisec = displayMilisec.innerHTML 
 
 
