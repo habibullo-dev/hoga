@@ -65,11 +65,11 @@ function userClockSetup(){
         userHour = chosenHour;
     })
 }
-
-//functions to run at start
+/* 
+//functions to run at start <= MOVED TO login.HTML
 startUpMark()
 userClockSetup()
-
+ */
 
 
 async function startUpMark(){

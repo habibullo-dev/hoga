@@ -34,12 +34,10 @@ async function saveSettings(){
     //⚠️Remove loading wheel pop-up, EX: loadingPopUp.style.display = "none"
 }
 
-
-
 async function sessRegenTry(){
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData){
-        widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData)
+        widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
         settingsDistribute(widgetSettingsBulk) //⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
         sessDBCompare() //at later date, compare.
         return
@@ -52,8 +50,7 @@ async function sessRegenTry(){
 }
 
 async function sessDBCompare(){
-    await autoLogin().then(console.log("haha")) //🚧WIP
-        
+    await autoLogin();  
     if (widgetSettingsBulk){
         if (dbSettingsBulk){
             for (const key of Object.keys(dbSettingsBulk)){
@@ -69,7 +66,7 @@ async function sessDBCompare(){
 }
 
 
-//🚧WIP
+/* 🚧WIP - Moved to login.html
 function autoLogin(){
     return fetch("/secure_token_req", {method: "POST",
         body: JSON.stringify({"email":userEmail}), //🔴this wrong, browser doesnt even have cookies yet. check Jay's HTML.
@@ -86,9 +83,9 @@ function autoLogin(){
         //🚧or better yet, use Jay's login process
         dbSettingsBulk = res
     })
-}
+} */
 
-/* 
+/* 🚧route ported from auth.py for reference
 #Session restore through token identification
 @auth_bp.route("/secure_token_req", methods=["POST"]) 
 def secure_cookie(): #can be used to RESTORE a pertinent session. This is user only. Admin should get a separate route.
