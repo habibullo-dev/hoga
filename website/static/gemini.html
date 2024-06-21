@@ -23,17 +23,24 @@
             border: 3px solid black;
             position: relative;
             overflow: auto;
-            background-image: linear-gradient(#FFC5C5, #FFEBD8);
+            background-image: linear-gradient(#B4E4FF, #95BDFF);
+            display: flex;
+            flex-direction: column;
         }
 
         #gemini-request {
             width: -webkit-fill-available;
-            height: 5%;
-            border-radius: 10px;
+            height: 2.5rem;
+            border-radius: 20px;
             border: 1px solid black;
             position: sticky;
             top: 100%;
+            flex-shrink: 0;
             margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            padding-left: 4px;
+            box-sizing: border-box;
         }
 
         #gemini-logo {
@@ -52,22 +59,21 @@
             padding: 10px;
             width: auto;
             max-width: 75%;
-            display: flex;
-            flex-wrap: wrap;
+            display: block;
             border-radius: 20px;
-            float: right;
+            align-self: end;
         }
 
         .gemini-response {
-            margin-top: 5rem;
+            margin-top: 1rem;
             margin-left: 1rem;
             border: 1px solid black;
             background-color: #FFEFEF;
             padding: 10px;
-            width: auto;
+            width: fit-content;
             max-width: 75%;
-            display: flex;
-            flex-wrap: wrap;
+            display: block;
+            /* flex-wrap: wrap; */
             border-radius: 20px;
             overflow-wrap: anywhere;
         }
