@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, request, make_response, render_template, jsonify #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
+from flask import Blueprint, Flask, request, make_response, render_template, jsonify, redirect, url_for #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
 import sqlalchemy
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -123,64 +123,68 @@ def activate(hash):
 #USER LOG-IN
 @auth_bp.post("/userlogin")
 def userlogin():
-    email = (request.form.get("email")).lower()
-    password = request.form.get("password")
-    with db.begin() as conn:
-        login = conn.execute(text("SELECT * FROM user WHERE email=:email"),{
-            "email": email
-        })
-        for acct in login:
-            if check_password_hash(acct.password,password) and (acct.user_activated == 1):
-                user_token = secrets.token_urlsafe(16) #☢️16 char token is generated for quick user ID
-                conn.execute(text("UPDATE user SET latest_login=NOW(), logged_in=1 WHERE email=:email"), {
-                    "email": email
-                })
-                conn.execute(text(f"INSERT INTO tokens (created_at, last_accessed, expiration_date, token, user_id) VALUES (NOW(), NOW(), NOW() + INTERVAL 3 DAY, :token_create, :ref_id_create)"), {
-                    "token_create": user_token,
-                    "ref_id_create": acct.user_id,
-                }) #☢️token storage process
-                response = make_response(jsonify({"confirmation" : "user token validated, access granted!", "email": acct.email, "name": acct.name}))
-                bring_user_settings(acct, response)
-                response.set_cookie(
-                        'session_token', #☢️specification for front-end to recognize this as a session token
-                        user_token, #☢️token itself
-                        httponly=True, 
-                        secure=True,
-                        samesite='Strict', #only usable in this site
-                        expires= datetime.now() + timedelta(days=10) #☢️expiration
-                    ) #☢️on top of the usual package, added session_token and confirmation message.
-                return response
-                #return {"email": info.email, "name": info.name} #🚧⚠️added to response var, see above
-            elif check_password_hash(acct.password,password) and (acct.user_activated == 0):
-                conn.execute(text("UPDATE user SET hash = :hash WHERE email = :email"), {
-                    "hash": str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20))),
-                    "email": acct.email
-                })
+    try:
+        email = (request.form.get("email")).lower()
+        password = request.form.get("password")
+        with db.begin() as conn:
+            login = conn.execute(text("SELECT * FROM user WHERE email=:email"),{
+                "email": email
+            })
+            for acct in login:
+                if check_password_hash(acct.password,password) and (acct.user_activated == 1):
+                    user_token = secrets.token_urlsafe(16) #☢️16 char token is generated for quick user ID
+                    conn.execute(text("UPDATE user SET latest_login=NOW(), logged_in=1 WHERE email=:email"), {
+                        "email": email
+                    })
+                    conn.execute(text(f"INSERT INTO tokens (created_at, last_accessed, expiration_date, token, user_id) VALUES (NOW(), NOW(), NOW() + INTERVAL 3 DAY, :token_create, :ref_id_create)"), {
+                        "token_create": user_token,
+                        "ref_id_create": acct.user_id,
+                    }) #☢️token storage process
+                    response = make_response(jsonify({"confirmation" : "user token validated, access granted!", "email": acct.email, "name": acct.name}))
+                    bring_user_settings(acct, response)
+                    response.set_cookie(
+                            'session_token', #☢️specification for front-end to recognize this as a session token
+                            user_token, #☢️token itself
+                            httponly=True, 
+                            secure=True,
+                            samesite='Strict', #only usable in this site
+                            expires= datetime.now() + timedelta(days=10) #☢️expiration
+                        ) #☢️on top of the usual package, added session_token and confirmation message.
+                    return response
+                    #return {"email": info.email, "name": info.name} #🚧⚠️added to response var, see above
+                elif check_password_hash(acct.password,password) and (acct.user_activated == 0):
+                    conn.execute(text("UPDATE user SET hash = :hash WHERE email = :email"), {
+                        "hash": str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20))),
+                        "email": acct.email
+                    })
 
-                res = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
-                    'email': acct.email
-                })
+                    res = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
+                        'email': acct.email
+                    })
 
-                for act in res:
-                    from_address = "hogadashboard@gmail.com"
-                    to_address = act.email
-                    subject = "Please verify your account " + act.name
-                    message_body = f"""<body>
-                    Thank you for registering an account with Hoga.
-                    Please click <a href='http://127.0.0.1:5000/activate/{act.hash}'>here</a> to activate your account.
-                    </body>"""
+                    for act in res:
+                        from_address = "hogadashboard@gmail.com"
+                        to_address = act.email
+                        subject = "Please verify your account " + act.name
+                        message_body = f"""<body>
+                        Thank you for registering an account with Hoga.
+                        Please click <a href='http://127.0.0.1:5000/activate/{act.hash}'>here</a> to activate your account.
+                        </body>"""
 
-                    msg = MIMEMultipart()
-                    msg['From'] = from_address
-                    msg['To'] = to_address
-                    msg['Subject'] = subject
+                        msg = MIMEMultipart()
+                        msg['From'] = from_address
+                        msg['To'] = to_address
+                        msg['Subject'] = subject
 
-                    message = MIMEText(message_body, 'html')
-                    msg.attach(message)
+                        message = MIMEText(message_body, 'html')
+                        msg.attach(message)
 
-                    smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                return {"message": "email sent to activate user's account"}
-            else: return {"error": "user inputted wrong email or password"}
+                        smtp_obj.sendmail(from_address, to_address, msg.as_string())
+                    return {"message": "email sent to activate user's account"}
+                else: return {"error": "user inputted wrong email or password"}
+        return {"error": "user inputted wrong email or password"}
+    except: 
+        return {"error": "user inputted wrong email or password"}
 
 #ADMIN LOG-IN
 @auth_bp.post("/adminlogin")
