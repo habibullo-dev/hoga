@@ -140,6 +140,7 @@ def userlogin():
                     "ref_id_create": acct.user_id,
                 }) #☢️token storage process
                 response = make_response(jsonify({"confirmation" : "user token validated, access granted!", "email": acct.email, "name": acct.name}))
+                bring_user_settings(acct, response)
                 response.set_cookie(
                         'session_token', #☢️specification for front-end to recognize this as a session token
                         user_token, #☢️token itself
@@ -302,6 +303,7 @@ def secure_cookie(): #can be used to RESTORE a pertinent session. This is user o
                         if item:
                             print("ITEM", item)
                             res = {"message":"user token validated, access granted!", "email": item.email, "name": item.name}
+                            bring_user_settings(item, res)
                             # IF VALUES ARE NOT PRESENT IN KEYS - ERROR 404 WILL BE TRIGGERED
                             # response =  {"message" : "user token validated, access granted!", "email": item.email, "name": item.name, "password": item.password, "widgetYoutube": item.youtube, "widgetSpotify": item.spotify, "widgetCalendar": item.calendar, "widgetWeather": item.weather, "widgetTasklist": item.tasklist}#⚙️list for settings can expand.
                             print("JSON RESPONSE", res)
@@ -311,7 +313,26 @@ def secure_cookie(): #can be used to RESTORE a pertinent session. This is user o
             except: 
                  return {"error" : "token data not found or expired"}, 404
     return {"error" : "received token invalid or non-existent, manual retry from client side requested"}, 405
-    
+
+
+def bring_user_settings(_item, _res):
+    #🚧take the entire response from DB, trim out confidential information, and send the settings. 
+    #This way even if columns for settings are added, we dont need to manually add them to this endpoint each time.
+    try:
+        _item.pop("created_at", "")
+        _item.pop("email", "")
+        _item.pop("name", "")
+        _item.pop("password", "")
+        _item.pop("user_id", "")
+        _item.pop("logged_in", "")
+        _item.pop("user_activated", "")
+        _item.pop("hash", "")
+        _item.pop("hash_expiration", "")
+        _item.pop("latest_login", "")
+        _res.update(_item) #🚧merge trimmed response with only settings, to the main response.
+    except: 
+        print("error trimming settings object. cancelling process.")
+
 #Sessions through Cookies explanation:
 # When a user logs in through route /userLogin, back-end sends an additional piece of information on top of the usual data: a randomly generated, 16 character-long "token".
 # This token should be received and held onto by front-end as a cookie. But also a copy of this token is sent to DB to a new table for 10 days, with the user's id as foreign key.
