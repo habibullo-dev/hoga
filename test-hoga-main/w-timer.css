@@ -1,0 +1,193 @@
+.timer-container {
+  /* flex: 1; */
+  height: fit-content;
+  margin: 5px;
+  padding: 5px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Albert Sans";
+  background-color: #f1f1f1;
+}
+
+.timer {
+  text-align: center;
+  font-size: 9rem;
+  /* margin-bottom: 20px; */
+  background: linear-gradient(
+    112.1deg,
+    rgb(32, 38, 57) 11.4%,
+    rgb(63, 76, 119) 70.2%
+  );
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+#timer-display {
+  letter-spacing: -0.2rem;
+  font-family: "Inter" !important;
+  /* background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%); */
+  padding: 0px 20px 0px 20px;
+  margin: 0px 10px 0px 10px;
+  border-radius: 20px;
+  color: white;
+  width: 440px;
+}
+
+#timer-state {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* width: fit-content; */
+  margin-left: 33%;
+  margin-right: 33%;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* .progress-bar {
+  width: -webkit-fill-available;
+  height: 20px;
+  background-color: #ddd;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  margin: 0 15px;
+}
+
+.progress-section {
+  height: 100%;
+  position: absolute;
+  transition: width 0.8s ease-in-out;
+} */
+
+.work {
+  background-color: #5cb85c;
+}
+
+.break {
+  background-color: #f0ad4e;
+}
+
+.marker {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background-color: #666;
+  top: 0;
+}
+
+.marker:nth-child(2n) {
+  left: 0;
+}
+
+.marker:nth-child(2n + 1) {
+  right: 0;
+}
+
+.marker:first-child {
+  display: none; /* Hide first marker */
+}
+
+.btn-container {
+  margin: 0px 0px 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn {
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #666;
+  color: white;
+  letter-spacing: 0rem;
+}
+
+#settingsBtn {
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  font-size: 2rem;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0 0 20px 0;
+}
+
+/* CSS for progress bar */
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  background: transparent !important;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex; /* Ensure flexbox layout */
+  justify-content: space-between;
+}
+
+/* CSS for progress line */
+.progress-line {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  height: 15%;
+  width: 95%;
+  background-color: #4a90e2 ;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+.progress-line-bg {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  height: 15%;
+  width: 95% !important;
+  background-color: #808080;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* CSS for circles (steps) */
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #4a90e2;
+  position: relative;
+  z-index: 2;
+  margin: 0 1px; /* Adjust margin as needed */
+}
+
+/* CSS for completed circles */
+.circle.completed {
+  background-color: #ececec; /* Completed color */
+}

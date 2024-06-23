@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="stylesheet" href="task.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="timer-controls">
+      <div class="tab-timer tab-content active">
+        <div class="timer-setup">
+          <div class="segmented-control-single-sel" data-type="tab-timer">
+            <div class="button-2 tab-button active" data-tab="tab-timer">
+              <div class="label1">Timer</div>
+            </div>
+            <div class="button-2 tab-button" data-tab="tab-breaks">
+              <div class="label1">Break</div>
+            </div>
+            <div class="button-2 tab-button" data-tab="tab-rounds">
+              <div class="separator"></div>
+              <div class="label1">Rounds</div>
+            </div>
+          </div>
+
+          <div class="timer-selector">
+            <div class="form-row">
+              <div class="left-accessory">
+                <div class="frame">
+                  <div class="title-timer">Set your focus time</div>
+                  <div class="subtitle">Default: 25 mins</div>
+                </div>
+              </div>
+              <div class="right-accessory">
+                <div class="group">
+                  <div class="stepper">
+                    <div class="label" id="focus-time-label">1</div>
+                    <div class="stepper1">
+                      <div class="separator"></div>
+                      <div class="filler"></div>
+                      <div class="top"></div>
+                      <div class="bottom"></div>
+                      <div class="plus" id="focus-time-plus">&#43;</div>
+                      <div class="minus" id="focus-time-minus">&#8722;</div>
+                    </div>
+                  </div>
+                  <div class="seconds">mins</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-breaks tab-content">
+        <div class="timer-setup">
+          <div class="segmented-control-single-sel" data-type="tab-breaks">
+            <div class="button-2 tab-button" data-tab="tab-timer">
+              <div class="label1">Timer</div>
+            </div>
+            <div class="button-2 tab-button active" data-tab="tab-breaks">
+              <div class="label1">Break</div>
+            </div>
+            <div class="button-2 tab-button" data-tab="tab-rounds">
+              <div class="separator"></div>
+              <div class="label1">Rounds</div>
+            </div>
+          </div>
+
+          <div class="timer-selector">
+            <div class="form-row">
+              <div class="left-accessory">
+                <div class="frame">
+                  <div class="title-timer">Set your break time</div>
+                  <div class="subtitle">Default: 5 mins</div>
+                </div>
+              </div>
+              <div class="right-accessory">
+                <div class="group">
+                  <div class="stepper">
+                    <div class="label" id="break-time-label">1</div>
+                    <div class="stepper1">
+                      <div class="separator"></div>
+                      <div class="filler"></div>
+                      <div class="top"></div>
+                      <div class="bottom"></div>
+                      <div class="plus" id="break-time-plus">&#43;</div>
+                      <div class="minus" id="break-time-minus">&#8722;</div>
+                    </div>
+                  </div>
+                  <div class="seconds">mins</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="break">
+            <div class="form-row">
+              <div class="left-accessory">
+                <div class="frame">
+                  <div class="title-timer">Enable auto start</div>
+                </div>
+              </div>
+              <div class="right-accessory">
+                <div class="switch">
+                  <div class="knob" id="auto-start"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-rounds tab-content">
+        <div class="timer-setup">
+          <div class="segmented-control-single-sel" data-type="tab-rounds">
+            <div class="button-2 tab-button" data-tab="tab-timer">
+              <div class="label1">Timer</div>
+            </div>
+            <div class="button-2 tab-button" data-tab="tab-breaks">
+              <div class="label1">Break</div>
+            </div>
+            <div class="button-2 tab-button active" data-tab="tab-rounds">
+              <div class="separator"></div>
+              <div class="label1">Rounds</div>
+            </div>
+          </div>
+
+          <div class="timer-selector">
+            <div class="form-row">
+              <div class="left-accessory">
+                <div class="frame">
+                  <div class="title-timer">Set number of cycles</div>
+                  <div class="subtitle">Default: 2 cycles</div>
+                </div>
+              </div>
+              <div class="right-accessory">
+                <div class="group">
+                  <div class="stepper">
+                    <div class="label" id="rounds-label">2</div>
+                    <div class="stepper1">
+                      <div class="separator"></div>
+                      <div class="filler"></div>
+                      <div class="top"></div>
+                      <div class="bottom"></div>
+                      <div class="plus" id="rounds-plus">&#43;</div>
+                      <div class="minus" id="rounds-minus">&#8722;</div>
+                    </div>
+                  </div>
+                  <div class="seconds">cycles</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="break">
+            <div class="form-row-inf">
+              <div class="left-accessory">
+                <div class="frame">
+                  <div class="title-timer">Enable infinite cycles</div>
+                </div>
+              </div>
+              <div class="right-accessory">
+                <div class="off" id="infinite">
+                  <div class="knob-off"></div>
+                </div>
+              </div>
+            </div>
+            <button id="save-btn">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        function setupStepper(stepperId, labelId) {
+          const plusButton = document.getElementById(`${stepperId}-plus`);
+          const minusButton = document.getElementById(`${stepperId}-minus`);
+          const label = document.getElementById(`${labelId}`);
+
+          if (plusButton && minusButton && label) {
+            plusButton.addEventListener("click", function () {
+              if (!isInfinite) {
+                label.textContent = parseInt(label.textContent) + 1;
+              }
+            });
+
+            minusButton.addEventListener("click", function () {
+              if (!isInfinite) {
+                label.textContent = Math.max(
+                  0,
+                  parseInt(label.textContent) - 1
+                );
+              }
+            });
+          }
+        }
+
+        setupStepper("focus-time", "focus-time-label");
+        setupStepper("break-time", "break-time-label");
+        setupStepper("rounds", "rounds-label");
+
+        const infiniteSwitch = document.getElementById("infinite");
+        const steppercolor = this.querySelector(".tab-rounds .stepper");
+        const label = this.querySelector(".tab-rounds .label");
+        let isInfinite = false;
+
+        if (infiniteSwitch && steppercolor) {
+          infiniteSwitch.addEventListener("click", function () {
+            const roundsPlus = document.getElementById("rounds-plus");
+            const roundsMinus = document.getElementById("rounds-minus");
+            const knoboff = this.querySelector(".knob-off");
+
+            if (!isInfinite) {
+              knoboff.style.left = "12px";
+              this.classList.add("switch");
+              this.classList.remove("off");
+              roundsPlus.disabled = true;
+              roundsMinus.disabled = true;
+              steppercolor.style.backgroundColor = "lightgray";
+              label.textContent = "∞";
+              isInfinite = true;
+            } else {
+              knoboff.style.left = "0px";
+              this.classList.add("off");
+              this.classList.remove("switch");
+              roundsPlus.disabled = false;
+              roundsMinus.disabled = false;
+              steppercolor.style.backgroundColor = "";
+              label.textContent = "2";
+              isInfinite = false;
+            }
+          });
+        }
+
+        const autoStartSwitch = document.getElementById("auto-start");
+        const switchColor = this.querySelector(".tab-breaks .switch");
+        let isAutoStart = true; // Defaulting to true for auto-start
+
+        if (autoStartSwitch) {
+          autoStartSwitch.addEventListener("click", function () {
+            console.log("Auto-start switch clicked");
+
+            // Find the knob element within the parent of autoStartSwitch
+            const knob =
+              this.closest(".right-accessory").querySelector(".knob");
+
+            // Toggle the switch class and adjust the knob position
+            if (!isAutoStart) {
+              knob.style.left = "12px";
+              this.classList.add("switch");
+              this.classList.remove("off");
+              knob.style.backgroundColor = "white";
+              switchColor.style.backgroundColor = "";
+              isAutoStart = true;
+            } else {
+              knob.style.left = "0px";
+              this.classList.add("off");
+              this.classList.remove("switch");
+              switchColor.style.backgroundColor = "white";
+              isAutoStart = false;
+            }
+
+            // Update other elements based on isAutoStart state if needed
+            updateOtherElements(isAutoStart);
+          });
+        } else {
+          console.error("Auto-start switch element not found");
+        }
+
+        function updateOtherElements(isAutoStart) {
+          console.log("Auto-start state:", isAutoStart);
+          const tabButtons = document.querySelectorAll(".tab-button");
+          tabButtons.forEach((button) => {
+            if (button.dataset.tab === "tab-timer") {
+              button.classList.toggle("active", !isAutoStart);
+            } else if (button.dataset.tab === "tab-breaks") {
+              button.classList.toggle("active", isAutoStart);
+            }
+          });
+        }
+
+        const saveButton = document.getElementById("save-btn");
+
+        if (saveButton) {
+          saveButton.addEventListener("click", function () {
+            const focusTime = parseInt(
+              document.getElementById("focus-time-label").textContent
+            );
+            const breakTime = parseInt(
+              document.getElementById("break-time-label").textContent
+            );
+            const rounds = parseInt(
+              document.getElementById("rounds-label").textContent
+            );
+
+            let roundsValue = rounds;
+            if (isInfinite) {
+              roundsValue = 999; // Set as 999 so it's infinite
+            }
+
+            const data = {
+              focusTime: focusTime,
+              breakTime: breakTime,
+              rounds: roundsValue,
+              isInfinite: isInfinite,
+              autoStart: isAutoStart,
+            };
+
+            console.log("Saved Data:", data);
+            parent.postMessage(data, "*");
+            // Send a message to the parent window to close the iframe
+            window.parent.postMessage("closeIframe", "*");
+          });
+        }
+
+        // Tab navigation logic
+        const tabButtons = document.querySelectorAll(
+          ".segmented-control-single-sel .tab-button"
+        );
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        // Function to update tab states
+        function updateTabs(activeTab) {
+          // Reset all tabs to button-2 initially
+          tabButtons.forEach((button) => {
+            button.classList.remove("active", "button-1");
+            button.classList.add("button-2");
+          });
+
+          // Set active tab to button-1
+          activeTab.classList.add("active", "button-1");
+          activeTab.classList.remove("button-2");
+
+          // Hide all tab contents
+          tabContents.forEach((content) => content.classList.remove("active"));
+
+          // Show the corresponding tab content based on data-tab attribute
+          const tab = activeTab.getAttribute("data-tab");
+          document.querySelector(`.${tab}`).classList.add("active");
+        }
+
+        // Initially set the Timer tab as active with button-1 styling
+        const initialActiveTab = document.querySelector(
+          '.tab-button[data-tab="tab-timer"]'
+        );
+        updateTabs(initialActiveTab);
+
+        // Event listener for hover on tab buttons
+        tabButtons.forEach((button) => {
+          button.addEventListener("mouseover", function () {
+            // Update tab styles immediately on hover
+            updateTabs(this);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
