@@ -1,5 +1,15 @@
 //⚠️Untested - 6/19/2024
 
+
+onStartStrLine();
+        
+function onStartStrLine(){
+    autoLogin()
+    sessRegenTry()
+    //startUpMark() //🚧deprecated
+    //userClockSetup() //🚧deprecated
+}
+
 //let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
 /* name for each setting keys: 
 spotify_setting
@@ -12,11 +22,35 @@ tasklist_setting
 mood_setting
 */
 
-
-//retrieving settings from widgetSettingsBulk for individual widgets, example:
-if (widgetSettingsBulk.spotify_setting){
-    //spotifyWidgetSize = widgetSettingsBulk.spotify_setting.size
+function autoLogin(){
+    try {
+        return fetch("/secure_token_req", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        })
+            .then(res => res.json())
+            .then(res => {
+                try {
+                document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
+                console.log(res["message"])
+                user.email = res["email"]
+                user.name = res["name"]
+                delete res["message"]
+                delete res["name"]
+                delete res["email"]
+                dbSettingsBulk = res
+                } catch {(error) => {
+                    console.log("autologin failed: ", error);
+                    suggestLogin(); //⚠️WIP function does not exist
+                }}
+        }).catch(error=>console.error('Mainline error fetching or parsing data:', error))
+    } catch {(error) => {
+        console.log("Mainline error connecting to database: ", error)
+        resolve();
+    }}
 }
+
+
 
 async function saveSettings(){
     //⚠️Create loading wheel pop-up, EX: loadingPopUp.style.display = "block"
@@ -34,11 +68,22 @@ async function saveSettings(){
     //⚠️Remove loading wheel pop-up, EX: loadingPopUp.style.display = "none"
 }
 
+// Function to distribute widget customization on load🚧
+/* async function distribWidgetSettings(_settings){
+    await new Promise(resolve => {
+        document.addEventListener("DOMContentLoaded", resolve);
+    });
+    Object.keys(_settings).forEach((key)=>{
+        console.log("Distributing widget settings!: ", key)
+        createWidget(key)
+    })
+ } */
+
 async function sessRegenTry(){
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData){
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
-        settingsDistribute(widgetSettingsBulk) //⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
+        distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
         sessDBCompare() //at later date, compare.
         return
     }
@@ -139,5 +184,3 @@ def bring_user_settings(_item, _res):
         _res.update(_item) #🚧merge trimmed response with only settings, to the main response.
     except: 
         print("error trimming settings object. cancelling process.") */
-
-

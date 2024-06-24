@@ -1,25 +1,108 @@
-from flask import Blueprint, Flask, request, make_response, render_template #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
+from flask import Blueprint, Flask, request, make_response, render_template, jsonify, redirect, url_for #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
 import sqlalchemy
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
+from email_validator import validate_email, EmailNotValidError
+import random
+import string
+import secrets
+import smtplib
+from getpass import getpass
+from email.mime.text import MIMEText    
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime, timedelta
+import secrets
+import google.generativeai as genai
+import os
 
 auth_bp = Blueprint("auth", __name__) #required to be exported and registered as blueprint.
 db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
 
+#SUPPOSED TO HIDE THE PASSWORD - SAME AS input() but safer
+# password = getpass("Input the password for hogadashboard@gmail.com")
+
+#CONNECTING TO OUR BUSINESS EMAIL
+smtp_obj = smtplib.SMTP('smtp.gmail.com')
+smtp_obj.ehlo()
+smtp_obj.starttls()
+smtp_obj.login("hogadashboard@gmail.com", "rarv jjoq frpr tbxh") #can use the variable password instead of the actual password
+
+#GEMINI RELATED CONTENT
+os.environ["API_KEY"] = "AIzaSyAWSgpgHCZ-LyCPGTkvvX_OBP1H9RSEDhI"
+api_key = os.environ["API_KEY"]
+genai.configure(api_key=api_key)
+model = genai.GenerativeModel("gemini-1.5-flash")
+
+@auth_bp.post("/geminicall")
+def geminicall():
+    response = model.generate_content(request.json.get("question"))
+    return(response.text)
+
+#SENDING USER INFORMATION TO HOMEPAGE
+@auth_bp.post("/savesettings")
+def savesettings():
+    with db.begin() as conn:
+        res = conn.execute(text("UPDATE user SET {BLABLABLA} WHERE email = :email"), {
+            "email": request.json.get("email")
+        })
+
 #REGISTRATION FOR USER
 @auth_bp.post("/registeruser")
 def registeruser():
-    with db.begin() as conn:
-        try: 
-            res = conn.execute(text("INSERT INTO user (email, password, created_at, latest_login, name) VALUES (:email, :password, NOW(), NOW(), :name)"), {
-                "email": request.form.get("email"), 
+    email = (request.form.get("email")).lower()
+    try: 
+        #CHECKS IF EMAIL IS USING VALID EMAIL FORMAT / SECURE EMAIL (DOESN'T CHECK IF EMAIL IS VALID)
+        emailinfo = validate_email(email, check_deliverability=True)
+        email = emailinfo.normalized
+        #CREATING RANDOM CHARACTER TO VALIDATE USER'S EMAIL
+        rand_hash = str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20)))
+        with db.begin() as conn:
+            res = conn.execute(text("INSERT INTO user (email, password, created_at, latest_login, name, hash) VALUES (:email, :password, NOW(), NOW(), :name, :hash)"), {
+                "email": email,
                 "password": generate_password_hash(request.form.get("password")),
-                "name": request.form.get("name")
+                "name": request.form.get("name"),
+                "hash": rand_hash
             })
             if res:
-                return "GOOD" #🚧return somth like "message":"DB reg success"
-        except:
-            return "BAD" #🚧Might be good practice if we can catch specific errors (such as 1 for email already existing or 1 for some bug the DB might spit out)
+                created_acct = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
+                    "email": email
+                })
+                for acct in created_acct:
+                    #EMAIL CONTENT <CHANGE SUBJECT / MESSAGE BODY IF NEEDED>
+                    from_address = "hogadashboard@gmail.com"
+                    to_address = acct.email
+                    subject = "Please verify your account " + acct.name
+                    message_body = f"""<body>
+                    Thank you for registering an account with Hoga.
+                    Please click <a href='http://127.0.0.1:5000/activate/{acct.hash}'>here</a> to activate your account.
+                    </body>"""
+
+                    msg = MIMEMultipart()
+                    msg['From'] = from_address
+                    msg['To'] = to_address
+                    msg['Subject'] = subject
+
+                    message = MIMEText(message_body, 'html')
+                    msg.attach(message)
+
+                    smtp_obj.sendmail(from_address, to_address, msg.as_string())
+                return {"message": "Registration success"}
+    #IF EMAIL IS NOT CORRECT FORMAT / UNSECURE
+    except EmailNotValidError as e:
+        return f"{"error":str(e)}"
+    #EMAIL EXISTS IN DATABASE
+    except:
+        return {"error": "Account already exists"}
+    
+#ACTIVATE USER
+@auth_bp.get("/activate/<hash>")
+def activate(hash):
+    with db.begin() as conn:
+        res = conn.execute(text("UPDATE user SET user_activated = 1 WHERE hash = :hash"), {
+            "hash": hash
+        })
+        if res:
+            return {"message": "user's account has been activated"}
 
 
 #REGISTRATION FOR ADMIN (NOT NEEDED DUE TO SECURITY REASONS)
@@ -40,22 +123,68 @@ def registeruser():
 #USER LOG-IN
 @auth_bp.post("/userlogin")
 def userlogin():
-    email = request.form.get("email")
-    password = request.form.get("password")
-    with db.begin() as conn:
-        login = conn.execute(text("SELECT * FROM user WHERE email=:email"),{
-            "email": email
-        }) #🚧try.catch if email does not exist in DB
-        for info in login:
-            if check_password_hash(info.password,password):
-                conn.execute(text("UPDATE user SET latest_login=NOW(), logged_in=1 WHERE email=:email"), {
-                    "email": email
-                })
-                return {"id": info.user_id, "email": info.email, "name": info.name #🚧is returning the DB-related ID to front-end necessary?
-                        }
-            else: return "BAD" #🚧return an error indicating that password does not match
-            
-        
+    try:
+        email = (request.form.get("email")).lower()
+        password = request.form.get("password")
+        with db.begin() as conn:
+            login = conn.execute(text("SELECT * FROM user WHERE email=:email"),{
+                "email": email
+            })
+            for acct in login:
+                if check_password_hash(acct.password,password) and (acct.user_activated == 1):
+                    user_token = secrets.token_urlsafe(16) #☢️16 char token is generated for quick user ID
+                    conn.execute(text("UPDATE user SET latest_login=NOW(), logged_in=1 WHERE email=:email"), {
+                        "email": email
+                    })
+                    conn.execute(text(f"INSERT INTO tokens (created_at, last_accessed, expiration_date, token, user_id) VALUES (NOW(), NOW(), NOW() + INTERVAL 3 DAY, :token_create, :ref_id_create)"), {
+                        "token_create": user_token,
+                        "ref_id_create": acct.user_id,
+                    }) #☢️token storage process
+                    response = make_response(jsonify({"confirmation" : "user token validated, access granted!", "email": acct.email, "name": acct.name}))
+                    bring_user_settings(acct, response)
+                    response.set_cookie(
+                            'session_token', #☢️specification for front-end to recognize this as a session token
+                            user_token, #☢️token itself
+                            httponly=True, 
+                            secure=True,
+                            samesite='Strict', #only usable in this site
+                            expires= datetime.now() + timedelta(days=10) #☢️expiration
+                        ) #☢️on top of the usual package, added session_token and confirmation message.
+                    return response
+                    #return {"email": info.email, "name": info.name} #🚧⚠️added to response var, see above
+                elif check_password_hash(acct.password,password) and (acct.user_activated == 0):
+                    conn.execute(text("UPDATE user SET hash = :hash WHERE email = :email"), {
+                        "hash": str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20))),
+                        "email": acct.email
+                    })
+
+                    res = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
+                        'email': acct.email
+                    })
+
+                    for act in res:
+                        from_address = "hogadashboard@gmail.com"
+                        to_address = act.email
+                        subject = "Please verify your account " + act.name
+                        message_body = f"""<body>
+                        Thank you for registering an account with Hoga.
+                        Please click <a href='http://127.0.0.1:5000/activate/{act.hash}'>here</a> to activate your account.
+                        </body>"""
+
+                        msg = MIMEMultipart()
+                        msg['From'] = from_address
+                        msg['To'] = to_address
+                        msg['Subject'] = subject
+
+                        message = MIMEText(message_body, 'html')
+                        msg.attach(message)
+
+                        smtp_obj.sendmail(from_address, to_address, msg.as_string())
+                    return {"message": "email sent to activate user's account"}
+                else: return {"error": "user inputted wrong email or password"}
+        return {"error": "user inputted wrong email or password"}
+    except:
+        return {"error": "user inputted wrong email or password"}
 
 #ADMIN LOG-IN
 @auth_bp.post("/adminlogin")
@@ -65,65 +194,155 @@ def adminlogin():
         with db.begin() as conn:
             login = conn.execute(text("SELECT admin_id, email, password, name FROM admin WHERE email=:email"), {
                 "email": email
-            }) 
+            })
             for info in login:
                 if check_password_hash(info.password,password):
                     conn.execute(text("UPDATE admin SET logged_in=1 WHERE email=:email"), {
-                        "email": email 
+                        "email": email
                     })    
-                    return {"admin_id": info.admin_id, "email": info.email, "name": info.name} #🚧should DB admin_id be returned to front-end?
-            else:  #🚧in the return above, could you add another key/value pair in the list? something like "admin_log_chk": info.admin_id. This could be used by super-admins or other members of the admin team to detect a specific member logging in from X location.             
-                return "BAD" #🚧return an error indicating that password does not match
+                    return {"admin_id": info.admin_id, "email": info.email, "name": info.name}
+            else:
+                return {"message":"admin inputted wrong email or password"}
+            
+#PASSWORD RECOVERY FOR USER
+@auth_bp.post("/passwordrecovery")
+def passwordrecovery():
+    try:
+        rand_hash = str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20)))
+        email = request.form.get("email").lower()
+        with db.begin() as conn:
+            conn.execute(text("UPDATE user SET hash = :hash, hash_expiration = :hash_expiration WHERE email = :email"), {
+                "hash": rand_hash,
+                "hash_expiration" : datetime.now() + timedelta(minutes=30),
+                "email": email
+            })
+            res = conn.execute(text("SELECT email, hash, name FROM user WHERE email = :email"), {
+                "email": email
+            })
+            for acct in res:
+                if acct:
+                    from_address = "hogadashboard@gmail.com"
+                    to_address = acct.email
+                    subject = "You have sent a request to reset your password " + acct.name
+                    message_body = f"""<body>
+                    Please follow the following instructions to reset the password to your account.
+                    Please click <a href='http://127.0.0.1:5000/passwordrecovery/{acct.hash}'>here</a> to reset your password.
+                    </body>"""
+
+                    msg = MIMEMultipart()
+                    msg['From'] = from_address
+                    msg['To'] = to_address
+                    msg['Subject'] = subject
+
+                    message = MIMEText(message_body, 'html')
+                    msg.attach(message)
+
+                    smtp_obj.sendmail(from_address, to_address, msg.as_string())
+                    return {"message": "Your password has been reset"}
+                else:
+                    return {"error": "Account does not exist"}
+    except:
+        return {"error": "There was an error with resetting your password. Please check to see if your email is correct"}
+
+@auth_bp.get("/passwordrecovery/<hash>")
+def passwordrecover(hash):
+    #input needs to be hidden to complete form
+    #CAN return object for static html file or render_template for Jinja templates
+    return render_template("websitename.html", hash=hash)
+
+@auth_bp.post("/resetpassword")
+def resetpassword():
+    try:
+        with db.begin() as conn:
+            res = conn.execute(text("UPDATE user SET password = :password WHERE hash = :hash"), {
+                "password": generate_password_hash(request.form.get("password")),
+                "hash": request.form.get("hash")
+            })
+            return {"message": "password has been reset"}
+    except: return {"error": "too much time has passed. user needs to reset password again"}
             
 #USER LOGOUT
 @auth_bp.post("/userlogout")
 def userlogout():
+    held_id = request.json.get("user_id")
     with db.begin() as conn:
         conn.execute(text("UPDATE user SET logged_in = 0 WHERE user_id=:user_id"),{
-            "user_id": request.json.get("user_id") 
+            "user_id": held_id
         })
-        return "GOOD" #🚧for future feature purpose, could you return a "message" : "destroyInstance" ?
-    
+        conn.execute(text("DELETE FROM tokens WHERE user_id=:foreign_key;"),{
+            "foreign_key": held_id #database token deletion
+        })
+        return {"message": "user has been logged out"}
+
+#ADMIN LOGOUT    
 @auth_bp.post("/adminlogout")
 def adminlogout():
     with db.begin() as conn:
         conn.execute(text("UPDATE admin SET logged_in = 0 WHERE admin_id = :admin_id"), {
             "admin_id": request.json.get("admin_id")
         })
-        return "GOOD" #🚧for future feature purpose, could you return a "message" : "destroyInstance" ?
+        return {"message": "admin has been logged out"}
+    
+#Session restore through token identification
+@auth_bp.route("/secure_token_req", methods=["POST"]) 
+def secure_cookie(): #can be used to RESTORE a pertinent session. This is user only. Admin should get a separate route.
+    session_token = request.cookies.get('session_token')
+    #email = request.json.get("email")
+    if session_token:
+        print(f"!!result of session_token: {session_token}")
+        with db.begin() as conn:         
+            try:
+                token_check = conn.execute(text("SELECT user_id FROM tokens WHERE token=:user_token"),{
+                    "user_token": session_token
+                }).fetchone()
+                print("!!result of token_check:",(token_check[0]))
+                for item in token_check:
+                    if item:
+                        login = conn.execute(text("SELECT * FROM user WHERE user_id=:foreign_id"),{
+                            "foreign_id": item
+                        })#⚠️was the table user, or users?
+                        #⚙️keep working, slave!
+                        #☢️get the token and compare it to token table. then grab the token's foreign key and log him automatically using data.
+                    for item in login:
+                        if item:
+                            print("ITEM", item)
+                            res = {"message":"user token validated, access granted!", "email": item.email, "name": item.name}
+                            bring_user_settings(item, res)
+                            # IF VALUES ARE NOT PRESENT IN KEYS - ERROR 404 WILL BE TRIGGERED
+                            # response =  {"message" : "user token validated, access granted!", "email": item.email, "name": item.name, "password": item.password, "widgetYoutube": item.youtube, "widgetSpotify": item.spotify, "widgetCalendar": item.calendar, "widgetWeather": item.weather, "widgetTasklist": item.tasklist}#⚙️list for settings can expand.
+                            print("JSON RESPONSE", res)
+                            return res #☢️We are accessing 2 tables here, first the token table to grab the foreign key of user_id, then use user_id to identify the user and bring back the info.
+                    else:
+                        return {"error" : "user login and settings information invalid"}, 403
+            except: 
+                 return {"error" : "token data not found or expired"}, 404
+    return {"error" : "received token invalid or non-existent, manual retry from client side requested"}, 405
 
-#Great job on the DB endpoints!!!! You whipped it up so quick
 
+def bring_user_settings(_item, _res):
+    #🚧take the entire response from DB, trim out confidential information, and send the settings. 
+    #This way even if columns for settings are added, we dont need to manually add them to this endpoint each time.
+    try:
+        _item.pop("created_at", "")
+        _item.pop("email", "")
+        _item.pop("name", "")
+        _item.pop("password", "")
+        _item.pop("user_id", "")
+        _item.pop("logged_in", "")
+        _item.pop("user_activated", "")
+        _item.pop("hash", "")
+        _item.pop("hash_expiration", "")
+        _item.pop("latest_login", "")
+        _res.update(_item) #🚧merge trimmed response with only settings, to the main response.
+    except: 
+        print("error trimming settings object. cancelling process.")
 
-#additional auth-checking def idea below:
+#Sessions through Cookies explanation:
+# When a user logs in through route /userLogin, back-end sends an additional piece of information on top of the usual data: a randomly generated, 16 character-long "token".
+# This token should be received and held onto by front-end as a cookie. But also a copy of this token is sent to DB to a new table for 10 days, with the user's id as foreign key.
+# On future app start-up, Front-end should request a fetch for "/secure_token_req in POST method, with an additional object in its headers: {"Authorization": "Bearer <TOKEN>"}
+# if token matches, send to front-end a package that will allow to log the user automatically and restore all his settings.
+# if token does not match or does not exist (for example, it expired in the DB), force user to log back in manually.
+# This will create session permanence for users. 
 
-
-@auth_bp.post("/pingSendActive") #front-end should send a signal package every 30 (CONFIGURABLE) minutes  or so to check if user is still in the app (he has a HOGA tab open). If no second confirm, automatically log out.
-def check_if_hoga_running():
-    res1 = request.json.get("activePing", False) #fetch trigger 
-    res2 = request.json.get("isSpecialLogin", False) #in case the logged user is considered an admin or a specific type of user such as one who needs extra accessibility options
-    if res1 == False and res2 == False:
-        userlogout() #not sure if we can manually trigger a function that was defined with a "POST" decorator, will need to be tested.
-    #for security concerns, might be good to auto-log out admin accounts in a different manner than normal users (such as log out automatically if HOGA tab is closed). What do you think of this idea?
-
-
-
-#cookie and sessions testing ground. Remove
-""" 
-userLogin = "testAccount"
-
-@auth_bp.route("/secure_cookie_call", methods=["GET", "POST"])
-def cookie_generator():
-    if request.method == "POST":
-        local_email = request.form["email"], #or whatever the Front_end decides on
-        local_name = user_full_name[0], #temporary.
-        output_msg = f"Welcome, {local_username}!" #⚠️where do we get and store local_username??
-        res = make_response('setting up login creds for user')
-        res.set_cookie("login_email",local_email) #key should be from the "name=" field of the input.
-    return res
-
-@auth_bp.route("/get_cookie")
-def cookie_get():
-    res_auth = request.cookies.get("login")
-    return res_auth 
-"""
+# Additionally, cookies can be used by temporary users to store their settings, being able to set and use the clock and restore its state even if they reopen the tab.

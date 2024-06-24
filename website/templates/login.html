@@ -34,14 +34,7 @@
     <script src="/static/settingsSaveLoad.js"></script>
     <script src="/static/feat.js"></script>
     <script>
-        onStartStrLine();
         
-        function onStartStrLine(){
-            autoLogin()
-            sessRegenTry()
-            startUpMark()
-            userClockSetup()
-        }
         // try {
         //     fetch("/secure_token_req", {
         //         method: "POST",
@@ -65,30 +58,8 @@
         //     const h1Elem = document.querySelector("h1");
         //     h1Elem.innerHTML = "Cookie not found"
         // }
-        function autoLogin(){
-            return fetch("/secure_token_req", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" }
-            })
-                .then(res => res.json())
-                .then(res => {
-                    try {
-                    document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
-                    console.log(res["message"])
-                    user.email = res["email"]
-                    user.name = res["name"]
-                    delete res["message"]
-                    delete res["name"]
-                    delete res["email"]
-                    dbSettingsBulk = res
-                    } catch {(error) => {
-                        console.log("autologin failed: ", error);
-                        suggestLogin(); //⚠️WIP function does not exist
-                    }}
-            })
-        }
+        
 
-        suggestLogin
 
     </script>
 

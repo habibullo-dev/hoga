@@ -1,11 +1,10 @@
 
 // Primary Vars 
-let user = {
+window.user = {
     "loggedIn": false,
     "email": "",
     "name": "",
 };
-let dbSettingsBulk = {};
-let widgetSettingsBulk = {};
-
+window.dbSettingsBulk = {};
+window.widgetSettingsBulk = {};
 

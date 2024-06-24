@@ -13,10 +13,10 @@ def widgets_grab():
     with db.begin() as conn:
         try:
             #Query 1 - spotify_setting ⚠️does not exist yet.
-            if bulk_widgets["spotify_setting"]:
+            if bulk_widgets["w-spotify"]:
                 query1 = conn.execute(text("UPDATE user SET spotify_setting=:user_spotify_setting WHERE email=:email"),{
                     "email": email,
-                    "user_spotify_setting": bulk_widgets["spotify_setting"]
+                    "user_spotify_setting": bulk_widgets["w-spotify"]
                 })
             else:
                 print("No change in spotify API widget detected.")

@@ -1,9 +1,182 @@
 // Define widgets as a global object
-let widgets = {};
+window.widgets = {}; //🚧modified to window-level var
 let gridContainer;
 let widgetsClicked = [];
+let createWidget;
+
+async function distribWidgetSettings(_settings){
+  await new Promise(resolve => {
+      document.addEventListener("DOMContentLoaded", resolve);
+  });
+  Object.keys(_settings).forEach((key)=>{
+      console.log("!! At the time of running DistribWidgetSettings, what is widgetSettingsBulk?", widgetSettingsBulk)
+      console.log("!! widgetSettingsBulk and key? ", widgetSettingsBulk[key])
+      console.log("Distributing widget settings!: ", key)
+      if (widgetSettingsBulk[key]["active"]){
+        createWidget(key, true)
+      } else {
+        console.log(`${key} was not active: ${widgetSettingsBulk[key]["active"]}`)
+      }
+  })
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  
+// Function to create a new widget
+createWidget = function(widgetId, startUp) {
+  console.log("Running Widget Creator - ", widgetId)
+  const existingWidget = widgets[widgetId];
+  if (!existingWidget) {
+    console.log("!!Creating new Widget after DOM: ", widgetId)
+    console.log("DOM Loaded!")
+    const widgetHtml = `./templates/${widgetId}.html`; // Path to HTML content
+    const widgetCss = `./static/css/${widgetId}.css`; // Path to CSS styling
+    const widgetScript = `./static/js/${widgetId}.js`; // Path to JS
+
+    // Get initial size based on widget ID
+    const { width, height } = getInitialSize(widgetId);
+
+    // Get custom min and max dimensions based on widget ID
+    const minWidth = getMinWidth(widgetId);
+    const minHeight = getMinHeight(widgetId);
+    const maxWidth = getMaxWidth(widgetId);
+    const maxHeight = getMaxHeight(widgetId);
+
+    // Create widget element
+    const widget = document.createElement("div");
+    widget.classList.add("widget", `widget-${widgetId}`);
+    widget.dataset.id = widgetId;
+
+    // Fetch HTML content from external file
+    fetch(widgetHtml)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load HTML: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then((html) => {
+        // Load HTML content into widget
+        widget.innerHTML = `
+        <div class="widget-content">
+          ${html}
+        </div>
+      `;
+
+        // After HTML is loaded, ensure any scripts and styles are processed
+        // processScripts(widget);
+
+        // Set initial styles and attributes
+        widget.style.position = "absolute";
+        widget.style.left = "0px";
+        widget.style.top = "60px";
+        widget.style.width = `${width}px`; // Initial width based on ID
+        widget.style.height = `${height}px`; // Initial height based on ID
+        widget.style.backgroundColor = "transparent";
+        // widget.style.border = "1px solid black";
+        widget.style.overflow = "hidden";
+        widget.style.resize = "both";
+        widget.style.zIndex = "1";
+
+        // Make widget draggable and resizable
+        $(widget)
+          .draggable({
+            containment: "parent",
+            grid: [10, 10],
+          })
+          .resizable({
+            containment: "parent",
+            minWidth: minWidth,
+            minHeight: minHeight,
+            maxWidth: maxWidth,
+            maxHeight: maxHeight,
+          });
+
+        // Append widget to grid container
+        gridContainer.appendChild(widget);
+
+        // Position the widget dynamically
+        positionWidget(widget);
+
+        // Load CSS stylesheet for the widget
+        loadWidgetStylesheet(widgetCss);
+
+        // Load Scripts for the widget
+        loadWidgetScript(widgetScript, () => {
+          console.log(`Script ${widgetScript} executed`);
+        });
+
+        // checkMusicPlayerSize();
+        //   // Call size checking function to apply styles based on initial size
+        //   if (widgetType === "music-player") {
+        //     checkMusicPlayerSize();
+        //   } else if (widgetType === "calendar") {
+        //     // Call function for calendar widget size checking
+        //   } else if (widgetType === "tasks-list") {
+        //     // Call function for tasks list widget size checking
+        //   }
+
+        // Store widget instance
+        widgets[widgetId] = widget;
+        autoSetupWidget(widgetSettingsBulk[widgetId], widget, startUp); 
+
+        //   // Call function to restore widget state (if any)
+        //   restoreWidgetState(widgetId);
+      })
+      .catch((error) => {
+        console.error("Error loading HTML:", error);
+        // If HTML load fails, show default content
+        widget.innerHTML = `
+          <div class="widget-content">
+            <h2>Default Widget Content</h2>
+            <p>This is the default content for widget ${widgetId}.</p>
+          </div>
+        `;
+
+        // Set styles for default content
+        widget.style.position = "absolute";
+        widget.style.left = "10px";
+        widget.style.top = "30px";
+        widget.style.width = "200px";
+        widget.style.height = "150px";
+        widget.style.backgroundColor = "lightblue";
+        widget.style.border = "1px solid black";
+        widget.style.borderRadius = "5px";
+        widget.style.overflow = "hidden";
+        widget.style.resize = "both";
+        widget.style.zIndex = "1";
+
+        // Make widget draggable and resizable
+        $(widget)
+          .draggable({
+            containment: "parent",
+            grid: [10, 10],
+          })
+          .resizable({
+            containment: "parent",
+            minHeight: 100,
+            minWidth: 100,
+            maxWidth: 400,
+            maxHeight: 300,
+          });
+
+        // Append widget to grid container
+        gridContainer.appendChild(widget);
+
+        // Position the widget dynamically
+        positionWidget(widget);
+
+        // Store widget instance
+        widgets[widgetId] = widget;
+      });
+  } else {
+    console.log("!!Widget already exists: ", widgetId)
+  }
+}//createWidget End
+
+
   let editClicked = false; // Flag to track if Edit (w-edit) is clicked
   let saveClicked = false; // Flag to track if Save (w-save) is clicked
 
@@ -15,12 +188,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const widgetButtons = [editButton, saveButton];
 
   const widgets = document.querySelectorAll(".tooltip img");
-  const otherWidgets = Array.from(widgets).filter(
+  window.otherWidgets = Array.from(widgets).filter( //🚧changed to window global var
     (widget) => !widgetButtons.includes(widget)
   );
 
   // Event listener for Edit (w-edit) button
-  editButton.addEventListener("click", function () {
+  editButton.addEventListener("click", editBtnClick);
+  function editBtnClick() { //🚧changed to named function for reuse.
+    console.log("!!clicked edit Button")
     editClicked = true;
     saveClicked = false; // Reset saveClicked when Edit is clicked
     document
@@ -31,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreWidgetStates(); // Restore widget states on Edit click
     enableWidgetInteractions(); // Enable draggable and resizable
     enableOtherWidgets(); // Enable click on other widgets
-  });
+  }
 
   function enableWidgetInteractions() {
     // Enable draggable for active widgets
@@ -45,7 +220,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listener for Save (w-save) button
-  saveButton.addEventListener("click", function () {
+  saveButton.addEventListener("click", saveBtnClick);
+  function saveBtnClick() { //🚧changed to named function for reuse.
+    console.log("!!clicked save Button")
     if (editClicked) {
       saveButton.style.display = "none";
       editButton.style.display = "inline-block";
@@ -58,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
       createNotification(); // Add notification on Save click
       hideSidebar();
     }
-  });
+  }
 
   function disableWidgetInteractions() {
     // Disable draggable for active widgets
@@ -111,17 +288,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to toggle widget state
-  function toggleWidgetState(widget) {
+  function toggleWidgetState(widget, noCreate) {
+
+    if(noCreate){
+      console.log("!! noCreate was TRUE ", noCreate)
+    } else {
+      console.log("!! noCreate was FALSE ", noCreate)
+    }
+
     const widgetId = widget.id;
     if (widget.classList.contains("clicked")) {
       widget.classList.remove("clicked");
       resetWidgetStyles(widget);
       // Remove from widgetsClicked array
       widgetsClicked = widgetsClicked.filter((id) => id !== widgetId);
+      console.log("!!toggleWidgetState - what is the widget ", widget) //this is just the fucking image
+      console.log("!!toggleWidgetState - what is the widgetId ", widgetId)
       // Remove widget from grid
       if (widgets[widgetId]) {
         gridContainer.removeChild(widgets[widgetId]);
+        console.log("!!toggleWidgetState - what is widgets[widgetId], ", widgets[widgetId]) //THIS IS THE DAMN DIV! FINALLY
+        widgetSettingsBulk[widgetId].active = false;//🚧consider the widget as inactive.
         delete widgets[widgetId];
+        
       }
     } else {
       widget.classList.add("clicked");
@@ -130,7 +319,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!widgetsClicked.includes(widgetId)) {
         widgetsClicked.push(widgetId);
         // Call createWidget function when widget is clicked
+        if(!noCreate){
         createWidget(widgetId);
+        }
       }
     }
   }
@@ -221,15 +412,15 @@ document.addEventListener("DOMContentLoaded", function () {
     // Perform your auto-save operation here
     saveWidgetStates();
   }
-
+  
   // Function to save widget states with dynamic data points
   function saveWidgetStates() {
-    const widgetStates = [];
-
+    //let widgetStates = [] 🚧CHANGED ARRAY STORAGE TO WINDOW-LEVEL OBJ STORAGE LOGIC - See above
+    console.log("!!Calling saveWidgetStates")
     // Iterate over widgets that are clicked or active
     widgetsClicked.forEach((widgetId) => {
+      console.log("!!how many widgets considered clicked? ", widgetsClicked)
       const widget = widgets[widgetId];
-
       // Initialize widgetData object
       let widgetData = {
         id: widgetId,
@@ -241,6 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
           width: widget.style.width,
           height: widget.style.height,
         },
+        active: true, //🚧 Added new data: active. Defined to make sure js checks if the widget was opened or closed when initalizing page
       };
 
       // Extract additional data based on widgetId
@@ -289,11 +481,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Push widgetData to widgetStates array
-      widgetStates.push(widgetData);
+      //widgetStates.push(widgetData); 🚧CHANGED ARRAY STORAGE TO OBJ STORAGE LOGIC - See below
+      // Move widgetData as K/V pair to window.widgetStates
+      widgetSettingsBulk[widgetId] = widgetData
     });
 
     // Log or process widgetStates array as needed
-    console.log("Active Widget States:", widgetStates);
+    console.log("Active Widget States:", widgetSettingsBulk);
+    saveSettings();
   }
 
   // Call initializeAutoSave() to start the auto-save mechanism
@@ -301,6 +496,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to create notification
   function createNotification() {
+    console.log("!!Created a notif!")
     const notification = document.createElement("div");
     notification.classList.add("notification");
 
@@ -319,7 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create and style the icon image
     const icon = document.createElement("img");
-    icon.src = "../static/images/logo-rev.png";
+    icon.src = "./static/images/logo-rev.png";
     icon.alt = "Icon";
     icon.style.width = "40px"; // Adjust the width of the icon as needed
     icon.style.display = "block"; // Ensure icon is on its own line
@@ -471,7 +667,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to create a new widget
+  
+
+  /* // Function to create a new widget //🚧MOVING OUT OF DOMCONTENT LOAD
   function createWidget(widgetId) {
     const existingWidget = widgets[widgetId];
     if (!existingWidget) {
@@ -615,7 +813,7 @@ document.addEventListener("DOMContentLoaded", function () {
           widgets[widgetId] = widget;
         });
     }
-  }
+  } */
 
   // // Process Styles from HTML
   // function processScripts(container) {
@@ -726,4 +924,40 @@ document.addEventListener("DOMContentLoaded", function () {
     widget.style.left = `${left}px`;
     widget.style.top = `${top}px`;
   }
+
+  function autoSetupWidget(widget, widgetElem, startUp){
+    console.log("!! - autoSetupWidget, the fuck is widget, widgetElem?", widget, widgetElem)
+    console.log("!! - autoSetupWidget, is the widget active??", widget.active)
+    try{
+
+      // Toggles state of widget to activate if active=true.
+      if (widget.active){
+        console.log("!! autoSetupWidget - Widget detected as active: ", widget, widget.active)
+        //momentarily simulates edit, widget creation then close.
+        const decoupleId = document.querySelectorAll(`#${widget["id"]}`);
+        console.log("!!how many id duplicates?: ", decoupleId)
+        startUp?editBtnClick():console.log("Not start-up, edit button click aborted")
+        toggleWidgetState(decoupleId[1], true)
+        startUp?saveBtnClick():console.log("Not start-up, save button click aborted")
+      }
+
+      // Automatically sets up position of widget 
+      widgetElem.style.left = `${widget.position.left}`; //This assumes the measurement value is stored in as well: ex: `250px` or `20vw`
+      widgetElem.style.top = `${widget.position.top}`;
+
+      // Automatically resizes widget
+      widgetElem.style.width = `${widget.size.width}`
+      widgetElem.style.top = `${widget.size.top}`
+      
+      console.log(`Widget ${widget.id} styling successfully restored.`)
+
+    } catch(error){
+      console.log(`Widget properties not found for: Widget: ${widget}, DOM: ${widgetElem}, Error type: ${error} - Restoring default styling`)
+    }
+    
+    
+  } 
+  
 });
+
+
