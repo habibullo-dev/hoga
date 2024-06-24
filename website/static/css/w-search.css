@@ -1,8 +1,10 @@
 * {
+  padding: 0;
+  margin: 0;
   font-family: "Albert Sans";
 }
 
-#gemini .google-img {
+.google-img {
   display: inline-block;
 }
 
@@ -18,20 +20,20 @@
 }
 
 #chat-window {
-    height: 300px;
-    overflow-y: auto; 
-    border: 1px solid #ffffff;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    background-color: white;
-  }
-  
-  #messages {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    overflow-y: scroll; 
-  }
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ffffff;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+}
 
 #gemini-request {
   width: -webkit-fill-available;
@@ -87,11 +89,11 @@
   display: flex;
   flex-wrap: wrap;
   border-radius: 10px;
-  float: right;
+  align-self: flex-end;
 }
 
 .gemini-response {
-  margin-top: 5rem;
+  margin-top: 1rem;
   margin-left: 1rem;
   background-color: #cdcdcd;
   padding: 10px;
@@ -101,4 +103,12 @@
   flex-wrap: wrap;
   border-radius: 10px;
   overflow-wrap: anywhere;
+}
+
+#gemini-container {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  height: fit-content;
+  max-height: 32vh;
 }
