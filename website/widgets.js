@@ -475,9 +475,9 @@ document.addEventListener("DOMContentLoaded", function () {
   function createWidget(widgetId) {
     const existingWidget = widgets[widgetId];
     if (!existingWidget) {
-      const widgetHtml = `../templates/${widgetId}.html`; // Path to HTML content
-      const widgetCss = `../static/css/${widgetId}.css`; // Path to CSS styling
-      const widgetScript = `../static/js/${widgetId}.js`; // Path to JS
+      const widgetHtml = `./templates/${widgetId}.html`; // Path to HTML content
+      const widgetCss = `./static/css/${widgetId}.css`; // Path to CSS styling
+      const widgetScript = `./static/js/${widgetId}.js`; // Path to JS
 
       // Get initial size based on widget ID
       const { width, height } = getInitialSize(widgetId);
