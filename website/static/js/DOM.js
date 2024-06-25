@@ -1,7 +1,7 @@
 //pomodo variables
 
 
-/* 
+/* 🚧 Deprecated, check Paolo's ver
 const clockStartBtn = document.getElementById("clockStartBtn")
 const clockStopBtn = document.getElementById("clockStopBtn")
 const clockResetBtn = document.getElementById("clockResetBtn")
@@ -29,3 +29,4 @@ let currentMilisec = displayMilisec.innerHTML
 = document.getElementById("")
 = document.getElementById("") */
 
+//THEMES DOM

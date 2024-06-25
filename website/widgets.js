@@ -1,5 +1,6 @@
 // Define widgets as a global object
 window.widgets = {}; //🚧modified to window-level var
+window.DOMstorage = {};
 let gridContainer;
 let widgetsClicked = [];
 let createWidget;
@@ -11,7 +12,7 @@ async function distribWidgetSettings(_settings){
   Object.keys(_settings).forEach((key)=>{
       console.log("!! At the time of running DistribWidgetSettings, what is widgetSettingsBulk?", widgetSettingsBulk)
       console.log("!! widgetSettingsBulk and key? ", widgetSettingsBulk[key])
-      console.log("Distributing widget settings!: ", key)
+      console.log("Distributing widget settings!: ", key, typeof key)
       if (widgetSettingsBulk[key]["active"]){
         createWidget(key, true)
       } else {
@@ -63,7 +64,9 @@ createWidget = function(widgetId, startUp) {
         <div class="widget-content">
           ${html}
         </div>
-      `;
+      `
+      DOMstorage[widgetId] = widget
+      ;
 
         // After HTML is loaded, ensure any scripts and styles are processed
         // processScripts(widget);
@@ -121,6 +124,7 @@ createWidget = function(widgetId, startUp) {
         // Store widget instance
         widgets[widgetId] = widget;
         autoSetupWidget(widgetSettingsBulk[widgetId], widget, startUp); 
+        console.log("!!BEFORE AUTOSETUP WIDGET WHAT THE STATUS OF WIDGETSETTINGSBULK, ", widgetSettingsBulk)
 
         //   // Call function to restore widget state (if any)
         //   restoreWidgetState(widgetId);
@@ -171,6 +175,9 @@ createWidget = function(widgetId, startUp) {
         // Store widget instance
         widgets[widgetId] = widget;
       });
+/*       console.log("TRACK WIDGET DOM 1,", widgetSettingsBulk[widgetId]["widgetDOM"])⚠️⚠️⚠️
+      widgetSettingsBulk[widgetId]["widgetDOM"] = widget//🚧adding widget cont to settings to track its DOM
+      console.log("TRACK WIDGET DOM 2,", widgetSettingsBulk[widgetId]["widgetDOM"]) */
   } else {
     console.log("!!Widget already exists: ", widgetId)
   }
@@ -221,7 +228,7 @@ createWidget = function(widgetId, startUp) {
 
   // Event listener for Save (w-save) button
   saveButton.addEventListener("click", saveBtnClick);
-  function saveBtnClick() { //🚧changed to named function for reuse.
+  function saveBtnClick(_skipOverWrite) { //🚧changed to named function for reuse.
     console.log("!!clicked save Button")
     if (editClicked) {
       saveButton.style.display = "none";
@@ -230,7 +237,7 @@ createWidget = function(widgetId, startUp) {
         .querySelector(".notch-container")
         .removeAttribute("data-edit-mode");
       saveClicked = true; // Set saveClicked to true on Save click
-      saveWidgetStates(); // Save widget states on Save click
+      saveWidgetStates(_skipOverWrite); // Save widget states on Save click
       disableWidgetInteractions(); // Disable draggable and resizable
       createNotification(); // Add notification on Save click
       hideSidebar();
@@ -414,15 +421,17 @@ createWidget = function(widgetId, startUp) {
   }
   
   // Function to save widget states with dynamic data points
-  function saveWidgetStates() {
+  function saveWidgetStates(_skipOverWrite) {
     //let widgetStates = [] 🚧CHANGED ARRAY STORAGE TO WINDOW-LEVEL OBJ STORAGE LOGIC - See above
     console.log("!!Calling saveWidgetStates")
     // Iterate over widgets that are clicked or active
     widgetsClicked.forEach((widgetId) => {
       console.log("!!how many widgets considered clicked? ", widgetsClicked)
+      
       const widget = widgets[widgetId];
       // Initialize widgetData object
-      let widgetData = {
+      console.log("!!current widget's data: ", widget.style.top)
+      let widgetData = { 
         id: widgetId,
         position: {
           left: widget.style.left,
@@ -433,8 +442,15 @@ createWidget = function(widgetId, startUp) {
           height: widget.style.height,
         },
         active: true, //🚧 Added new data: active. Defined to make sure js checks if the widget was opened or closed when initalizing page
-      };
+      }; 
 
+
+
+
+
+      
+
+      console.log("!! WIDGET SAVE< WHAT IS WIDGET DATA", widgetData)
       // Extract additional data based on widgetId
       switch (widgetId) {
         // case "w-spotify":
@@ -483,7 +499,14 @@ createWidget = function(widgetId, startUp) {
       // Push widgetData to widgetStates array
       //widgetStates.push(widgetData); 🚧CHANGED ARRAY STORAGE TO OBJ STORAGE LOGIC - See below
       // Move widgetData as K/V pair to window.widgetStates
-      widgetSettingsBulk[widgetId] = widgetData
+      console.log("!!WHAT IS WIDGETSETTINGSBULK PRESAVE, ", widgetSettingsBulk[widgetId])
+      console.log("Is _skipOverwrite present?", _skipOverWrite)
+      if (_skipOverWrite != "confirm _skipOverWrite"){
+        console.log("Overwriting bulk triggered.")
+        widgetSettingsBulk[widgetId] = widgetData
+      }
+      console.log("!!WHAT IS WIDGETSETTINGSBULK POSTSAVE, ", widgetSettingsBulk[widgetId])
+
     });
 
     // Log or process widgetStates array as needed
@@ -925,12 +948,11 @@ createWidget = function(widgetId, startUp) {
     widget.style.top = `${top}px`;
   }
 
-  function autoSetupWidget(widget, widgetElem, startUp){
+  function autoSetupWidget(widget, widgetElem, startUp){ 
     console.log("!! - autoSetupWidget, the fuck is widget, widgetElem?", widget, widgetElem)
     console.log("!! - autoSetupWidget, is the widget active??", widget.active)
     try{
-
-      // Toggles state of widget to activate if active=true.
+      // Toggles state of widget (IN ISLAND) to activate if active=true.
       if (widget.active){
         console.log("!! autoSetupWidget - Widget detected as active: ", widget, widget.active)
         //momentarily simulates edit, widget creation then close.
@@ -938,21 +960,20 @@ createWidget = function(widgetId, startUp) {
         console.log("!!how many id duplicates?: ", decoupleId)
         startUp?editBtnClick():console.log("Not start-up, edit button click aborted")
         toggleWidgetState(decoupleId[1], true)
-        startUp?saveBtnClick():console.log("Not start-up, save button click aborted")
+        startUp?saveBtnClick("confirm _skipOverWrite"):console.log("Not start-up, save button click aborted")
       }
 
       // Automatically sets up position of widget 
-      widgetElem.style.left = `${widget.position.left}`; //This assumes the measurement value is stored in as well: ex: `250px` or `20vw`
-      widgetElem.style.top = `${widget.position.top}`;
+      widgetElem.style.left = widget.position.left; //This assumes the measurement value is stored in as well: ex: `250px` or `20vw`
+      widgetElem.style.top = widget.position.top;
 
       // Automatically resizes widget
-      widgetElem.style.width = `${widget.size.width}`
-      widgetElem.style.top = `${widget.size.top}`
-      
-      console.log(`Widget ${widget.id} styling successfully restored.`)
+      widgetElem.style.width = widget.size.width
+      widgetElem.style.height = widget.size.height
 
     } catch(error){
-      console.log(`Widget properties not found for: Widget: ${widget}, DOM: ${widgetElem}, Error type: ${error} - Restoring default styling`)
+      console.log(`Widget properties not found for: Widget: ${widget.id}, DOM: ${widgetElem}, Error type: ${error} - Restoring default styling`)
+      console.log("WIDGETELEM TOP: ", widgetElem.style.top)
     }
     
     
