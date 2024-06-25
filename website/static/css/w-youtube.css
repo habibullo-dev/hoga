@@ -1,130 +1,192 @@
-#navbar {
-    width: 300px;
-    height: 50px;
-  }
+body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-  body {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+      #widgetContainer {
+        width: 90%;
+        max-width: 800px;
+        height: 80%;
+        margin-bottom: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+        position: relative;
+      }
 
-  #widgetContainer {
-    width: 400px;
-    height: 300px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-  }
+      #searching1 {
+        border-radius: 5px;
+        width: 40%;
+        border: none;
+        padding: 5px 5px;
+      }
 
-  #YouTubeWidgets {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: flex-start;
-    width: 100%;
-    height: calc(100% - 80px);
-    overflow-y: scroll;
-  }
+      #navbar {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        position: relative;
+        z-index: 1;
+        gap: 10px;
+      }
 
-  .YoutubeWidget {
-    background-color: rgba(255, 0, 0, 0.345);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: calc(50% - 20px);
-    height: calc(50% - 20px);
-    margin: 10px;
-    padding: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    background-color: white;
-    box-sizing: border-box;
-    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-    cursor: pointer;
-    position: relative;
-  }
+      #widgetContainer.enlarged #navbar {
+        display: none;
+      }
 
-  .YoutubeWidget.enlarged {
-    width: 400px;
-    /* Full width of the viewport */
-    height: 350px;
-    /* Full height of the viewport */
-    z-index: 1000;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
-  }
+      #searchButton {
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        border-radius: 10px;
+      }
 
-  .YoutubeWidget.enlarged .enlarge-button,
-  .YoutubeWidget.enlarged .minimize-button {
-    position: absolute;
-    bottom: -30px;
-    right: 10px;
-  }
+      #YouTubeWidgets {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: flex-start;
+        width: 100%;
+        height: calc(100% - 120px);
+        overflow-y: scroll;
+        padding: 10px;
+      }
 
-  .videos {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    padding: 0;
-    box-sizing: border-box;
-  }
+      .YoutubeWidget {
+        background-color: rgba(255, 0, 0, 0.345);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: calc(50% - 20px);
+        height: calc(50% - 20px);
+        margin: 10px;
+        padding: 10px;
+        /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+        border-radius: 10px;
+        background-color: white;
+        box-sizing: border-box;
+        transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+        cursor: pointer;
+        position: relative;
+      }
 
-  input {
-    width: 70%;
-    height: 80%;
-    padding: 10px;
-    margin: 10px 0;
-    box-sizing: border-box;
-  }
+      .YoutubeWidget.enlarged {
+        width: inherit;
+        height: inherit;
+        z-index: 1000;
+        position: relative;
+        top: 60px;
+        left: 0;
+        transform: none;
+        background-color: white;
 
-  #searchButton {
-    width: 20%;
-    height: 80%;
-  }
+        /* border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+        transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+      }
 
-  .video {
-    width: 100%;
-    height: 100%;
-  }
+      .YoutubeWidget.enlarged .enlarge-button,
+      .YoutubeWidget.enlarged .minimize-button {
+        position: absolute;
+        top: -60px;
+        right: 35px;
+      }
 
-  iframe {
-    width: 100%;
-    height: 100%;
-  }
+      #widgetContainer.enlarged #YouTubeWidgets,
+      #widgetContainer.enlarged #pagination {
+        display: none;
+      }
 
-  .enlarge-button,
-  .minimize-button {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 1;
-  }
+      #pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        gap: 10px;
+      }
 
-  .enlarge-button:hover,
-  .minimize-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+      .pagination-button {
+        background-color: #ff0000;
+        color: white;
+        border: none;
+        padding: 3px 5px;
+        font-weight: 600;
+        border-radius: 5px;
+      }
+
+      #widgetContainer.enlarged #pagination {
+        display: none;
+      }
+
+      .videos {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .video {
+        width: 100%;
+        height: 100%;
+      }
+
+      iframe {
+        width: 95%;
+        aspect-ratio: 16/9;
+      }
+
+      .enlarge-button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 3px 8px;
+        font-size: 0.8rem;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1;
+        margin: 10px 0px;
+      }
+
+      .minimize-button {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1;
+        margin-top: 10px;
+      }
+
+      .enlarge-button:hover,
+      .minimize-button:hover {
+        background-color: rgba(255, 221, 30, 0.8);
+        color: black;
+      }
+
+      .video-info {
+        display: none;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      .YoutubeWidget.enlarged .video-info {
+        display: block;
+      }
