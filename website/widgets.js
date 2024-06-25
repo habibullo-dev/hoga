@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
 // Function to create a new widget
-createWidget = function(widgetId, startUp) {
+createWidget = async function(widgetId, startUp) {
   console.log("Running Widget Creator - ", widgetId)
   const existingWidget = widgets[widgetId];
   if (!existingWidget) {
@@ -58,7 +58,7 @@ createWidget = function(widgetId, startUp) {
         }
         return response.text();
       })
-      .then((html) => {
+      .then(async (html) => {
         // Load HTML content into widget
         widget.innerHTML = `
         <div class="widget-content">
@@ -107,7 +107,7 @@ createWidget = function(widgetId, startUp) {
         loadWidgetStylesheet(widgetCss);
 
         // Load Scripts for the widget
-        loadWidgetScript(widgetScript, () => {
+        await loadWidgetScript(widgetScript, () => {
           console.log(`Script ${widgetScript} executed`);
         });
 
@@ -444,11 +444,6 @@ createWidget = function(widgetId, startUp) {
         active: true, //🚧 Added new data: active. Defined to make sure js checks if the widget was opened or closed when initalizing page
       }; 
 
-
-
-
-
-      
 
       console.log("!! WIDGET SAVE< WHAT IS WIDGET DATA", widgetData)
       // Extract additional data based on widgetId
@@ -853,13 +848,20 @@ createWidget = function(widgetId, startUp) {
   //   });
 
   // Function to load JavaScript file dynamically
-  function loadWidgetScript(jsFile, callback) {
-    const script = document.createElement("script");
-    script.src = jsFile;
-    script.type = "text/javascript";
-    script.onload = callback;
-    document.body.appendChild(script);
-    console.log("JavaScript file loaded:", jsFile);
+  function loadWidgetScript(jsFile, callback) { //🚧changed to promise for async running purpose
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = jsFile;
+      script.type = "text/javascript";
+      script.onload = () => {
+          console.log(`JavaScript file loaded: ${jsFile}`);
+          resolve();
+      };
+      script.onerror = () => {
+          reject(new Error(`Failed to load script: ${jsFile}`));
+      };
+      document.body.appendChild(script);
+    });
   }
 
   // // Timer Panel
@@ -948,9 +950,9 @@ createWidget = function(widgetId, startUp) {
     widget.style.top = `${top}px`;
   }
 
-  function autoSetupWidget(widget, widgetElem, startUp){ 
+  function autoSetupWidget(widget, widgetElem, startUp){ //🚧
     console.log("!! - autoSetupWidget, the fuck is widget, widgetElem?", widget, widgetElem)
-    console.log("!! - autoSetupWidget, is the widget active??", widget.active)
+   
     try{
       // Toggles state of widget (IN ISLAND) to activate if active=true.
       if (widget.active){
@@ -972,8 +974,9 @@ createWidget = function(widgetId, startUp) {
       widgetElem.style.height = widget.size.height
 
     } catch(error){
-      console.log(`Widget properties not found for: Widget: ${widget.id}, DOM: ${widgetElem}, Error type: ${error} - Restoring default styling`)
-      console.log("WIDGETELEM TOP: ", widgetElem.style.top)
+      //console.log(`Widget properties not found for: Widget: ${widget.id}, DOM: ${widgetElem}`)
+      console.log(`Error type: ${error} - Restoring default styling`)
+      //console.log("WIDGETELEM TOP: ", widgetElem.style.top)
     }
     
     
