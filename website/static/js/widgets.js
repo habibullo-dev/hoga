@@ -594,7 +594,7 @@ createWidget = async function(widgetId, startUp) {
       case "w-weather":
         return { width: 200, height: 200 };
       case "w-search":
-        return { width: 350, height: "fit-content" };
+        return { width: 270, height: "fit-content" };
       default:
         return { width: 200, height: 200 }; // Default size
     }
@@ -614,7 +614,7 @@ createWidget = async function(widgetId, startUp) {
         return 200;
       case "w-weather":
         return 150;
-      case "search":
+      case "w-search":
         return 200;
       default:
         return 100;
@@ -635,7 +635,7 @@ createWidget = async function(widgetId, startUp) {
         return 430;
       case "w-weather":
         return 300;
-      case "search":
+      case "w-search":
         return 400;
       default:
         return 600;
@@ -656,8 +656,8 @@ createWidget = async function(widgetId, startUp) {
         return 150;
       case "w-weather":
         return 100;
-      case "search":
-        return 300;
+      case "w-search":
+        return 250;
       default:
         return 80;
     }
@@ -674,11 +674,11 @@ createWidget = async function(widgetId, startUp) {
       case "w-timer":
         return 300;
       case "w-youtube":
-        return 300;
+        return 430;
       case "w-weather":
         return 200;
       case "search":
-        return 490;
+        return 350;
       default:
         return 500;
     }
