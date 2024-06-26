@@ -6,7 +6,7 @@ views_bp = Blueprint('views', __name__)
 #Home
 @views_bp.route("/")
 def redir_home_dashboard():
-    return render_template("home.html")
+    return render_template("index.html")
 
 
 

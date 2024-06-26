@@ -12,11 +12,33 @@
   border-radius: 10px;
   width: 100%;
   flex-basis: inherit;
-  height: 100%;
   position: relative;
   overflow: auto;
   background-color: white;
   color: black;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-height: 400px;
+}
+
+.example-prompt {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.example-1, .example-2 {
+  background-color: lightgray;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
+  width: 35%;
+  justify-content: center;
+  align-items: center;
+  color: #595e62;
 }
 
 #chat-window {
@@ -44,6 +66,14 @@
   top: 100%;
   margin: 20px 10px 10px 10px;
   padding: 5px 10px;
+
+  transform-origin: top;
+
+  box-shadow: 3px -10px 20px -10px rgba(181, 203, 236, 10.8),
+    3px -10px 50px -10px rgba(211, 115, 219, 0.4),
+    3px -20px 30px -20px rgba(181, 203, 236, 0.3),
+    3px -10px 30px -3px rgba(230, 158, 229, 0.5),
+    3px -15px 20px -10px rgba(181, 203, 236, 1);
 }
 
 #new-message {
@@ -75,7 +105,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  margin-bottom: 2px;
 }
 
 .user-question {
@@ -107,8 +138,8 @@
 
 #gemini-container {
   display: flex;
-  overflow: auto;
+  overflow: scroll;
   flex-direction: column;
-  height: fit-content;
-  max-height: 32vh;
+  position: relative;
+  flex-grow: 1;
 }

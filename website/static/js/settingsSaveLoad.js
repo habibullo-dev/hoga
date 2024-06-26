@@ -1,14 +1,9 @@
 //⚠️Untested - 6/19/2024
 
 
-onStartStrLine();
+
         
-function onStartStrLine(){
-    autoLogin()
-    sessRegenTry()
-    //startUpMark() //🚧deprecated
-    //userClockSetup() //🚧deprecated
-}
+
 
 //let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
 /* name for each setting keys: 
@@ -83,7 +78,7 @@ async function sessRegenTry(){
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData){
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
-        distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
+        await distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
         sessDBCompare() //at later date, compare.
         return
     }
@@ -93,6 +88,8 @@ async function sessRegenTry(){
     }
     widgetSettingsBulk = dbSettingsBulk
 }
+
+
 
 async function sessDBCompare(){
     await autoLogin();  
@@ -184,3 +181,11 @@ def bring_user_settings(_item, _res):
         _res.update(_item) #🚧merge trimmed response with only settings, to the main response.
     except: 
         print("error trimming settings object. cancelling process.") */
+
+function onStartStrLine(){
+    autoLogin()
+    sessRegenTry()
+    //startUpMark() //🚧deprecated
+    //userClockSetup() //🚧deprecated
+}
+onStartStrLine();
