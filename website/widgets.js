@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return 200;
       case "w-weather":
         return 150;
-      case "search":
+      case "w-search":
         return 200;
       default:
         return 100;
@@ -422,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return 400;
       case "w-weather":
         return 300;
-      case "search":
+      case "w-search":
         return 400;
       default:
         return 600;
@@ -443,7 +443,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return 150;
       case "w-weather":
         return 100;
-      case "search":
+      case "w-search":
         return 250;
       default:
         return 80;
