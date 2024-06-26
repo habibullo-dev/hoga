@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-weather":
         return { width: 200, height: 200 };
       case "w-search":
-        return { width: 350, height: "fit-content" };
+        return { width: 270, height: "fit-content" };
       default:
         return { width: 200, height: 200 }; // Default size
     }
