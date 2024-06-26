@@ -34,7 +34,7 @@ createWidget = async function(widgetId, startUp) {
     console.log("!!Creating new Widget after DOM: ", widgetId)
     console.log("DOM Loaded!")
     const widgetHtml = `../templates/${widgetId}.html`; // Path to HTML content
-    const widgetCss = `../css/${widgetId}.css`; // Path to CSS styling
+    const widgetCss = `../static/css/${widgetId}.css`; // Path to CSS styling
     const widgetScript = `../static/js/${widgetId}.js`; // Path to JS
 
     // Get initial size based on widget ID
