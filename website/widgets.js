@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-timer":
         return { width: "fit-content", height: "fit-content" };
       case "w-youtube":
-        return { width: 400, height: 300 };
+        return { width: 400, height: 350 };
       case "w-weather":
         return { width: 200, height: 200 };
       case "w-search":
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-timer":
         return 300;
       case "w-youtube":
-        return 300;
+        return 430;
       case "w-weather":
         return 200;
       case "search":
