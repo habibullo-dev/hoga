@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-timer":
         return { width: "fit-content", height: "fit-content" };
       case "w-youtube":
-        return { width: 400, height: 350 };
+        return { width: 400, height: "fit-content" };
       case "w-weather":
         return { width: 200, height: 200 };
       case "w-search":
