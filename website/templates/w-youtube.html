@@ -1,95 +1,28 @@
 <div id="widgetContainer">
-    <div class="YoutubeWidget" style="width: 100%; height: 80px; flex-direction: row; align-items: center;">
       <div id="navbar">
-        <input id="searching1" placeholder="Search YouTube: ">
-        <button id="searchButton" onclick="handleButtonClick(event)">Go</button>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png"
+          style="height: 20px"
+          alt="yt"
+        />
+        <input id="searching1" placeholder="Search YouTube: " />
+        <!-- <button id="searchButton" onclick="handleButtonClick(event)">&#128269;</button> -->
       </div>
-    </div>
 
-    <div id="YouTubeWidgets">
-      <!-- Placeholder divs for videos, updated dynamically -->
-      <!-- Ensure IDs from videos1 to videos20 are used -->
-      <div class="YoutubeWidget">
-        <div id="videos1" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
+      <div id="YouTubeWidgets">
+        <!-- Video results -->
       </div>
-      <div class="YoutubeWidget">
-        <div id="videos2" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos3" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos4" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <!-- Repeat for videos 5 to 20 -->
-      <!-- Ensure all 20 divs are properly structured with IDs and buttons -->
-      <div class="YoutubeWidget">
-        <div id="videos5" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos6" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos7" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos8" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos9" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos10" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos11" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos12" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos13" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos14" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos15" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos16" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos17" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos18" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos19" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
-      </div>
-      <div class="YoutubeWidget">
-        <div id="videos20" class="videos"></div>
-        <button class="enlarge-button" onclick="toggleEnlarge(this)">Enlarge</button>
+
+      <div id="pagination">
+        <button
+          class="pagination-button"
+          id="prevPage"
+          onclick="changePage(-1)"
+        >
+          &#60;
+        </button>
+        <button class="pagination-button" id="nextPage" onclick="changePage(1)">
+          &#62;
+        </button>
       </div>
     </div>
-  </div>

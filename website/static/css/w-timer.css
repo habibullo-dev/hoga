@@ -36,7 +36,7 @@ body {
   margin: 0px 10px 0px 10px;
   border-radius: 20px;
   color: white;
-  width: 440px;
+  width: fit-content;
 }
 
 #timer-state {

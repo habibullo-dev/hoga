@@ -583,11 +583,11 @@ createWidget = async function(widgetId, startUp) {
   function getInitialSize(widgetId) {
     switch (widgetId) {
       case "w-spotify":
-        return { width: 300, height: "fit-content" };
+        return { width: 300, height: "" };
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
-        return { width: 300, height: "fit-content" };
+        return { width: 220, height: 200 };
       case "w-timer":
         return { width: "fit-content", height: "fit-content" };
       case "w-youtube":
@@ -608,7 +608,7 @@ createWidget = async function(widgetId, startUp) {
       case "w-calendar":
         return 100;
       case "w-tasks":
-        return 200;
+        return 150;
       case "w-timer":
         return 300;
       case "w-youtube":
@@ -650,7 +650,7 @@ createWidget = async function(widgetId, startUp) {
       case "w-calendar":
         return 150;
       case "w-tasks":
-        return 150;
+        return 100;
       case "w-timer":
         return 150;
       case "w-youtube":
@@ -671,7 +671,7 @@ createWidget = async function(widgetId, startUp) {
       case "w-calendar":
         return 490;
       case "w-tasks":
-        return 500;
+        return 400;
       case "w-timer":
         return 300;
       case "w-youtube":
@@ -719,11 +719,7 @@ createWidget = async function(widgetId, startUp) {
         })
         .then((html) => {
           // Load HTML content into widget
-          widget.innerHTML = `
-          <div class="widget-content">
-            ${html}
-          </div>
-        `;
+          widget.innerHTML = `${html}`;
 
           // After HTML is loaded, ensure any scripts and styles are processed
           // processScripts(widget);
@@ -739,6 +735,8 @@ createWidget = async function(widgetId, startUp) {
           widget.style.overflow = "hidden";
           widget.style.resize = "both";
           widget.style.zIndex = "1";
+          widget.style.flexDirection = "column";
+          widget.style.display = "flex";
 
           // Make widget draggable and resizable
           $(widget)
