@@ -89,7 +89,7 @@ def registeruser():
                 return {"message": "Registration success"}
     #IF EMAIL IS NOT CORRECT FORMAT / UNSECURE
     except EmailNotValidError as e:
-        return f"{"error":str(e)}"
+        return f"{'error':str(e)}"
     #EMAIL EXISTS IN DATABASE
     except:
         return {"error": "Account already exists"}
