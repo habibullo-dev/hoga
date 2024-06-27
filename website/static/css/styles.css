@@ -618,6 +618,10 @@ label[for="nav-toggle"] {
   z-index:0;
 }
 
+.display-toggle{/* 🚧NEW CSS */
+  display: none;
+}
+
 .nav-button {
   position: relative;
   margin-left: 25px;

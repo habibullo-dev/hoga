@@ -17,13 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     })
 
+    thDevBtn.addEventListener("click", ()=>{
+        
+        thDevPicks.classList.toggle("display-toggle")
+    })
+
 
 })
 
 const loadThemeSet = async function(_css, _js, _html){
-
     console.log(`!!Props ID - CSS ${_css}, JS ${_js}, HTML ${_html}`)
-
     const parent = document.getElementById("grid-container")
     
     try{await thKillSwitch()} 
@@ -56,6 +59,7 @@ const loadThemeSet = async function(_css, _js, _html){
         script.src = (_js)
         script.type = "text/javascript"
         HTML.appendChild(script)
+        script.onload = ()=>(parallaxStartUp({staticTitle:true, distCalc:1.5, rotaCalc:3}, paraStopButton, paraStartButton));
     }  catch (error) {
         console.log("Failed to load javascript file. Wrong path or file does not exist. ", error)
     }
@@ -79,7 +83,7 @@ const loadThemeSet = async function(_css, _js, _html){
                 console.log("No script file found")
             }
             document.head.removeChild(CSS)
-            document.body.removeChild(HTML)
+            parent.removeChild(HTML)
         resolve("Theme scrap completed! ", HTML);
         })
     }//Dont forget to append your killswitch to something.

@@ -4,16 +4,17 @@
 
 console.log("multiParallax package loaded! Original system by True Coder. Modified by DXM")
 //fixed DOMS
-const paraStopButton = document.querySelector("#paraStop");
-const paraStartButton = document.querySelector("#paraStart");
+let paraStopButton = document.querySelector("#paraStop");
+let paraStartButton = document.querySelector("#paraStart");
 
 
-const parallaxNodes = document.querySelectorAll(".parallaxElem")
-const parallaxImgs = document.querySelectorAll(".parallaxElem:not(.parallaxTitle)")
-const parallaxConts = document.querySelectorAll(".parallaxCont")
-
+let parallaxNodes = document.querySelectorAll(".parallaxElem")
+let parallaxImgs = document.querySelectorAll(".parallaxElem:not(.parallaxTitle)")
+let parallaxConts = document.querySelectorAll(".parallaxCont")
 
 function parallaxAssign(_stopButton, _runButton, _dCalc, _rotaCalc){
+
+
     let mouseXPos = 0;
     let mouseYPos = 0;
     let rotateDegree = 0;
@@ -70,10 +71,18 @@ function parallaxAssign(_stopButton, _runButton, _dCalc, _rotaCalc){
 
 
 function parallaxStartUp(_setup, _stopButton, _runButton){ //additional function you can run at start to create a "pop-in/pop-out" effect for the elements
+    console.log("Starting up parallax setup")
     let _paraAnimArr = []
     let _parallaxElems
     let _distCalc = _setup.distCalc?_setup.distCalc:false
     let _rotaCalc = _setup.rotaCalc?_setup.rotaCalc:false
+
+    paraStopButton = document.querySelector("#paraStop");
+    paraStartButton = document.querySelector("#paraStart");
+
+    parallaxNodes = document.querySelectorAll(".parallaxElem")
+    parallaxImgs = document.querySelectorAll(".parallaxElem:not(.parallaxTitle)")
+    parallaxConts = document.querySelectorAll(".parallaxCont")
 
     if (_setup.staticTitle){
         _parallaxElems = parallaxImgs //affect only the image
