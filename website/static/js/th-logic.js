@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const _th = theme.dataset.themename
             console.log("THEME DETECT? ", _th)
             theme.addEventListener("click", ()=>{console.log("At button click time, what is _th? ", _th)
-            loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../templates/${_th}.html`)})
+            loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../static/html/${_th}.html`)})
         }
     })
 
