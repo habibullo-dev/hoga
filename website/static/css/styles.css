@@ -471,7 +471,7 @@ body {
   flex-direction: column;
   color: var(--navbar-light-primary);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  overflow: hidden;
+  /* overflow: hidden; */
   user-select: none;
 }
 #nav-bar hr,
@@ -559,7 +559,7 @@ label[for="nav-toggle"] {
   background: var(--navbar-dark-primary);
   box-shadow: 0 0 0 16px var(--navbar-dark-primary);
   direction: rtl;
-  overflow-x: hidden;
+  /* verflow-x: hidden; */
   transition: width 0.2s;
 }
 #nav-content::-webkit-scrollbar {
@@ -599,6 +599,23 @@ label[for="nav-toggle"] {
 #nav-content-highlight:after {
   top: 100%;
   box-shadow: 16px -16px var(--background);
+}
+
+#nav-dev-picks{/* 🚧NEW CSS */
+  box-shadow: 16px 16px var(--background);
+  width: var(--navbar-width);
+  background-color: black;
+  transition: top 0.2s;
+  position: absolute;
+  right: calc(-1*var(--navbar-width));
+  top: calc(var(--navbar-width)/1.2);
+}
+
+#current-theme{/* 🚧NEW CSS */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index:0;
 }
 
 .nav-button {
