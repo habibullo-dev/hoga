@@ -42,7 +42,15 @@ def geminicall():
 @auth_bp.post("/savesettings")
 def savesettings():
     with db.begin() as conn:
-        res = conn.execute(text("UPDATE user SET {BLABLABLA} WHERE email = :email"), {
+        res = conn.execute(text("UPDATE user SET youtube = :youtube, spotify = :spotify, calendar_setting = :calendar_setting, calendar_date = :calendar_date, clock_setting = :clock_setting, weather = :weather, tasklist_setting = :tasklist_setting, tasklist_list = :tasklist_list WHERE email = :email"), {
+            "youtube": request.json.get("youtube"),
+            "spotify": request.json.get("spotify"),
+            "calendar_setting": request.json.get("calendar_setting"),
+            "calendar_date": request.json.get("calendar_date"),
+            "clock_setting": request.json.get("clock_setting"),
+            "weather": request.json.get("weather"),
+            "tasklist_setting": request.json.get("tasklist_setting"),
+            "tasklist_list": request.json.get("tasklist_list"),
             "email": request.json.get("email")
         })
 
