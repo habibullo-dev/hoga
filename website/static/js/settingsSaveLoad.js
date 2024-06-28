@@ -2,7 +2,7 @@
 
 
 
-        
+
 
 
 //let widgetSettingsBulk = {} //cram all the K/V pairs for each widget settings into this.
@@ -17,7 +17,7 @@ tasklist_setting
 mood_setting
 */
 
-function autoLogin(){
+function autoLogin() {
     try {
         return fetch("/secure_token_req", {
             method: "POST",
@@ -26,28 +26,32 @@ function autoLogin(){
             .then(res => res.json())
             .then(res => {
                 try {
-                document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
-                console.log(res["message"])
-                user.email = res["email"]
-                user.name = res["name"]
-                delete res["message"]
-                delete res["name"]
-                delete res["email"]
-                dbSettingsBulk = res
-                } catch {(error) => {
-                    console.log("autologin failed: ", error);
-                    suggestLogin(); //⚠️WIP function does not exist
-                }}
-        }).catch(error=>console.error('Mainline error fetching or parsing data:', error))
-    } catch {(error) => {
-        console.log("Mainline error connecting to database: ", error)
-        resolve();
-    }}
+                    document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
+                    console.log(res["message"])
+                    user.email = res["email"]
+                    user.name = res["name"]
+                    delete res["message"]
+                    delete res["name"]
+                    delete res["email"]
+                    dbSettingsBulk = res
+                } catch {
+                    (error) => {
+                        console.log("autologin failed: ", error);
+                        suggestLogin(); //⚠️WIP function does not exist
+                    }
+                }
+            }).catch(error => console.error('Mainline error fetching or parsing data:', error))
+    } catch {
+        (error) => {
+            console.log("Mainline error connecting to database: ", error)
+            resolve();
+        }
+    }
 }
 
 
 
-async function saveSettings(){
+async function saveSettings() {
     //⚠️Create loading wheel pop-up, EX: loadingPopUp.style.display = "block"
     localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk)) //store settings in local machine for future quick access. turns into string
     await fetch("/widget_all_settings", {
@@ -56,9 +60,9 @@ async function saveSettings(){
             userEmail: user.email, //sending current session's email to back-end for identification
             allWidgetSettings: widgetSettingsBulk, //sending all the relevant settings (that have been changed since last time).
         }),
-        headers:{
+        headers: {
             'Content-Type': 'application/json'
-            },
+        },
     })
     //⚠️Remove loading wheel pop-up, EX: loadingPopUp.style.display = "none"
 }
@@ -74,16 +78,16 @@ async function saveSettings(){
     })
  } */
 
-async function sessRegenTry(){
+async function sessRegenTry() {
     //unpack whatever was fetched from DB
-    if (localStorage.hogaWidgetData){
+    if (localStorage.hogaWidgetData) {
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
         await distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
         sessDBCompare() //at later date, compare.
         return
     }
     console.log("Local settings data not found. Resorting to database fetch") //if no local settings, grab from DB directly
-    if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0){
+    if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0) {
         await autoLogin();
     }
     widgetSettingsBulk = dbSettingsBulk
@@ -91,15 +95,15 @@ async function sessRegenTry(){
 
 
 
-async function sessDBCompare(){
-    await autoLogin();  
-    if (widgetSettingsBulk){
-        if (dbSettingsBulk){
-            for (const key of Object.keys(dbSettingsBulk)){
-                if (dbSettingsBulk[key] != widgetSettingsBulk[key]){
+async function sessDBCompare() {
+    await autoLogin();
+    if (widgetSettingsBulk) {
+        if (dbSettingsBulk) {
+            for (const key of Object.keys(dbSettingsBulk)) {
+                if (dbSettingsBulk[key] != widgetSettingsBulk[key]) {
                     //⚠️RETURNS CALL TO ACTION FROM USER
                     //"SYNCRHONIZING SETTINGS"
-                }   
+                }
             }
         }
         //if not, ignore.
@@ -182,7 +186,7 @@ def bring_user_settings(_item, _res):
     except: 
         print("error trimming settings object. cancelling process.") */
 
-function onStartStrLine(){
+function onStartStrLine() {
     autoLogin()
     sessRegenTry()
     //startUpMark() //🚧deprecated

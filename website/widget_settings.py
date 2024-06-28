@@ -1,6 +1,8 @@
 from flask import jsonify, request, render_template, session, make_response, Blueprint
 import sqlalchemy
 from sqlalchemy import text
+import json
+
 db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
 
 settings_all_bp = Blueprint("settings_save", __name__)
@@ -17,18 +19,18 @@ def widgets_grab():
         try:
             #Query 1 - spotify_setting ⚠️does not exist yet.
             if bulk_widgets["w-spotify"]:
-                query1 = conn.execute(text("UPDATE user SET spotify_setting=:user_spotify_setting WHERE email=:email"),{
+                query1 = conn.execute(text("UPDATE user SET spotify=:user_spotify_setting WHERE email=:email"),{
                     "email": email,
-                    "user_spotify_setting": bulk_widgets["w-spotify"]
+                    "user_spotify_setting": json.dumps(bulk_widgets.get("w-spotify"))
                 })
             else:
                 print("No change in spotify API widget detected.")
                 
             #Query 2 - youtube_setting ⚠️does not exist yet.
             if bulk_widgets["w-youtube"]:
-                query2 = conn.execute(text("UPDATE user SET youtube_setting=:user_yt_setting WHERE email=:email"),{
+                query2 = conn.execute(text("UPDATE user SET youtube=:user_yt_setting WHERE email=:email"),{
                     "email": email,
-                    "user_yt_setting": bulk_widgets["w-youtube"]
+                    "user_yt_setting": json.dumps(bulk_widgets["w-youtube"])
                 })
             else:
                 print("No change in youtube API widget detected.")
@@ -37,7 +39,7 @@ def widgets_grab():
             if bulk_widgets["w-calendar"]:
                 query3 = conn.execute(text("UPDATE user SET calendar_setting=:user_cal_setting WHERE email=:email"),{
                     "email": email,
-                    "user_cal_setting": bulk_widgets["w-calendar"]
+                    "user_cal_setting": json.dumps(bulk_widgets["w-calendar"])
                 })
             else:
                 print("No change in calendar settings detected.")
@@ -46,16 +48,16 @@ def widgets_grab():
             if bulk_widgets["w-timer"]:
                 query4 = conn.execute(text("UPDATE user SET clock_setting=:user_clock_setting WHERE email=:email"),{
                     "email": email,
-                    "user_clock_setting": bulk_widgets["w-timer"]
+                    "user_clock_setting": json.dumps(bulk_widgets["w-timer"])
                 })
             else:
                 print("No change in clock setup detected")
 
             #Query 5 - weather_setting ⚠️does not exist yet.
             if bulk_widgets["w-weather"]:
-                query5 = conn.execute(text("UPDATE user SET weather_setting=:user_weather_setting WHERE email=:email"),{
+                query5 = conn.execute(text("UPDATE user SET weather:user_weather_setting WHERE email=:email"),{
                     "email": email,
-                    "user_weather_setting": bulk_widgets["w-weather"]
+                    "user_weather_setting": json.dumps(bulk_widgets["w-weather"])
                 })
             else:
                 print("No change in weather widget detected")
@@ -64,7 +66,7 @@ def widgets_grab():
             if bulk_widgets["w-tasks"]:
                 query6 = conn.execute(text("UPDATE user SET tasklist_setting=:user_task_setting WHERE email=:email"),{
                     "email": email,
-                    "user_task_setting": bulk_widgets["w-tasks"]
+                    "user_task_setting": json.dumps(bulk_widgets["w-tasks"])
                 })
             else:
                 print("No change in user task list detected")
@@ -73,16 +75,16 @@ def widgets_grab():
             if bulk_widgets["currentTheme"]:
                 query7 = conn.execute(text("UPDATE user SET mood_setting=:user_mood_setting WHERE email=:email"),{
                     "email": email,
-                    "user_mood_setting": bulk_widgets["currentTheme"]
+                    "user_mood_setting": json.dumps(bulk_widgets["currentTheme"])
                 })
             else:
                 print("No change in moods preferences detected")
 
             #Query 8 - Gemini_setting 
             if bulk_widgets["w-search"]:
-                query8 = conn.execute(text("UPDATE user SET gemini_setting=:user_gemini_setting WHERE email=:email"),{
+                query8 = conn.execute(text("UPDATE user SET gemini=:user_gemini_setting WHERE email=:email"),{
                     "email": email,
-                    "gemini_setting": bulk_widgets["w-search"]
+                    "gemini_setting": json.dumps(bulk_widgets["w-search"])
                 })
             else:
                 print("No change in gemini setup detected")
