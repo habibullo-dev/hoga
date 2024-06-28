@@ -1,3 +1,6 @@
+//⚠️INSTRUCTIONS AT THE END OF THE CODE⚠️
+
+
 window.thKillSwitch;
 window.loadingScreen = document.createElement("div")
 loadingScreen.id="loadSCreenCont"
@@ -173,3 +176,64 @@ return new Promise((resolve, reject) => {
     });
 });
 }
+
+
+//How to set up your dev theme:
+/* 
+Put your CSS, HTML and JS files in the respective folders WITHIN static. Example: /static/css/myTheme.css.
+
+🚩ALL 3 FILES Should have the SAME NAME. Example: myTheme.css, myTheme.html, myTheme.js
+That file name will be used by the initiator function 
+
+In the index.html, located in Templates, go to the element called "nav-dev-picks" (or the element called "nav-content" if you are making a base theme/mood).
+Look at the structure, and follow the practice to make your own theme button.
+Example:
+
+<div class="nav-button themeSwitch" data-themename="myTheme">
+              <span>My Theme</span>
+</div>
+
+🚩Don't forget to set the class to nav-button, as well as themeSwitch (with a space), and the data-themename to the same name as your files (in this case, myTheme)
+
+Once that is all done, no need to touch this HTML anymore.
+
+Now in your HTML file, create the content as necessary. Same with CSS.
+
+In your JS file, you need to do some addition to your usual script:
+
+Create a function that contains all the logic behind your theme. 
+
+🚩Make it an async function like so:
+
+async function myThemeLoader(){ 
+    FUNCTION CONTENT 
+}
+
+at the END of the function, add this bit of code:
+
+🚧COPY PASTE BELOW
+console.log("Content finished loading. deleting Loading Screen")
+loadingScreen.style.opacity="0";
+setTimeout(()=>{
+    loadingScreen.innerHTML="";
+}, 150)
+🚧DO NOT COPY PASTE BELOW THIS LINE
+
+🚩It does NOT matter if you do not have a script for your theme. You need this logic to make sure the loading screen executes as expected.
+🚩Even if you don't need a JS file, please make one as instructed above, and you can make a random function name with the above bit of code. In fact you can just copy paste this into your empty JS:
+
+
+🚧COPY PASTE BELOW
+blablaDoesntMatter()
+
+async function blablaDoesntMatter(){
+    console.log("Content finished loading. deleting Loading Screen")
+    loadingScreen.style.opacity="0";
+    setTimeout(()=>{
+        loadingScreen.innerHTML="";
+    }, 150)
+}
+🚧DO NOT COPY PASTE BELOW THIS LINE
+
+Once completed, let me know and I'll check!
+*/
