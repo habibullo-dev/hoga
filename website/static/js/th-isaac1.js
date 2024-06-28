@@ -16,8 +16,8 @@ async function th1TimeChange(){
                 elem.remove
             })
             th1TimeBoundCont.innerHTML = `
-            <img src="../static/images/themes/DXM/013.webp" class="parallaxElem ik-cloud timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="200" style="left:90%; top: 54%">
-            <img src="../static/images/themes/DXM/012.webp" class="parallaxElem ik-cloud timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="258" style="left: 10%; top: 20%">
+            <img src="../static/images/themes/DXM/013.webp" class="parallaxElem ik-cloud timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="600" style="left:90%; top: 54%">
+            <img src="../static/images/themes/DXM/012.webp" class="parallaxElem ik-cloud timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="900" style="left: 10%; top: 20%">
             <img src="../static/images/themes/DXM/010.webp" class="parallaxElem ik-fog2 timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="68" style="top: 40%">
             <img src="../static/images/themes/DXM/009.webp" class="parallaxElem ik-fog1 timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="68" style="top: 73%">    
             `
