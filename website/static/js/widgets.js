@@ -534,7 +534,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create and style the icon image
     const icon = document.createElement("img");
-    icon.src = "../images/logo-rev.png";
+    icon.src = "../static/images/logo-rev.png";
     icon.alt = "Icon";
     icon.style.width = "40px"; // Adjust the width of the icon as needed
     icon.style.display = "block"; // Ensure icon is on its own line
