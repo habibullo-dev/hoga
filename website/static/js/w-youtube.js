@@ -196,7 +196,7 @@ function changePage(delta) {
 }
 
 function loadClient() {
-  gapi.client.setApiKey("AIzaSyDV-T0X9AO3mEQQRMXu_pLqDyoEl_3NPwI");
+  gapi.client.setApiKey("AIzaSyANSSSvYA_jmlHaPsGmTzvTJUVuDl11rgs");
   return gapi.client
     .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(
