@@ -38,7 +38,7 @@ def geminicall():
     response = model.generate_content(request.json.get("question"))
     return(response.text)
 
-#SENDING USER INFORMATION TO HOMEPAGE
+#CLICK TO SAVE USER SETTINGS
 @auth_bp.post("/savesettings")
 def savesettings():
     with db.begin() as conn:
