@@ -53,7 +53,7 @@ async function saveSettings(){
     await fetch("/widget_all_settings", {
         method: "POST",
         body: JSON.stringify({
-            userEmail: local_email, //sending current session's email to back-end for identification
+            userEmail: user.email, //sending current session's email to back-end for identification
             allWidgetSettings: widgetSettingsBulk, //sending all the relevant settings (that have been changed since last time).
         }),
         headers:{

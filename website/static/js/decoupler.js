@@ -2,7 +2,7 @@
 // Primary Vars 
 window.user = {
     "loggedIn": false,
-    "email": "",
+    "email": "hogadashboard@gmail.com",
     "name": "",
 };
 window.dbSettingsBulk = {};
