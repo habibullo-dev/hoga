@@ -1,5 +1,6 @@
 // Define widgets as a global object
 window.widgets = {}; //🚧modified to window-level var
+
 window.DOMstorage = {};
 let gridContainer;
 let widgetsClicked = [];

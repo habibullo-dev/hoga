@@ -1,4 +1,9 @@
 window.thKillSwitch;
+window.loadingScreen = document.createElement("div")
+loadingScreen.id="loadSCreenCont"
+let loadBars = Array.from(document.querySelectorAll(".loadInner"))
+const parentGrid = document.getElementById("grid-container")
+parentGrid.insertBefore(loadingScreen, parentGrid.firstChild)
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -13,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const _th = theme.dataset.themename
             console.log("THEME DETECT? ", _th)
             theme.addEventListener("click", ()=>{console.log("At button click time, what is _th? ", _th)
-            loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../static/html/${_th}.html`)})
+            loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../static/html/${_th}.html`, _th)})
         }
     })
 
@@ -25,10 +30,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
-const loadThemeSet = async function(_css, _js, _html){
+//th-isaac1
+
+const loadThemeSet = async function(_css, _js, _html, _themeName){
     console.log(`!!Props ID - CSS ${_css}, JS ${_js}, HTML ${_html}`)
-    const parent = document.getElementById("grid-container")
-    
+
+    loadingScreen.style.opacity="1"
+    loadingScreen.innerHTML=`
+    <div id="loadingBarBlackBG">
+        <div id="loadBars">
+            <div class="loadOuter" style="left: 10%">
+                <div class="loadInner"></div>
+            </div>        
+            <img src="../static/images/loading.gif" class="loading-circle">
+            <img src="../static/images/logo_trans.webp" id="hogaLoadLogo">
+            <div class="loadOuter" style="left: 60%">
+                <div class="loadInner" style="left: 100%; transform-origin: left; transform: scaleX(-1);"></div>
+            </div>           
+        </div>
+    </div>
+    `
+    loadBars = Array.from(document.querySelectorAll(".loadInner"))
+
     try{await thKillSwitch()} 
     catch {console.log("killswitch empty. First setup?")}
 
@@ -44,7 +67,7 @@ const loadThemeSet = async function(_css, _js, _html){
         const res = await fetch(_html)
         const htmlContent = await res.text()
         HTML.innerHTML = htmlContent
-        parent.insertBefore(HTML, parent.firstChild); //insert as first child of grid-container
+        parentGrid.insertBefore(HTML, parentGrid.firstChild); //insert as first child of grid-container
 
     } catch (error) {
         console.log("Theme HTML failed to load. Early exit: ", error);
@@ -54,12 +77,13 @@ const loadThemeSet = async function(_css, _js, _html){
         return
     }
 
-    try { //js file is technically optional. You can make a theme without script.
-        const script = document.createElement("script")
-        script.src = (_js)
-        script.type = "text/javascript"
-        HTML.appendChild(script)
-        script.onload = ()=>(parallaxStartUp({staticTitle:true, distCalc:1.5, rotaCalc:3}, paraStopButton, paraStartButton));
+
+    try { //js file is technically optional. You can make a theme without script.           
+            const script = document.createElement("script")
+            script.src = (_js)
+            script.type = "text/javascript"
+            HTML.appendChild(script)
+            /* script.onload = () => {parallaxStartUp({staticTitle:true, distCalc:1.5, rotaCalc:3}, paraStopButton, paraStartButton)} */
     }  catch (error) {
         console.log("Failed to load javascript file. Wrong path or file does not exist. ", error)
     }
@@ -83,11 +107,69 @@ const loadThemeSet = async function(_css, _js, _html){
                 console.log("No script file found")
             }
             document.head.removeChild(CSS)
-            parent.removeChild(HTML)
+            parentGrid.removeChild(HTML)
         resolve("Theme scrap completed! ", HTML);
         })
     }//Dont forget to append your killswitch to something.
-    
 
+    widgetSettingsBulk.currentTheme = _themeName;
+    
 }
 
+/* 
+function imgLoadPromise(container) {
+    return new Promise((resolve, reject) => {
+      const images = container.querySelectorAll("img");
+      let loadedCount = 0;
+      const totalImages = images.length;
+  
+      if (totalImages === 0) {
+        resolve();
+      }
+  
+      images.forEach((img) => {
+        img.onload = () => {
+          loadedCount++;
+          if (loadedCount === totalImages) {
+            resolve(); 
+          }
+        };
+  
+        img.onerror = () => {
+          reject(`Failed to load image: ${img.src}`); 
+        };
+      });
+    });
+  }
+ */
+function imgLoadPromise(container) {
+return new Promise((resolve, reject) => {
+    const images = Array.from(container.children);
+    let loadedCount = 0;
+    const totalImages = images.length;
+
+    if (totalImages === 0) {
+    resolve(); 
+    }
+
+    images.forEach((img) => {
+    img.onload = () => {
+        loadedCount++;
+        loadBars.forEach((bars)=>{
+            bars.style.width = (loadedCount/totalImages*100)+"%"
+        })
+        if (loadedCount === totalImages) {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+            resolve(); // Ensure rendering is completed
+            });
+        });
+        }
+    };
+
+    img.onerror = () => {
+        reject(`Failed to load image: ${img.src}`); // Handle image load error
+    };
+    });
+});
+}

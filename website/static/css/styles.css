@@ -652,3 +652,53 @@ label[for="nav-toggle"] {
   label[for="nav-footer-toggle"] {
   transform: rotate(180deg);
 }
+
+
+/* LOADING-RELATED CSS */
+#loadSCreenCont{
+  transition: opacity 0.2s;
+}
+#loadingBarBlackBG{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 1);
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: 999;
+}
+#loadBars{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2rem;
+}
+.loadOuter{
+  background-color: rgba(200,200,200,0.9);
+  padding: 1px;
+  min-width: 30%;
+  min-height: 1px;
+  position: absolute
+}
+.loadInner{
+  background-color: white;
+  width: 1%;
+  min-height: 1px;
+  position: absolute;
+  transition: width 0.2s linear;
+}
+#hogaLoadLogo{
+  left:calc(50% - 75px); 
+  position:absolute; 
+  width: 150px; 
+  opacity: 0.9;
+}
+.loading-circle{
+  left:calc(50% - 175px); 
+  position:absolute; 
+  width: 350px;
+  opacity: 0.9;
+}
