@@ -893,21 +893,14 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("CSS stylesheet loaded:", cssFile);
   }
 
-  loadWidgetStylesheet("../css/styles.css");
+  loadWidgetStylesheet("../static/css/styles.css");
 
   // // Log iframe load events for debugging
   // iframe.addEventListener("load", function () {
   //   console.log("iframe loaded successfully.");
   // });
 
-  // Function to load CSS stylesheet dynamically
-  function loadWidgetStylesheet(cssFile) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.type = "text/css";
-    link.href = cssFile;
-    document.head.appendChild(link);
-  }
+
 
   // Function to position the widget dynamically
   function positionWidget(widget) {

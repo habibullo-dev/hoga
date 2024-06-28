@@ -246,7 +246,7 @@ function extractTaskData() {
 
 // Function to save task list setup
 function saveTaskListSetup() {
-  const { tasks, completedTasks } = extractTaskData();
+  const { incompleteTasks, completedTasks } = extractTaskData();
 
   fetch("/taskDataGrab", {
     method: "POST",
@@ -254,8 +254,8 @@ function saveTaskListSetup() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      tasks: tasks,
+      tasks: incompleteTasks,
       completedTasks: completedTasks,
-    }),
+    })
   });
 }

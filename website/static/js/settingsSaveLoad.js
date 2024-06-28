@@ -82,7 +82,7 @@ async function sessRegenTry() {
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData) {
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
-        await distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. adds in all the settings to respective widgets. wait for Paolo ver.
+        await distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. 
         sessDBCompare() //at later date, compare.
         return
     }
