@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, request, make_response, render_template, jsonify, redirect, url_for #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
+from flask import Blueprint, Flask, request, make_response, render_template, jsonify, redirect, url_for, flash #fusion this with whatever .py doc's pre-existing flask import list you shove this thing into.
 import sqlalchemy
 from sqlalchemy import text
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -200,8 +200,9 @@ def admin():
     return render_template("admin.html")
 
 #ADMIN LOG-IN
-@auth_bp.post("/adminlogin")
+@auth_bp.post("/adminlogin", methods=["GET", "POST"])
 def adminlogin():
+    if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
         with db.begin() as conn:
@@ -220,6 +221,8 @@ def adminlogin():
             else:
                 error_msg = {"message":"Incorrect username or password"}
                 return render_template("admin.html", error_msg=error_msg)
+    else:
+        return render_template("admin.html")
 
 #PASSWORD RECOVERY FOR USER
 @auth_bp.post("/passwordrecovery")
