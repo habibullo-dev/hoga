@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+#nav-bar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 1px black;
+    padding: 1rem;
+    background-color: #050C9C;
+}
+
+#nav-bar>span {
+    font-size: 1.5rem;
+    color: white;
+}
+
+#admin-email {
+    display: none;
+}

@@ -213,8 +213,10 @@ def adminlogin():
                 "email": email
             })
             for info in login:
-                if info: 
-                    return render_template("admindashboard.html", info=info)
+                if info:
+                    total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
+                    total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
+                    return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data)
             else:
                 error_msg = {"message":"Incorrect username or password"}
                 return render_template("admin.html", error_msg=error_msg)
@@ -293,10 +295,11 @@ def userlogout():
 @auth_bp.post("/adminlogout")
 def adminlogout():
     with db.begin() as conn:
-        conn.execute(text("UPDATE admin SET logged_in = 0 WHERE admin_id = :admin_id"), {
-            "admin_id": request.json.get("admin_id")
+        conn.execute(text("UPDATE admin SET logged_in = 0 WHERE email = :email"), {
+            "email": request.json.get("email")
         })
-        return {"message": "admin has been logged out"}
+        return redirect(url_for("auth.admin"))
+    
     
 #Session restore through token identification
 @auth_bp.route("/secure_token_req", methods=["POST"]) 

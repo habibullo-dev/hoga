@@ -4,11 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../static/css/admindashboard.css">
 </head>
 
 <body>
-    <h1>Hello World {{info.name}}</h1>
+    <nav id="nav-bar">
+        <span>Hoga</span>
+        <span>{{info.name}}</span>
+        <button id="logout">Log Out</button>
+        <span id="admin-email">{{info.email}}</span>
+    </nav>
+
+    <script src="../static/js/admindashboard.js"></script>
 </body>
 
 </html>

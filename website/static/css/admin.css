@@ -25,6 +25,9 @@ body {
 }
 
 h1 {
+    background: -webkit-linear-gradient(#279EFF, #6F61C0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin: 2rem 0;
 }
 
@@ -37,6 +40,8 @@ input {
     margin: 1rem;
     width: 70%;
     padding-left: 0.5rem;
+    height: 1rem;
+    font-size: 1rem;
 }
 
 input:focus {
@@ -45,6 +50,18 @@ input:focus {
     border-left: none;
     border-right: none;
     outline: none;
+}
+
+/* For Chrome and Safari */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* For Firefox */
+input:-moz-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
+    text-fill-color: #000 !important;
 }
 
 #sign-in {
