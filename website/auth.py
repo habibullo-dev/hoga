@@ -193,6 +193,11 @@ def userlogin():
         return {"error": "user inputted wrong email or password"}
     except:
         return {"error": "user inputted wrong email or password"}
+    
+#Jinja template for Admin login
+@auth_bp.get("/admin")
+def admin():
+    return render_template("admin.html")
 
 #ADMIN LOG-IN
 @auth_bp.post("/adminlogin")
@@ -200,19 +205,20 @@ def adminlogin():
         email = request.form.get("email")
         password = request.form.get("password")
         with db.begin() as conn:
-            login = conn.execute(text("SELECT email, name FROM admin WHERE email=:email"), {
-                "email": email
+            login = conn.execute(text("SELECT email, name FROM admin WHERE email=:email AND password=:password"), {
+                "email": email,
+                "password": password
             })
             conn.execute(text("UPDATE admin SET logged_in = 1 WHERE email = :email"),{
                 "email": email
             })
             for info in login:
                 if info: 
-                    return render_template("admin.html", info=info)
+                    return render_template("admindashboard.html", info=info)
             else:
-                error_msg = {"message":"admin inputted wrong email or password"}
+                error_msg = {"message":"Incorrect username or password"}
                 return render_template("admin.html", error_msg=error_msg)
-            
+
 #PASSWORD RECOVERY FOR USER
 @auth_bp.post("/passwordrecovery")
 def passwordrecovery():

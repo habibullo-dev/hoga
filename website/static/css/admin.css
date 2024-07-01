@@ -5,21 +5,23 @@
 }
 
 body {
-    background: linear-gradient(to right, #279EFF, #6F61C0)
+    background: linear-gradient(to right, #279EFF, #6F61C0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 #adminlogin {
+    background-color: white;
     display: flex;
     flex-direction: column;
     border: 1px black solid;
-    width: 20%;
-    height: 60%;
+    width: 25%;
+    height: 70%;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    position: absolute;
-    left: 40%;
-    top: 20%;
 }
 
 h1 {
@@ -49,5 +51,18 @@ input:focus {
     width: 70%;
     margin: 2rem;
     padding: .5rem 0;
-    background: linear-gradient(to right, #279EFF, #6F61C0)
+    background: linear-gradient(to right, #279EFF, skyblue, #6F61C0)
+}
+
+#error_container {
+    margin-top: 1rem;
+    background-color: rgb(253, 225, 230);
+    width: auto;
+    padding: 0.5rem;
+    border: 1px solid rgb(254, 125, 146);
+}
+
+#error_msg {
+    color: red;
+    font-size: 0.8rem;
 }
