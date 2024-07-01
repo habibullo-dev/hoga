@@ -21,19 +21,28 @@ showCompletedButton.style.backgroundColor = "lightgray"
 function generateNewTask(_setup, _completed){
     const taskText = _setup?_setup:taskInput.value.trim(); //🚧 if _setup mode is on, fetch from existing text. else take from input value as usual.
   
-    if (_completed){ //🚧if task was from _completed, instantly move it back to completed list and remove the other buttons.  
-      li.querySelector(".checked-off").style.color = "black";
-      li.querySelector(".checked-off").style.backgroundColor = "transparent";
-      const taskSpan = document.createElement("span");
-      taskSpan.textContent = taskText;
-      li.appendChild(taskSpan);
-      completedList.appendChild(li);
-      li.dataset.ref = `${taskList.childElementCount}`;
-      customTaskLists.completedListSetup = completedList.innerHTML;
-    } else if (taskText !== "") {
+    if (taskText !== "") {
       const li = document.createElement("li");
       li.classList.add("draggable");
       li.setAttribute("draggable", "true");
+
+      if (_completed){ //🚧if task was from _completed, instantly move it back to completed list and remove the other buttons.  
+        console.log("detected a COMPLETED item.", taskText)
+        // create check-off button element
+        const checkedOff = document.createElement("button");
+        checkedOff.innerHTML = "&#10003;";
+        checkedOff.classList.add("checked-off");
+        li.appendChild(checkedOff);
+        li.querySelector(".checked-off").style.color = "black";
+        li.querySelector(".checked-off").style.backgroundColor = "transparent";
+        const taskSpan = document.createElement("span");
+        taskSpan.textContent = taskText;
+        li.appendChild(taskSpan);
+        completedList.appendChild(li);
+        li.dataset.ref = `${taskList.childElementCount}`;
+        customTaskLists.completedListSetup = completedList.innerHTML;
+
+      } else {
 
       // create check-off button element
       const checkedOff = document.createElement("button");
@@ -63,7 +72,7 @@ function generateNewTask(_setup, _completed){
         taskItem.classList.add("pop");
         setTimeout(() => {
           taskItem.remove();
-          extractTaskData();
+          saveTaskListSetup();
         }, 300); // Matches the CSS animation duration
       });
 
@@ -71,8 +80,7 @@ function generateNewTask(_setup, _completed){
       checkedOff.addEventListener("click", function (e) {
         const taskItem = e.currentTarget.parentNode;
         taskItem.querySelector(".checked-off").style.color = "black";
-        taskItem.querySelector(".checked-off").style.backgroundColor =
-          "transparent";
+        taskItem.querySelector(".checked-off").style.backgroundColor = "transparent";
         taskItem.classList.add("hide");
         setTimeout(() => {
           taskItem.classList.remove("hide");
@@ -80,7 +88,7 @@ function generateNewTask(_setup, _completed){
           customTaskLists.completedListSetup = completedList.innerHTML;
           deleteBtn.style.display = "none";
           editBtn.style.display = "none";
-          extractTaskData();
+          saveTaskListSetup();
         }, 300);
       });
 
@@ -103,7 +111,7 @@ function generateNewTask(_setup, _completed){
             taskItem.appendChild(taskSpan);
             taskItem.appendChild(deleteBtn);
             taskItem.appendChild(editBtn);
-            extractTaskData();
+            saveTaskListSetup();
           }
         });
 
@@ -126,7 +134,8 @@ function generateNewTask(_setup, _completed){
       taskList.appendChild(li);
       customTaskLists.taskListSetup = taskList.innerHTML;
       taskInput.value = "";
-      extractTaskData();
+      saveTaskListSetup();
+      }
     }
 
     draggables = document.querySelectorAll(".draggable"); //re-selects all draggable elements
@@ -294,13 +303,17 @@ function saveTaskListSetup() {
 let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
 
 async function restoreTasks() {
-  await sessRegenTry()
-  console.log("Restoring tasklist content!")
+  console.log("!!attempting to RESTORE tasklist content!")
+  
   const res = widgetSettingsBulk["w-tasks"]["taskList"]
-  res[0].forEach((task)=>{
+  console.log("!!Restoring tasklist content! what is in the res?", res)
+  console.log("!!res['incompleteTasks']", res["incompleteTasks"])
+  console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
+
+  res["incompleteTasks"].forEach((task)=>{
     generateNewTask(task.text)
   })
-  res[1].forEach((task)=>{
+  res["completedTasks"].forEach((task)=>{
     generateNewTask(task.text, true)
   })
 
