@@ -18,13 +18,19 @@ const showCompletedButton = document.getElementById("showCompletedButton");
 const showIncompleteButton = document.getElementById("showIncompleteButton");
 showCompletedButton.style.backgroundColor = "lightgray"
 
-// event listener for adding new list item with enter key
-taskInput.addEventListener("keypress", function (e) {
-  if (e.key === "Enter") {
-    const taskText = taskInput.value.trim();
-
-    // create list element
-    if (taskText !== "") {
+function generateNewTask(_setup, _completed){
+    const taskText = _setup?_setup:taskInput.value.trim(); //🚧 if _setup mode is on, fetch from existing text. else take from input value as usual.
+  
+    if (_completed){ //🚧if task was from _completed, instantly move it back to completed list and remove the other buttons.  
+      li.querySelector(".checked-off").style.color = "black";
+      li.querySelector(".checked-off").style.backgroundColor = "transparent";
+      const taskSpan = document.createElement("span");
+      taskSpan.textContent = taskText;
+      li.appendChild(taskSpan);
+      completedList.appendChild(li);
+      li.dataset.ref = `${taskList.childElementCount}`;
+      customTaskLists.completedListSetup = completedList.innerHTML;
+    } else if (taskText !== "") {
       const li = document.createElement("li");
       li.classList.add("draggable");
       li.setAttribute("draggable", "true");
@@ -57,6 +63,7 @@ taskInput.addEventListener("keypress", function (e) {
         taskItem.classList.add("pop");
         setTimeout(() => {
           taskItem.remove();
+          extractTaskData();
         }, 300); // Matches the CSS animation duration
       });
 
@@ -73,6 +80,7 @@ taskInput.addEventListener("keypress", function (e) {
           customTaskLists.completedListSetup = completedList.innerHTML;
           deleteBtn.style.display = "none";
           editBtn.style.display = "none";
+          extractTaskData();
         }, 300);
       });
 
@@ -95,6 +103,7 @@ taskInput.addEventListener("keypress", function (e) {
             taskItem.appendChild(taskSpan);
             taskItem.appendChild(deleteBtn);
             taskItem.appendChild(editBtn);
+            extractTaskData();
           }
         });
 
@@ -113,10 +122,11 @@ taskInput.addEventListener("keypress", function (e) {
 
       //send data for fetch:
       //⚠️Important: later as we add more "features" to this widget, this format needs to be changed by adding more of the individual task customizations.
-      li.dataset.ref = `${taskList.childElementCount + 1}`;
+      li.dataset.ref = `${taskList.childElementCount}`;
       taskList.appendChild(li);
       customTaskLists.taskListSetup = taskList.innerHTML;
       taskInput.value = "";
+      extractTaskData();
     }
 
     draggables = document.querySelectorAll(".draggable"); //re-selects all draggable elements
@@ -131,6 +141,13 @@ taskInput.addEventListener("keypress", function (e) {
         draggable.classList.remove("dragging"); //removes the dragging class
       });
     });
+}
+
+// event listener for adding new list item with enter key
+taskInput.addEventListener("keypress", function (e) {
+  console.log("!!TASK CREATED?????")
+  if (e.key === "Enter") {
+    generateNewTask() //🚧stored all of it into function declaration instead, for reusability purpose.
   }
 });
 
@@ -177,14 +194,14 @@ dragContainers.forEach((container) => {
     const afterElement = getDragAfterElement(container, e.clientY);
     const draggable = document.querySelector(".dragging"); //name the item currently being dragged
     if (afterElement == null) {
-      container.appendChild(draggable);
+      container.appendChild(draggable); //slap after last element
     } else {
-      container.insertBefore(draggable, afterElement);
+      container.insertBefore(draggable, afterElement); 
     }
 
     clearTimeout(taskOrderFetch);
     taskOrderFetch = setTimeout(() => {
-      saveTaskListSetup();
+      extractTaskData();
       console.log("fetch complete.");
     }, 5000);
   });
@@ -221,20 +238,26 @@ function extractTaskData() {
   const completedTasks = [];
 
   // Extract tasks from taskList
-  taskItems.forEach((taskItem) => {
+  taskItems.forEach((taskItem, i) => {
+    taskItem.dataset.ref = i
     const taskText = taskItem.querySelector("span").textContent;
+    console.log("!! taskItem is at number", i, "for item: ", taskItems[i])
     tasks.push({
       text: taskText,
+      order: i,
       completed: false,
     });
   });
   console.log("TASKS", tasks)
 
   // Extract tasks from completedList
-  completedItems.forEach((completedItem) => {
+  completedItems.forEach((completedItem, i) => {
+    completedItem.dataset.ref = i
     const taskText = completedItem.querySelector("span").textContent;
+    console.log("!! completedItem is at number", i, "for item: ", completedItems[i])
     completedTasks.push({
       text: taskText,
+      order: i,
       completed: true,
     });
   });
@@ -248,6 +271,7 @@ function extractTaskData() {
 
 // Function to save task list setup
 function saveTaskListSetup() {
+  console.log("!!SAVETASKLISTSETUP CALLED!!!! FETCHING!!")
   const { incompleteTasks, completedTasks } = extractTaskData();
 
   fetch("/taskDataGrab", {
@@ -265,3 +289,41 @@ function saveTaskListSetup() {
     .then(res => console.log("SAVETASKLISTSETUP", res));
   console.log("TASKDATAGRAB FETCH", incompleteTasks, completedTasks)
 }
+`[[{text: "do groceries", order: 1, completed: false}],[{text: "eat lunch", order: 1, completed: true}]]`
+
+let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
+
+async function restoreTasks() {
+  await sessRegenTry()
+  console.log("Restoring tasklist content!")
+  const res = widgetSettingsBulk["w-tasks"]["taskList"]
+  res[0].forEach((task)=>{
+    generateNewTask(task.text)
+  })
+  res[1].forEach((task)=>{
+    generateNewTask(task.text, true)
+  })
+
+/*   fetch("/taskDataPull", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "email": user.email
+    })
+  }).then(res=> res.json())
+  .then(res=>{
+    if (!res.error){
+      res[0].forEach((task)=>{
+        generateNewTask(task.text)
+      })
+      res[1].forEach((task)=>{
+        generateNewTask(task.text, true)
+      })
+    }
+  }) */
+  
+}
+
+restoreTasks()
