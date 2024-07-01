@@ -17,7 +17,19 @@ tasklist_setting
 mood_setting
 */
 
-function autoLogin() {
+function overwriteDB(){
+    dbSettingsBulk = widgetSettingsBulk
+    saveSettings()
+    console.log("local settings overwriting DB")
+}
+
+function overwriteLocal(){
+    widgetSettingsBulk = dbSettingsBulk
+    localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
+    console.log("DB settings overwriting local")
+}
+
+function autoLogin() { //brings in everything about user from DB EXCEPT private information.
     try {
         return fetch("/secure_token_req", {
             method: "POST",
@@ -97,13 +109,20 @@ async function sessRegenTry() {
 
 async function sessDBCompare() {
     await autoLogin();
+    let conflictors = []
     if (widgetSettingsBulk) {
         if (dbSettingsBulk) {
-            for (const key of Object.keys(dbSettingsBulk)) {
+            for (const key of Object.keys(dbSettingsBulk)) { //compare settings from DB and local, and ask user to choose which one to select.
                 if (dbSettingsBulk[key] != widgetSettingsBulk[key]) {
                     //⚠️RETURNS CALL TO ACTION FROM USER
                     //"SYNCRHONIZING SETTINGS"
+                    console.log(`Found discrepancy between local storage and database settings: DB ${dbSettingsBulk[key]} and Local ${widgetSettingsBulk[key]}` )
+                    conflictors.push(dbSettingsBulk[key])
+                    conflictors.push(widgetSettingsBulk[key])
                 }
+            }
+            if(conflictors.length>0){
+                createUrgentPopUp(`Warning: HOGA has detected some conflicts between the settings stored in our database and your browser. Please select your most recent settings presets to recover.`, overwriteDB, overwriteLocal, "Database Settings", "Local Settings")
             }
         }
         //if not, ignore.
