@@ -23,7 +23,7 @@ def create_or_edit_task():
     with db.begin() as conn:
         try: 
             exec2 = conn.execute(text("UPDATE user SET tasklist_list=:tasknode WHERE email=:email"),{
-                "tasknode": json.dumps(res),
+                "tasknode": json.dumps([res, res1]),
                 "email": res_email
                 # "email": "hogadashboard@gmail.com" ##TESTING PURPOSES
             })
@@ -34,7 +34,22 @@ def create_or_edit_task():
         except:
             return {"error" : "1600 Problem identifying email"}
 
-
-
-
-
+""" 
+@tasklist_bp.post("/taskDataPull")
+def send_back_tasks():
+    res_email = request.json.get("email", "")
+    with db.begin() as conn:
+        try: 
+            exec = conn.execute(text("SELECT tasklist_list FROM user WHERE email:email"),{
+                "email": res_email
+                # "email": "hogadashboard@gmail.com" ##TESTING PURPOSES
+            })
+            if exec:
+                for list in exec:
+                    list = json.loads(list)
+                    return jsonify(list)
+            else:
+                return {"error" : "1602 Issue fetching user tasklist widget"} #reserving error rank 1600-1699 for tasklist widget update
+        except:
+            return {"error" : "1600 Problem identifying email"}
+ """
