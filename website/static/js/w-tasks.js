@@ -47,7 +47,7 @@ taskInput.addEventListener("keypress", function (e) {
       li.appendChild(deleteBtn);
 
       const editBtn = document.createElement("button");
-      editBtn.innerHTML = "&#9998;"; 
+      editBtn.innerHTML = "&#9998;";
       editBtn.classList.add("edit-btn");
       li.appendChild(editBtn);
 
@@ -73,7 +73,7 @@ taskInput.addEventListener("keypress", function (e) {
           customTaskLists.completedListSetup = completedList.innerHTML;
           deleteBtn.style.display = "none";
           editBtn.style.display = "none";
-        }, 300); 
+        }, 300);
       });
 
       editBtn.addEventListener("click", function (e) {
@@ -228,6 +228,7 @@ function extractTaskData() {
       completed: false,
     });
   });
+  console.log("TASKS", tasks)
 
   // Extract tasks from completedList
   completedItems.forEach((completedItem) => {
@@ -237,6 +238,7 @@ function extractTaskData() {
       completed: true,
     });
   });
+  console.log("COMPLETED TASKS", completedTasks)
 
   return {
     incompleteTasks: tasks,
@@ -254,8 +256,12 @@ function saveTaskListSetup() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      tasks: incompleteTasks,
-      completedTasks: completedTasks,
+      "tasks": incompleteTasks,
+      "completedTasks": completedTasks,
+      "email": user.email
     })
-  });
+  })
+    .then(res => res.json())
+    .then(res => console.log("SAVETASKLISTSETUP", res));
+  console.log("TASKDATAGRAB FETCH", incompleteTasks, completedTasks)
 }

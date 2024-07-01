@@ -200,17 +200,18 @@ def adminlogin():
         email = request.form.get("email")
         password = request.form.get("password")
         with db.begin() as conn:
-            login = conn.execute(text("SELECT admin_id, email, password, name FROM admin WHERE email=:email"), {
+            login = conn.execute(text("SELECT email, name FROM admin WHERE email=:email"), {
+                "email": email
+            })
+            conn.execute(text("UPDATE admin SET logged_in = 1 WHERE email = :email"),{
                 "email": email
             })
             for info in login:
-                if check_password_hash(info.password,password):
-                    conn.execute(text("UPDATE admin SET logged_in=1 WHERE email=:email"), {
-                        "email": email
-                    })    
-                    return {"admin_id": info.admin_id, "email": info.email, "name": info.name}
+                if info: 
+                    return render_template("admin.html", info=info)
             else:
-                return {"message":"admin inputted wrong email or password"}
+                error_msg = {"message":"admin inputted wrong email or password"}
+                return render_template("admin.html", error_msg=error_msg)
             
 #PASSWORD RECOVERY FOR USER
 @auth_bp.post("/passwordrecovery")

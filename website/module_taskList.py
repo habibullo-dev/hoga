@@ -3,6 +3,7 @@ from datetime import datetime
 from time import time
 import sqlalchemy
 from sqlalchemy import text
+import json
 db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
 
 tasklist_bp = Blueprint('tasklist_bp', __name__)
@@ -16,13 +17,15 @@ task_nodes_TEST = [{"task_name1":{"BLABLA (see below)"}}, {"task_name2":{"BLABLA
 @tasklist_bp.post("/taskDataGrab")
 def create_or_edit_task():
     res_email = request.json.get("email", "")#receive the email to identify who's tasklist this is.
-    res = request.json.get("tasks", "") 
+    res = request.json.get("tasks", "")
+    print("taskDataGrab Res", res) 
     res1 = request.json.get("completedTasks", "")
     with db.begin() as conn:
         try: 
-            exec2 = conn.execute(text("UPDATE user SET tasklist=:tasknode WHERE email=:email"),{
-                "tasknode": res,
+            exec2 = conn.execute(text("UPDATE user SET tasklist_list=:tasknode WHERE email=:email"),{
+                "tasknode": json.dumps(res),
                 "email": res_email
+                # "email": "hogadashboard@gmail.com" ##TESTING PURPOSES
             })
             if exec2:
                 return {"message" : "Task widget data update success"}
