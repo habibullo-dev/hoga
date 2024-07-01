@@ -1,9 +1,9 @@
 * {
-    font-family: "Roboto", sans-serif;
+    font-family: "Albert Sans";
 }
 
 body {
-    background-image: url("../images/urban.jpg");
+    background-image: url("../images/waves.jpg");
     background-size: cover;
     background-color: #fff;
     margin: 0;
@@ -18,7 +18,8 @@ h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #fff;
-    font-weight: lighter;
+    font-weight: 100;
+    font-size: 2.5rem;
 }
 
 .form-container {
@@ -57,21 +58,21 @@ input[type="password"] {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1.2rem;
-    font-weight: 300;
+    font-weight: 100;
 }
 
 button {
     padding: 10px 15px;
     border: none;
-    background: #172725;
+    background: #3693CE;
     color: white;
     font-size: 1.2rem;
-    font-weight: 200;
+    font-weight: 100;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
 }
 
 button:hover {
-    background: #213939;
+    background: #52E9F0;
 }
