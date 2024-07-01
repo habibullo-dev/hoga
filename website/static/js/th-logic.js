@@ -1,5 +1,11 @@
 //⚠️INSTRUCTIONS AT THE END OF THE CODE⚠️
 
+const bgFXCont = document.getElementsByClassName("bg-effect")[0] 
+let thOptionsHTML;
+let thFuncArr;
+
+let th3i1 = 0 //special vars for theme 3
+let th3i2 = 0
 
 window.thKillSwitch;
 window.loadingScreen = document.createElement("div")
@@ -33,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 })
 
-//th-isaac1
 
 const loadThemeSet = async function(_css, _js, _html, _themeName){
     console.log(`!!Props ID - CSS ${_css}, JS ${_js}, HTML ${_html}`)
@@ -101,6 +106,11 @@ const loadThemeSet = async function(_css, _js, _html, _themeName){
         resolve("Theme killed! ", HTML);
         })
     })//Dont forget to append your killswitch to something. */
+
+    
+    bgFXCont.innerHTML = "" //destroy the bg container's effects.
+
+    
 
     thKillSwitch = async ()=>{
         new Promise((resolve)=>{
@@ -176,6 +186,8 @@ return new Promise((resolve, reject) => {
     });
 });
 }
+
+
 
 
 //How to set up your dev theme:

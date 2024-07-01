@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to create a new widget
   createWidget = async function (widgetId, startUp) {
+    
     console.log("Running Widget Creator - ", widgetId)
     const existingWidget = widgets[widgetId];
     if (!existingWidget) {
@@ -85,6 +86,8 @@ document.addEventListener("DOMContentLoaded", function () {
           widget.style.flexDirection = "column";
           widget.style.display = "flex";
 
+          
+
           // Make widget draggable and resizable
           $(widget)
             .draggable({
@@ -103,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
           gridContainer.appendChild(widget);
 
           // Position the widget dynamically
-          positionWidget(widget);
+          widgetId == "w-themeOptions" ?positionWidget(widget, {top:"60%", left: "20px"}):positionWidget(widget);
 
           // Load CSS stylesheet for the widget
           loadWidgetStylesheet(widgetCss);
@@ -154,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
           widget.style.resize = "both";
           widget.style.zIndex = "1";
 
+          
+
           // Make widget draggable and resizable
           $(widget)
             .draggable({
@@ -172,8 +177,9 @@ document.addEventListener("DOMContentLoaded", function () {
           gridContainer.appendChild(widget);
 
           // Position the widget dynamically
-          positionWidget(widget);
-
+          
+          widgetId == "w-themeOptions" ?positionWidget(widget, {top:"60%", left: "20px"}):positionWidget(widget);
+          /* widgetId == "w-themeOptions" ?activeThemeSetup():console.log("normal widget setup completed.") */
           // Store widget instance
           widgets[widgetId] = widget;
         });
@@ -402,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   }
 
   let saveTimer; // Variable to store the auto-save timer
-
+    
   // Function to initialize auto-save timer
   function initializeAutoSave() {
     // Clear any existing timer
@@ -598,6 +604,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return { width: 200, height: 200 };
       case "w-search":
         return { width: 270, height: "fit-content" };
+      case "w-themeOptions":
+        return { width: 290, height: 350 };
       default:
         return { width: 200, height: 200 }; // Default size
     }
@@ -619,6 +627,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return 150;
       case "w-search":
         return 200;
+      case "w-themeOptions":
+        return 250;
       default:
         return 100;
     }
@@ -640,6 +650,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return 300;
       case "w-search":
         return 400;
+      case "w-themeOptions":
+        return 340;
       default:
         return 600;
     }
@@ -661,6 +673,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return 100;
       case "w-search":
         return 250;
+      case "w-themeOptions":
+        return 350;
       default:
         return 80;
     }
@@ -682,6 +696,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return 200;
       case "search":
         return 350;
+      case "w-themeOptions":
+        return 430;
       default:
         return 500;
     }
@@ -903,7 +919,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   // Function to position the widget dynamically
-  function positionWidget(widget) {
+  function positionWidget(widget, _dynamic) {
     const existingWidgets = document.querySelectorAll(".widget");
     const gridRect = gridContainer.getBoundingClientRect(); // Get dimensions of grid container
 
@@ -941,6 +957,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set the position of the new widget
     widget.style.left = `${left}px`;
     widget.style.top = `${top}px`;
+    
+    if(_dynamic){
+      console.log("Dynamic Positioning for widget")
+      widget.style.top = _dynamic.top
+      widget.style.left = _dynamic.left;
+    }
   }
 
   function autoSetupWidget(widget, widgetElem, startUp) { //🚧

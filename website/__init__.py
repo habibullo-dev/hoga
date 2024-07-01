@@ -10,6 +10,7 @@ def create_app(): #function that "creates" the app itself, and all its content.
     from .module_pomodoro import timer_bp
     from .widget_settings import settings_all_bp
     from .module_taskList import tasklist_bp 
+    from .module_pomodoro_prime import clock_bp
 
     #then register them after import.
     app.register_blueprint(views_bp, url_prefix='/')
@@ -17,5 +18,6 @@ def create_app(): #function that "creates" the app itself, and all its content.
     app.register_blueprint(timer_bp, url_prefix='/')
     app.register_blueprint(settings_all_bp, url_prefix='/')
     app.register_blueprint(tasklist_bp, url_prefix='/')
+    app.register_blueprint(clock_bp, url_prefix='/')
     
     return app

@@ -6,6 +6,8 @@ let currentRound = 1; // Current round
 let isWorking = true; // Flag to track if it's work time or break time
 let timerInterval; // Interval ID for timer
 
+window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
+
 const progressBar = document.getElementById("progress-bar");
 
 // Function to create a step (circle) in the progress bar
@@ -215,3 +217,17 @@ window.addEventListener("message", function (event) {
 
 // Initial render of the progress bar
 renderProgressBar();
+
+
+window.addEventListener("unload", function () {
+  clockSettingsBulk.currentTime = currentTime;
+  const _payload = JSON.stringify({ clock_info: clockSettingsBulk, email: user.email });
+  navigator.sendBeacon('/user_clock_settings', _payload);
+});
+
+window.addEventListener('beforeunload', function (evt) {
+  if (isWorking){
+    evt.returnValue = 'Timer is currently running. Would you like to confirm leaving the page?';
+    return 'Timer is currently running. Would you like to confirm leaving the page?';
+  }
+});
