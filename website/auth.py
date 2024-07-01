@@ -200,7 +200,7 @@ def admin():
     return render_template("admin.html")
 
 #ADMIN LOG-IN
-@auth_bp.post("/adminlogin", methods=["GET", "POST"])
+@auth_bp.route("/adminlogin", methods=["GET", "POST"])
 def adminlogin():
     if request.method == "POST":
         email = request.form.get("email")

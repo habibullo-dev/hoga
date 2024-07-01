@@ -83,3 +83,31 @@ input:-moz-autofill {
     color: red;
     font-size: 0.8rem;
 }
+
+#sign-in:hover {
+    cursor: pointer;
+    transform: translate(0px, -3px);
+    transition: all 0.2s ease-in;
+    background: linear-gradient(to right, #06D001, #F3FF90)
+}
+
+@media (max-width: 1030px) {
+    #adminlogin {
+        width: 50%;
+        height: 70%;
+    }
+}
+
+@media (max-width: 830px) {
+    #adminlogin {
+        width: 60%;
+        height: 70%;
+    }
+}
+
+@media (max-width: 500px) {
+    #adminlogin {
+        width: 80%;
+        height: 60%;
+    }
+}
