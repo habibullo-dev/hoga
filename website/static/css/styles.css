@@ -702,3 +702,32 @@ label[for="nav-toggle"] {
   width: 350px;
   opacity: 0.9;
 }
+#popup-important{
+  z-index: 99999;
+  background-color: rgba(50, 50, 50, 0.8);
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+#popup-imp-window{
+  border-radius: var(--border-radius);
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+#popup-imp-text{
+  width: 90%;
+  max-height: 75%;
+}
+.popup-button{
+  min-width: 9rem;
+  min-height: 1.8rem;
+  background-color: rgba(200,200,200,0.9);
+}
+.popup-button:hover{
+  background-color: rgba(150,150,150,0.9);
+}
