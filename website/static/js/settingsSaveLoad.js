@@ -25,27 +25,27 @@ function autoLogin() {
         })
             .then(res => res.json())
             .then(res => {
-                try {
-                    document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
-                    console.log(res["message"])
-                    user.email = res["email"]
-                    user.name = res["name"]
-                    delete res["message"]
-                    delete res["name"]
-                    delete res["email"]
-                    dbSettingsBulk = res
-                } catch {
-                    (error) => {
+                console.log("RESPONSE FROM BACKEND", typeof (res))
+                if (res) {
+                    try {
+                        // document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
+                        console.log("COOKIE RESPONSE", res["message"])
+                        user.email = res["email"]
+                        user.name = res["name"]
+                        delete res["message"]
+                        delete res["name"]
+                        delete res["email"]
+                        dbSettingsBulk = res
+                    } catch (error) {
+                        // (error) => {
                         console.log("autologin failed: ", error);
                         suggestLogin(); //⚠️WIP function does not exist
                     }
                 }
             }).catch(error => console.error('Mainline error fetching or parsing data:', error))
-    } catch {
-        (error) => {
-            console.log("Mainline error connecting to database: ", error)
-            resolve();
-        }
+    } catch (error) {
+        console.log("Mainline error connecting to database: ", error)
+        resolve();
     }
 }
 
