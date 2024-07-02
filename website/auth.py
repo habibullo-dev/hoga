@@ -16,7 +16,7 @@ import google.generativeai as genai
 import os
 
 auth_bp = Blueprint("auth", __name__) #required to be exported and registered as blueprint.
-db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
+db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1/final project")
 
 #SUPPOSED TO HIDE THE PASSWORD - SAME AS input() but safer
 # password = getpass("Input the password for hogadashboard@gmail.com")
@@ -217,9 +217,11 @@ def adminlogin():
                 if info:
                     total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
                     total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
-                    for item in total_online_data:
-                        print(item.count)
-                    return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data)
+                    revenue_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
+                    revenue_per_user = 0
+                    for user in revenue_users_data:
+                        total_revenue = user.count * revenue_per_user
+                    return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data, total_revenue = total_revenue)
             else:
                 error_msg = {"message":"Incorrect username or password"}
                 return render_template("admin.html", error_msg=error_msg)

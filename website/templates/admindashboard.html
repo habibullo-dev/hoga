@@ -16,32 +16,30 @@
     </nav>
 
     <main>
-        <h1>Hi, Welcome {{info.name}} 👋</h1>
+        <h1>Dashboard - {{info.name}}</h1>
         <div id="data-container">
             <div>
-                <img src="../static/icons/people.svg" alt="people" class="svg-img">
+                <img src="../static/icons/people.svg" alt="people" class="svg-img" id="first-svg">
                 Total Users:
-                {% for item in total_users_data %}
-                <span> {{item.count}}</span>
+                {% for user in total_users_data %}
+                <span> {{user.count}}</span>
                 {% endfor %}
             </div>
             <div>
-                <img src="../static/icons/online.svg" alt="online" class="svg-img">
+                <img src="../static/icons/online.svg" alt="online" class='svg-img' id="second-svg">
                 Total Online:
                 {% for online in total_online_data %}
-                {% if online.count %}
-                <span>{{online.count}}</span>
+                {% if online %}
+                <span> {{online.count}}</span>
                 {% else %}
                 <span>0</span>
                 {% endif %}
                 {% endfor %}
             </div>
             <div>
-                <img src="../static/icons/currency.svg" alt="money" class="svg-img">
-                Revenue per user: $
-                {% for item in total_users_data %}
-                <span> {{item.count}}</span>
-                {% endfor %}
+                <img src="../static/icons/currency.svg" alt="currency" class="svg-img" id="third-svg">
+                Total Revenue:
+                <span> ${{total_revenue}}</span>
             </div>
         </div>
         <canvas id="myChart"></canvas>

@@ -37,23 +37,27 @@
 }
 
 h1 {
-    margin-left: 10%;
     font-size: 1.5rem;
     padding-top: 1.5rem;
-    margin-bottom: 1rem;
+    text-align: center;
 }
 
 h2 {
     margin-left: 10%;
 }
 
-#data-container {
-    width: 80%;
+main {
     margin: auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#data-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    background-color: white;
+    justify-content: space-between;
     border-radius: 5px;
 }
 
@@ -61,18 +65,49 @@ h2 {
     height: 2.5rem;
     width: 2.5rem;
     margin-right: 1rem;
+    fill: white;
+    border-radius: 50%;
+    padding: .3rem;
 }
 
 #data-container>div {
+    width: 33%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     font-size: 1.3rem;
     border: 1px solid black;
-    padding: 0.5rem 1rem;
-    margin: 3rem 1rem;
+    padding: 2rem 4rem;
+    margin: 1.5rem 1rem 3rem 0;
     border-radius: 10px;
+}
+
+#data-container>div:nth-child(1) {
+    background-color: #FF7F3E;
+    color: white
+}
+
+#first-svg {
+    background-color: #FFF6E9;
+}
+
+#data-container>div:nth-child(2) {
+    background-color: #3FA2F6;
+    color: white;
+}
+
+#second-svg {
+    background-color: #96C9F4;
+}
+
+#data-container>div:nth-child(3) {
+    background-color: #FF9EAA;
+    color: white;
+}
+
+#third-svg {
+    background-color: #FFD0D0;
 }
 
 #sub-data {
