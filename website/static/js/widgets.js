@@ -601,11 +601,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-youtube":
         return { width: 400, height: "fit-content" };
       case "w-weather":
-        return { width: 200, height: 200 };
+        return { width: 500, height: "fit-content" };
       case "w-search":
         return { width: 270, height: "fit-content" };
-      case "w-themeOptions":
-        return { width: 290, height: 350 };
       default:
         return { width: 200, height: 200 }; // Default size
     }
@@ -616,19 +614,17 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-spotify":
         return 150;
       case "w-calendar":
-        return 100;
+        return 200;
       case "w-tasks":
         return 150;
       case "w-timer":
-        return 300;
+        return 320;
       case "w-youtube":
         return 200;
       case "w-weather":
-        return 150;
+        return 170;
       case "w-search":
         return 200;
-      case "w-themeOptions":
-        return 250;
       default:
         return 100;
     }
@@ -639,7 +635,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-spotify":
         return 400;
       case "w-calendar":
-        return 590;
+        return 500;
       case "w-tasks":
         return 400;
       case "w-timer":
@@ -647,11 +643,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-youtube":
         return 430;
       case "w-weather":
-        return 300;
+        return 720;
       case "w-search":
         return 400;
-      case "w-themeOptions":
-        return 340;
       default:
         return 600;
     }
@@ -662,7 +656,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-spotify":
         return 100;
       case "w-calendar":
-        return 150;
+        return 200;
       case "w-tasks":
         return 100;
       case "w-timer":
@@ -670,11 +664,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-youtube":
         return 150;
       case "w-weather":
-        return 100;
+        return 200;
       case "w-search":
         return 250;
-      case "w-themeOptions":
-        return 350;
       default:
         return 80;
     }
@@ -685,7 +677,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-spotify":
         return 250;
       case "w-calendar":
-        return 490;
+        return 500;
       case "w-tasks":
         return 400;
       case "w-timer":
@@ -693,15 +685,14 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-youtube":
         return 430;
       case "w-weather":
-        return 200;
+        return 250;
       case "search":
         return 350;
-      case "w-themeOptions":
-        return 430;
       default:
         return 500;
     }
   }
+
 
 
 
