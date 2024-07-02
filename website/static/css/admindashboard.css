@@ -7,16 +7,80 @@
 #nav-bar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: solid 1px black;
     padding: 1rem;
     background-color: #050C9C;
 }
 
 #nav-bar>span {
+    margin: 0 2rem;
+}
+
+#company-name {
     font-size: 1.5rem;
     color: white;
+    font-weight: bold;
+}
+
+#logout {
+    color: white;
+}
+
+#logout:hover {
+    cursor: pointer;
+    color: rgb(242, 240, 240);
 }
 
 #admin-email {
     display: none;
+}
+
+h1 {
+    margin-left: 10%;
+    font-size: 1.5rem;
+    padding-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+h2 {
+    margin-left: 10%;
+}
+
+#data-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.svg-img {
+    height: 2.5rem;
+    width: 2.5rem;
+    margin-right: 1rem;
+}
+
+#data-container>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    border: 1px solid black;
+    padding: 0.5rem 1rem;
+    margin: 3rem 1rem;
+    border-radius: 10px;
+}
+
+#sub-data {
+    font-size: 2rem;
+}
+
+canvas {
+    width: 80%;
+    margin: auto;
+    max-height: 88%;
 }

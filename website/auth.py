@@ -217,6 +217,8 @@ def adminlogin():
                 if info:
                     total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
                     total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
+                    for item in total_online_data:
+                        print(item.count)
                     return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data)
             else:
                 error_msg = {"message":"Incorrect username or password"}
