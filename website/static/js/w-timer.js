@@ -231,3 +231,28 @@ window.addEventListener('beforeunload', function (evt) {
     return 'Timer is currently running. Would you like to confirm leaving the page?';
   }
 });
+
+function timerCurrentSave(){
+  clockSettingsBulk.rounds = rounds
+  clockSettingsBulk.workTime = workTime
+  clockSettingsBulk.breakTime = breakTime
+  clockSettingsBulk.currentTime = currentTime
+  clockSettingsBulk.currentRound = currentRound
+  clockSettingsBulk.isWorking = isWorking
+  return clockSettingsBulk
+}
+
+async function restoreTimeSettings(){
+  const res = widgetSettingsBulk["w-timer"]["timerValues"]
+  rounds = res.rounds
+  workTime = res.workTime
+  breakTime = res.breakTime
+  currentTime = res.currentTime
+  currentRound = res.currentround
+  isWorking = res.isWorking
+  renderProgressBar();
+  startTimer() //start and instantly stop the timer to set in the retrieved data.
+  setTimeout(pauseTimer, 1000)
+}
+
+restoreTimeSettings()

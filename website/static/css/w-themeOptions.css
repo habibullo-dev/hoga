@@ -1,3 +1,6 @@
+#themeOptions{
+    overflow-y: visible;
+}
 #themeOptionsCont{
     background-color: #f0f0f0;
     display: flex;
@@ -147,12 +150,14 @@ filter: drop-shadow(0 0 1px)
     background-color: #f1f1f1;
     min-width: 7rem;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 9999;
+    overflow-y: scroll;
+    max-height: 5rem;
   }
   
   .dropdown-content a {
     color: black;
-    padding: 12px 16px;
+    padding: 5px 5px;
     text-decoration: none;
     display: block;
     pointer-events: auto; 
@@ -160,6 +165,6 @@ filter: drop-shadow(0 0 1px)
   
   .dropdown-content a:hover {background-color: #ddd;}
   
-  .dropdown:hover .dropdown-content {display: block;}
+  .dropdown:hover .dropdown-content {display: block;  position: absolute; z-index: 9999; }
   
   .dropdown:hover .dropbtn {background-color: rgba(150, 150, 150, 0.8);}

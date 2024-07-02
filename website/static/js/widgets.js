@@ -1,5 +1,5 @@
 // Define widgets as a global object
-window.widgets = {}; //🚧modified to window-level var
+let widgets = {}; //🚧modified to window-level var
 
 window.DOMstorage = {};
 let gridContainer;
@@ -20,11 +20,19 @@ async function distribWidgetSettings(_settings) {
       console.log(`${key} was not active: ${widgetSettingsBulk[key]["active"]}`)
     }
   })
+  if (_settings.currentTheme){
+    loadThemeSet(`../static/css/${_settings.currentTheme}.css`, `../static/js/${_settings.currentTheme}.js`, `../static/html/${_settings.currentTheme}.html`, _settings.currentTheme)
+  }
+  
 }
 
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
+
+  
+
 
 
   // Function to create a new widget
@@ -182,6 +190,8 @@ document.addEventListener("DOMContentLoaded", function () {
           /* widgetId == "w-themeOptions" ?activeThemeSetup():console.log("normal widget setup completed.") */
           // Store widget instance
           widgets[widgetId] = widget;
+          console.log("!!WIDGETS STATUS: ", widgets)
+          console.log("!!WIDGETS STATUS")
         });
       /*       console.log("TRACK WIDGET DOM 1,", widgetSettingsBulk[widgetId]["widgetDOM"])⚠️⚠️⚠️
             widgetSettingsBulk[widgetId]["widgetDOM"] = widget//🚧adding widget cont to settings to track its DOM
@@ -478,7 +488,8 @@ document.addEventListener("DOMContentLoaded", function () {
           break;
         case "w-timer":
           // Extract stopwatch specific data
-          widgetData.timerValue = "00:00:00"; // Placeholder for timer value
+          //widgetData.timerValues = "00:00:00"; // Placeholder for timer value
+          widgetData.timerValues = timerCurrentSave();
           break;
         // case "w-youtube":
         //   // Extract YouTube player specific data
@@ -604,6 +615,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return { width: 500, height: "fit-content" };
       case "w-search":
         return { width: 270, height: "fit-content" };
+      case "w-themeOptions":
+        return { width: 290, height: "fit-content" };
       default:
         return { width: 200, height: 200 }; // Default size
     }
@@ -667,6 +680,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return 200;
       case "w-search":
         return 250;
+      case "w-themeOptions":
+        return 100;
       default:
         return 80;
     }
@@ -987,6 +1002,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   }
+
+  //TEST
+  const themeOptionsBtn = document.getElementById("w-themeOptions")
+  themeOptionsBtn.addEventListener("click", function (){toggleWidgetState(themeOptionsBtn)})
+
+/*   console.log("!!WHAT IS THEMEOPTIONS AT, ACTIVE?", widgetSettingsBulk["w-themeOptions"])
+  if (!widgetSettingsBulk["w-themeOptions"]["active"]){
+    toggleWidgetState(themeOptionsBtn, noCreate)
+    console.log("!!YES IT WAS ACTIVE NOW DID THE TOGGLE WORKKKK")
+  } */
 
 });
 
