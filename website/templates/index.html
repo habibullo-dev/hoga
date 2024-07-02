@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../static/css/styles.css" />
   <link rel="stylesheet" href="../static/css/animation.css" />
   <link rel="stylesheet" href="../static/css/DXM-toolBox.css" />
+  <link rel="stylesheet" href="../static/css/w-themeOptions.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet" />
@@ -104,20 +105,20 @@
                 ">Layouts</span>
           </div>
           <hr />
-          <div class="nav-button">
+          <div class="nav-button themeSwitch">
             <span>Dreamy</span>
           </div>
-          <div class="nav-button">
+          <div class="nav-button themeSwitch">
             <span>Retro</span>
           </div>
 
-          <div class="nav-button">
+          <div class="nav-button themeSwitch">
             <span>Cosy</span>
           </div>
-          <div class="nav-button">
+          <div class="nav-button themeSwitch">
             <span>Minimal</span>
           </div>
-          <div class="nav-button">
+          <div class="nav-button themeSwitch">
             <span>Bold</span>
           </div>
           <br />
@@ -153,6 +154,31 @@
             </div>
             <div id="nav-content-highlight"></div>
           </div>
+          <!-- THEME OPTIONS - ORIGINALLY TOGGLED OFF -->
+          <div id="themeOptions" style="border-radius: 5%;" class="display-toggle">
+            <div id="themeOptionsCont">Theme Options</div>
+            <div id="themeParticles">
+              <div class="optionCont" style="color:#8392a5;">Focus Mode
+                <label class="togSwitch"> 
+                    <input type="checkbox" id="focusModeSwitch" class="">
+                    <span class="togRound"></span>
+                </label>
+              </div>
+              <div class="dropdown">
+                    <button class="dropbtn">Particle Effects</button>
+                    <div class="dropdown-content">
+                        <a class="selectFXBtn" style="color: red" onclick="(function() { setupFX('cancel'); })()">Remove</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('rain', 60); })()">Rain</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('fireflies', 14); })()">Fireflies</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('snowfall', 40); })()">Snowfall</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('pixie', 50); })()">Pixie</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('pug', 50); })()">Pug</a>
+                    </div>
+              </div>    
+            </div>
+            <div id="themeExtraOptions"></div>
+          </div>
+          <!-- THEME OPTIONS END -->
         </div>
       </div>
     </div>
@@ -230,6 +256,7 @@
   <script src="../static/js/widgets.js"></script>
   <script src="../static/js/size.js"></script>
   <script src="../static/js/th-logic.js"></script>
+  <script src="../static/js/w-themeOptions.js"></script>
   <!-- DEPENDENCY STACK -->
   <script src="../static/js/settingsSaveLoad.js"></script>
   <script src="https://apis.google.com/js/api.js"></script>

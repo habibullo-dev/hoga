@@ -1003,15 +1003,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-  //TEST
-  const themeOptionsBtn = document.getElementById("w-themeOptions")
-  themeOptionsBtn.addEventListener("click", function (){toggleWidgetState(themeOptionsBtn)})
-
-/*   console.log("!!WHAT IS THEMEOPTIONS AT, ACTIVE?", widgetSettingsBulk["w-themeOptions"])
-  if (!widgetSettingsBulk["w-themeOptions"]["active"]){
-    toggleWidgetState(themeOptionsBtn, noCreate)
-    console.log("!!YES IT WAS ACTIVE NOW DID THE TOGGLE WORKKKK")
-  } */
+ 
 
 });
 

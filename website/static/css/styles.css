@@ -608,8 +608,9 @@ label[for="nav-toggle"] {
   transition: top 0.2s;
   position: absolute;
   right: calc(-1*var(--navbar-width));
-  top: calc(var(--navbar-width)/1.2);
+  top: calc(var(--navbar-width)/0.8);
 }
+
 
 #current-theme{/* 🚧NEW CSS */
   position: absolute;
@@ -717,8 +718,9 @@ label[for="nav-toggle"] {
   border-radius: var(--border-radius);
   background-color: white;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 45rem;
+  min-width: 45rem;
   height: 30rem;
 }
 #popup-imp-text{
@@ -727,7 +729,7 @@ label[for="nav-toggle"] {
 }
 .popup-button{
   min-width: 9rem;
-  min-height: 1.8rem;
+  height: 1.8rem;
   background-color: rgba(200,200,200,0.9);
 }
 .popup-button:hover{

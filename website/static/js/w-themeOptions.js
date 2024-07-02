@@ -1,4 +1,4 @@
-window.themeOptions = document.querySelector("#customThemeOptions") //store the name of the theme options container.
+
 console.log("!!THEMEOPTIONS WAS JUST DEFINED? ", themeOptions)
 const selectFXBtn = Array.from(document.querySelectorAll(".selectFXBtn")) //⚠️ obsolete?
 
@@ -16,11 +16,12 @@ document.querySelector("#focusModeSwitch").addEventListener("click", ()=>{ //To 
         loadingScreen.innerHTML=""
     }
 })
-activeThemeSetup()
+//activeThemeSetup()
 
 
 
-//Theme options widget function - global-level
+
+//Theme options widget function - global-level ⚠️⚠️⚠️
 async function activeThemeSetup(){
     console.log("!! ACTIVETHEMESETUP FUNC RAN")
     /* await createWidget("w-themeOptions") */
@@ -32,7 +33,7 @@ async function activeThemeSetup(){
     console.log("!! WIDGETSETTINGSBULK CURRENTTHEME:", widgetSettingsBulk.currentTheme)
 
 
-    themeOptions.innerHTML = _innerHTML;
+    themeExtraOptions.innerHTML = _innerHTML;
     const themeClickables = Array.from(document.querySelectorAll(".thOptionClickable"))
     themeClickables.forEach((clickable, i)=>{
         try {
@@ -41,10 +42,20 @@ async function activeThemeSetup(){
             console.log(error, ` - Index ${i} out of bounds for _funcArr? `, _funcArr, " - Double-check: ", _funcArr[i])
         }
     })
+    if (themeOptions.classList.contains("display-toggle")){
+        themeOptions.classList.toggle("display-toggle")
+    }
     console.log("Finished setting up clickables for your option theme.", _funcArr)
 }
 
-
+function FXCreatePixies(_num){
+    for (let i = 0; i<_num; i++){
+        const pixieCont = document.createElement("div")
+        pixieCont.innerHTML = `<div class="pixie"></div>`
+        pixieCont.classList.add("pixie-container")
+        bgFXCont.appendChild(pixieCont)
+    }
+}
 
 function setupFX(_type, _num){
     bgFXCont.innerHTML=""
@@ -53,12 +64,7 @@ function setupFX(_type, _num){
         case "cancel":
             return;
         case "pixie":
-            for (let i = 0; i<_num; i++){
-                const pixieCont = document.createElement("div")
-                pixieCont.innerHTML = `<div class="pixie"></div>`
-                pixieCont.classList.add("pixie-container")
-                bgFXCont.appendChild(pixieCont)
-            }
+            FXCreatePixies(50)
             break;
         case "fireflies":
             for (let i = 0; i<_num; i++){
