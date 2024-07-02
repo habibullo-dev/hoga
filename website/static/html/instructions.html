@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instructions</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Albert Sans";
+      }
+      .card {
+        max-width: 400px;
+        margin: 20px auto;
+        background-color: #d5d5d5;
+        color: rgb(61, 61, 61);
+        border-radius: 10px;
+      }
+
+      h5 {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-top: 20px;
+      }
+
+      .card-body {
+        background-color: #363636;
+        color: white;
+        border-radius: 0 0 10px 10px;
+      }
+
+      p {
+        margin-top: 5px;
+        font-size: 0.85rem;
+        font-weight: 300;
+        padding: 0 20px;
+      }
+
+      .card-header {
+        color: #363636;
+        border-radius: 15px;
+      }
+      .progress {
+        height: 15px;
+      }
+
+      .progress-bar {
+        background-color: rgb(109, 160, 205);
+      }
+
+      .step-content {
+        display: none;
+        margin-bottom: -20px;
+        text-align: center;
+        padding: 5px;
+      }
+      .step-content.active {
+        display: block;
+        text-align: center;
+      }
+
+      #skip {
+        text-align: center;
+        display: flex;
+        margin: 15px;
+        font-size: 0.8rem;
+        justify-content: center;
+        justify-items: center;
+      }
+
+      #nextButton,
+      #prevButton {
+        font-size: 0.8rem;
+        background-color: rgb(109, 160, 205);
+        margin: auto;
+      }
+
+      .inst {
+        display: flex;
+        margin: auto;
+        width: 300px;
+        height: auto;
+        mask-image: radial-gradient(
+            circle,
+            rgba(0, 0, 0, 1) 70%,
+            rgba(0, 0, 0, 0) 100%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 1) 20%,
+            rgba(0, 0, 0, 1) 80%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        -webkit-mask-image: radial-gradient(
+            circle,
+            rgba(0, 0, 0, 1) 80%,
+            rgba(0, 0, 0, 0) 100%
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 1) 20%,
+            rgba(0, 0, 0, 1) 80%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        mask-composite: intersect;
+        -webkit-mask-composite: destination-in;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card" id="instructionCard">
+      <div class="card-header">
+        <img src="./static/images/logo-rev.png" style="height: 15px" alt="" />
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          onclick="skipInstructions()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="progress mb-4">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            style="width: 0%"
+            id="progressBar"
+          ></div>
+        </div>
+        <div class="step-content active" id="step0">
+          <h5>Welcome!</h5>
+          <p>
+            Meet your ultimate personal space. Here's a quick step-by-step guide
+            on how to use the app.
+          </p>
+        </div>
+        <div class="step-content" id="step1">
+          <img
+            class="inst"
+            src="./static/images/notch.png"
+            style="width: 300px"
+            alt=""
+          />
+          <h5>Control Panel</h5>
+          <p>
+            Hover to the top of the page to initialize the control panel. The
+            control panel displays all the available widgets and customizable
+            settings.
+          </p>
+        </div>
+        <div class="step-content" id="step2">
+          <img
+            class="inst"
+            src="./static/images/top-notch.png"
+            style="width: 350px"
+            alt=""
+          />
+          <h5>Interactive Widgets</h5>
+          <p>
+            Select the edit button and pick any of the available widgets you
+            want to add.
+          </p>
+        </div>
+        <div class="step-content" id="step3">
+          <img
+            class="inst"
+            src="./static/images/dev.png"
+            style="width: 200px"
+            alt=""
+          />
+          <h5>Generate Layouts</h5>
+          <p>
+            Select any of the preset themes or try some of the developer picks
+            for some cool features!
+          </p>
+        </div>
+        <div class="step-content" id="step4">
+          <img
+            class="inst"
+            src="./static/images/save.png"
+            style="width: 200px"
+            alt=""
+          />
+          <h5>Save Themes</h5>
+          <p>
+            Click on the save button to automatically restore your settings for
+            the next visit.
+          </p>
+        </div>
+        <div class="buttons-btm">
+          <div class="d-flex justify-content-between mt-4">
+            <button
+              class="btn btn-primary"
+              id="prevButton"
+              onclick="prevStep()"
+              style="visibility: hidden"
+            >
+              &lt;
+            </button>
+            <button
+              class="btn btn-secondary mt-3"
+              id="skip"
+              onclick="skipInstructions()"
+            >
+              Skip Instructions
+            </button>
+            <button
+              class="btn btn-primary"
+              id="nextButton"
+              onclick="nextStep()"
+            >
+              &gt;
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script>
+      let currentStep = 0;
+      const totalSteps = 5;
+
+      function showStep(step) {
+        for (let i = 0; i < totalSteps; i++) {
+          document.getElementById(`step${i}`).classList.remove("active");
+        }
+        document.getElementById(`step${step}`).classList.add("active");
+        updateProgressBar(step);
+        updateButtons(step);
+      }
+
+      function updateProgressBar(step) {
+        const progress = (step / (totalSteps - 1)) * 100;
+        document.getElementById("progressBar").style.width = `${progress}%`;
+      }
+
+      function updateButtons(step) {
+        if (step === 0) {
+          document.getElementById("prevButton").style.visibility = "hidden";
+        } else {
+          document.getElementById("prevButton").style.visibility = "visible";
+        }
+
+        if (step === totalSteps - 1) {
+          document.getElementById("nextButton").style.visibility = "hidden";
+        } else {
+          document.getElementById("nextButton").style.visibility = "visible";
+        }
+      }
+
+      function nextStep() {
+        if (currentStep < totalSteps - 1) {
+          currentStep++;
+          showStep(currentStep);
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      }
+
+      function skipInstructions() {
+        document.getElementById("instructionCard").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
