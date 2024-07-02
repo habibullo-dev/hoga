@@ -1,237 +1,134 @@
-/* ---------------- default width: 800 height: 300 ------------- */
+* {
+  font-family: "Albert Sans";
+}
+
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
-.weather-widget {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 800px;
+.container {
+  text-align: center;
+  /* max-width: fit-content; */
+  /* width: 100%; */
+  max-height: fit-content;
+  padding: 15px 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent */
+  backdrop-filter: blur(10px);
 }
 
-.location {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.forecast {
-    display: flex;
-    justify-content: space-around;
-}
-
-.day-container {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-.day {
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin: 0 5px;
-    padding: 10px;
-    flex: 1;
-    text-align: center;
-}
-
-.day-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.weather-icon {
-    width: 50px;
-    height: 50px;
-    margin: 10px 0;
-}
-
-.temp {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.humidity {
-    font-size: 14px;
-    color: #666;
-    margin-top: 5px;
-}
-
-.description {
-    font-size: 14px;
-    color: #666;
-}
-
-/* ----------- width: 440 height: 300 --------------- */
-
-/* body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
-
-.weather-widget {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 400px;
+.header {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+  text-align: left;
+  color: rgb(255, 255, 255);
+  /* padding: 2px 8px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.1);  */
+  /* backdrop-filter: blur(10px); */
 }
 
 .location {
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 0.9rem;
+  margin-bottom: 0px;
+  color: rgb(164, 164, 164);
+  text-align: left;
+  margin-top: -10px;
+  font-weight: 500;
+  padding: 0 10px;
 }
 
-.forecast {
-    display: flex;
-    justify-content: space-around;
+.country {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: -10px;
+  margin-left: 10px;
+  text-transform: uppercase;
 }
 
-.day-container {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+.weather-card-container {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-around;
+  margin-top: 0px;
+  overflow: scroll;
+  position: relative;
 }
 
-.day:nth-of-type(n+4) {
-    display: none;
+.weather-card {
+  padding: 10px;
+  margin: 10px;
+  width: 120px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* background-color: rgb(241, 241, 229); */
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent */
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
 }
 
-.day {
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin: 0 5px;
-    padding: 10px;
-    flex: 1;
-    text-align: center;
-    width: calc(33.33% - 10px);
+.weather-card:hover {
+  background-color: rgb(57, 57, 57);
+  color: white;
 }
 
-.day-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.weather-icon {
-    width: 50px;
-    height: 50px;
-    margin: 10px 0;
-}
-
-.temp {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.humidity {
-    font-size: 14px;
-    color: #666;
-    margin-top: 5px;
-}
-
-.description {
-    font-size: 14px;
-    color: #666;
-} */
-
-/* ---------- width: 190 height: 224 ---------- */
-
-/* body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-}
-
-.weather-widget {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 150px;
-}
-
-.location {
-    display: none;
-}
-
-.forecast {
-    display: flex;
-    justify-content: space-around;
-}
-
-.day-container {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-}
-
-.day:nth-of-type(n+2) {
-    display: none;
+.date {
+  font-weight: bold;
+  font-size: 0.8rem;
 }
 
 .day {
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-    margin: 0 5px;
-    padding: 10px;
-    flex: 1;
-    text-align: center;
-    width: calc(33.33% - 10px);
+  font-size: 0.7rem;
+  color: #666;
 }
 
-.day-name {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
+.weather-card:hover .day {
+    color: #e5e5e5;
+  }
+
+  .weather-card:hover .temperature {
+    color: #c95714;
+    font-weight: 600;
+  }
+
+.icon {
+  width: 50px;
 }
 
-.weather-icon {
-    width: 50px;
-    height: 50px;
-    margin: 10px 0;
-}
-
-.temp {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.humidity {
-    font-size: 14px;
-    color: #666;
-    margin-top: 5px;
+.temperature {
+  font-size: 1rem;
+  margin-bottom: 5px;
 }
 
 .description {
-    font-size: 14px;
-    color: #666;
-} */
+  text-transform: capitalize;
+  font-size: 0.7rem;
+}
+
+.dropdown-container {
+  text-align: right;
+  margin-bottom: 10px;
+  font-size: 0.8rem;
+}
+
+select {
+  padding: 3px;
+  font-size: 1em;
+  border-radius: 8px;
+}
+
+.weather-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding: 0 10px;
+}

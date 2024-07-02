@@ -10,12 +10,43 @@
 
 <body>
     <nav id="nav-bar">
-        <span>Hoga</span>
-        <span>{{info.name}}</span>
-        <button id="logout">Log Out</button>
+        <span id="company-name">Hoga</span>
+        <span id="logout">Log Out</span>
         <span id="admin-email">{{info.email}}</span>
     </nav>
 
+    <main>
+        <h1>Hi, Welcome {{info.name}} 👋</h1>
+        <div id="data-container">
+            <div>
+                <img src="../static/icons/people.svg" alt="people" class="svg-img">
+                Total Users:
+                {% for item in total_users_data %}
+                <span> {{item.count}}</span>
+                {% endfor %}
+            </div>
+            <div>
+                <img src="../static/icons/online.svg" alt="online" class="svg-img">
+                Total Online:
+                {% for online in total_online_data %}
+                {% if online.count %}
+                <span>{{online.count}}</span>
+                {% else %}
+                <span>0</span>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div>
+                <img src="../static/icons/currency.svg" alt="money" class="svg-img">
+                Revenue per user: $
+                {% for item in total_users_data %}
+                <span> {{item.count}}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <canvas id="myChart"></canvas>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../static/js/admindashboard.js"></script>
 </body>
 

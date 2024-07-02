@@ -82,7 +82,7 @@ def widgets_grab():
 
             #Query 8 - Gemini_setting 
             if bulk_widgets["w-search"]:
-                query8 = conn.execute(text("UPDATE user SET gemini=:user_gemini_setting WHERE email=:email"),{
+                query8 = conn.execute(text("UPDATE user SET gemini=:gemini_setting WHERE email=:email"),{
                     "email": email,
                     "user_gemini_setting": json.dumps(bulk_widgets["w-search"])
                 })

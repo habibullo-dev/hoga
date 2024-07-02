@@ -1,54 +1,110 @@
-const getlocation = () => {
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-        const lat = pos.coords.latitude;
-        const long = pos.coords.longitude;
-        const weatherApiKey = '1d735e1ab42746265d96032c39b8fe8b';
-        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${weatherApiKey}&units=metric`;
-        const response = await fetch(url);
-        const data = await response.json();
-        updateForecast(data);
-    });
-}
+const apiKey = "1d735e1ab42746265d96032c39b8fe8b"; 
+      const apiUrl = "https://api.openweathermap.org/data/2.5/forecast";
+      const container = document.getElementById("weatherWidget");
+      const viewSelector = document.getElementById("viewSelector");
+      const cityCountryElement = document.getElementById("cityCountry");
 
-const updateForecast = (data) => {
-    const forecastElem = document.getElementById('forecast');
-    const locationElem = document.getElementById('location');
-    forecastElem.innerHTML = '';
-    locationElem.innerHTML = `${data.city.name}, ${data.city.country}`;
-
-    const days = {};
-    data.list.forEach(item => {
-        const date = new Date(item.dt_txt).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
-        if (!days[date]) {
-            days[date] = item;
+      // Fetch weather
+      async function fetchWeatherData(latitude, longitude) {
+        const response = await fetch(
+          `${apiUrl}?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    });
+        const data = await response.json();
+        return data;
+      }
 
-    const dayContainer = document.createElement('div');
-    dayContainer.classList.add('day-container');
+      // Display weather
+      function displayWeatherData(data, numDays) {
+        container.innerHTML = "";
 
-    Object.keys(days).slice(0, 5).forEach(key => {
-        const day = days[key];
-        const date = new Date(day.dt_txt).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric' });
-        const temp = day.main.temp;
-        const weatherDescription = day.weather[0].description;
-        const humidity = day.main.humidity;
-        const icon = day.weather[0].icon;
+        const cityName = data.city.name;
+        const countryName = data.city.country;
+        const forecastList = data.list;
 
-        const dayElem = document.createElement('div');
-        dayElem.classList.add('day');
-        dayElem.innerHTML = `
-            <div class="day-name">${date}</div>
-            <img class="weather-icon" src="https://openweathermap.org/img/wn/${icon}.png" alt="${weatherDescription}">
-            <div class="temp">${temp}°C</div>
-            <div class="humidity">Humidity: ${humidity}%</div>
-            <div class="description">${weatherDescription}</div>
-        `;
+        // Display location
+        cityCountryElement.textContent = `${cityName}, ${countryName}`;
 
-        dayContainer.appendChild(dayElem);
-    });
+        // Display weather cards
+        for (let i = 0; i < numDays; i++) {
+          const weather = forecastList[i * 8]; // Pick first forecast
+          const date = new Date(weather.dt * 1000); // Convert to date object
 
-    forecastElem.appendChild(dayContainer);
-}
+          const weatherCard = document.createElement("div");
+          weatherCard.classList.add("weather-card");
 
-getlocation();
+          const dateElement = document.createElement("div");
+          dateElement.textContent = date.toLocaleDateString(undefined, {
+            day: "numeric",
+            month: "short",
+          });
+          dateElement.classList.add("date");
+
+          const dayElement = document.createElement("div");
+          dayElement.textContent = date.toLocaleDateString(undefined, {
+            weekday: "short",
+          });
+          dayElement.classList.add("day");
+
+          const iconElement = document.createElement("img");
+          iconElement.src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`;
+          iconElement.alt = weather.weather[0].description;
+          iconElement.classList.add("icon");
+
+          const temperatureElement = document.createElement("div");
+          temperatureElement.textContent = `${Math.round(weather.main.temp)}°C`;
+          temperatureElement.classList.add("temperature");
+
+          const descriptionElement = document.createElement("div");
+          const capitalizedDescription = capDescription(
+            weather.weather[0].description
+          );
+          descriptionElement.textContent = capitalizedDescription;
+          descriptionElement.classList.add("description");
+
+          weatherCard.appendChild(dateElement);
+          weatherCard.appendChild(dayElement);
+          weatherCard.appendChild(iconElement);
+          weatherCard.appendChild(temperatureElement);
+          weatherCard.appendChild(descriptionElement);
+
+          container.appendChild(weatherCard);
+        }
+      }
+
+      // Capitalize Description
+      function capDescription(description) {
+        return description.replace(/\b\w/g, (char) => char.toUpperCase());
+      }
+
+      // Get current position and weather data
+      function getCurrentPositionAndFetchWeather(numDays) {
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            try {
+              const lat = pos.coords.latitude;
+              const long = pos.coords.longitude;
+              console.log("Latitude:", lat, "Longitude:", long);
+
+              const weatherData = await fetchWeatherData(lat, long);
+              displayWeatherData(weatherData, numDays);
+            } catch (error) {
+              console.error("Error fetching weather data:", error);
+            }
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      }
+
+      // Dropdown
+      viewSelector.addEventListener("change", (event) => {
+        const numDays = parseInt(event.target.value, 10);
+        getCurrentPositionAndFetchWeather(numDays);
+      });
+
+      // Call function
+      getCurrentPositionAndFetchWeather(3);
