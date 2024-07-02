@@ -1,11 +1,15 @@
 //⚠️INSTRUCTIONS AT THE END OF THE CODE⚠️
 
 const bgFXCont = document.getElementsByClassName("bg-effect")[0] 
+
 let thOptionsHTML;
 let thFuncArr;
 
 let th3i1 = 0 //special vars for theme 3
 let th3i2 = 0
+
+//Startup theme recall
+
 
 window.thKillSwitch;
 window.loadingScreen = document.createElement("div")
@@ -14,11 +18,29 @@ let loadBars = Array.from(document.querySelectorAll(".loadInner"))
 const parentGrid = document.getElementById("grid-container")
 parentGrid.insertBefore(loadingScreen, parentGrid.firstChild)
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const thDevBtn = document.getElementById("dev-pick-button")
     const thDevPicks = document.getElementById("nav-dev-picks")
     const themesBtnArr = Array.from(thDevPicks.children)
+
+/*     themeOptionsBtn.addEventListener("click", ()=>{
+        console.log("!!WIDGETSETTINGSBULK STATUS", widgetSettingsBulk)
+        if (!widgetSettingsBulk["w-themeOptions"]){ //⚠️⚠️⚠️🚧
+            console.log("spawning theme widget")
+            createWidget("w-themeOptions")
+        } else {
+            console.log("attempting to remove widget for theme")
+            gridContainer.removeChild(widgets["w-themeOptions"]);
+            console.log("!!toggleWidgetState - what is widgets[widgetId], ", widgets["w-themeOptions"]) //THIS IS THE DAMN DIV! FINALLY
+            widgetSettingsBulk["w-themeOptions"].active = false;//🚧consider the widget as inactive.
+            delete widgets["w-themeOptions"];
+        }
+    }) */
+
+    
 
     themesBtnArr.forEach((theme)=>{
         if (theme.classList.contains('themeSwitch')){

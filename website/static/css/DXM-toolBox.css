@@ -81,6 +81,8 @@
     height: 10rem;
     top: 88%;
     left:-2rem;
+    background-image: url("../images/themes/DXM/puggi.gif");
+    background-size: contain;
     position: absolute;
     animation: sliderXLong 5s linear infinite;
     animation-duration: 10s;
@@ -89,11 +91,11 @@
 
 @keyframes sliderX {
     from {
-      transform: translateX(-100%);
+      transform: translateX(-5vh);
     }
   
     to {
-      transform: translateX(120%);
+      transform: translateX(110vh);
     }
 }
 

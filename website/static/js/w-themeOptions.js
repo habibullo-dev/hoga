@@ -19,6 +19,7 @@ document.querySelector("#focusModeSwitch").addEventListener("click", ()=>{ //To 
 activeThemeSetup()
 
 
+
 //Theme options widget function - global-level
 async function activeThemeSetup(){
     console.log("!! ACTIVETHEMESETUP FUNC RAN")
@@ -71,6 +72,9 @@ function setupFX(_type, _num){
         case "rain":
             break;
         case "pug":
+            const pugDog = document.createElement("div")
+            pugDog.id = "gifPug"
+            bgFXCont.appendChild(pugDog)
             break;
     }
     if (document.getElementById("focusModeSwitch").classList.contains("focusModeOn")){

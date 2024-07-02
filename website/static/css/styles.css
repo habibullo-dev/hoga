@@ -718,6 +718,8 @@ label[for="nav-toggle"] {
   background-color: white;
   display: flex;
   justify-content: center;
+  width: 45rem;
+  height: 30rem;
 }
 #popup-imp-text{
   width: 90%;

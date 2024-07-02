@@ -302,7 +302,7 @@ function saveTaskListSetup() {
 
 let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
 
-async function restoreTasks() {
+async function restoreTasks() { //brings back the tasks for complete and incomplete. function is called when script file is loaded.
   console.log("!!attempting to RESTORE tasklist content!")
   
   const res = widgetSettingsBulk["w-tasks"]["taskList"]

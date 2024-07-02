@@ -84,7 +84,7 @@ def widgets_grab():
             if bulk_widgets["w-search"]:
                 query8 = conn.execute(text("UPDATE user SET gemini=:user_gemini_setting WHERE email=:email"),{
                     "email": email,
-                    "gemini_setting": json.dumps(bulk_widgets["w-search"])
+                    "user_gemini_setting": json.dumps(bulk_widgets["w-search"])
                 })
             else:
                 print("No change in gemini setup detected")

@@ -27,6 +27,7 @@ function overwriteLocal(){
     widgetSettingsBulk = dbSettingsBulk
     localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
     console.log("DB settings overwriting local")
+    location.reload(true);
 }
 
 function autoLogin() { //brings in everything about user from DB EXCEPT private information.
@@ -70,8 +71,8 @@ async function saveSettings() {
         method: "POST",
         body: JSON.stringify({
             userEmail: user.email, //sending current session's email to back-end for identification
-            allWidgetSettings: widgetSettingsBulk, //sending all the relevant settings (that have been changed since last time).
-        }),
+            allWidgetSettings: localStorage.hogaWidgetData, //sending all the relevant settings (that have been changed since last time).
+        }), //🚧Changed from widgetSettingsBulk to hogaWidgetData!
         headers: {
             'Content-Type': 'application/json'
         },
@@ -94,7 +95,7 @@ async function sessRegenTry() {
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData) {
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
-        await distribWidgetSettings(widgetSettingsBulk) //⚠️⚠️⚠️WIP function. 
+        await distribWidgetSettings(widgetSettingsBulk) 
         sessDBCompare() //at later date, compare.
         return
     }
@@ -102,7 +103,9 @@ async function sessRegenTry() {
     if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0) {
         await autoLogin();
     }
+    if (dbSettingsBulk){
     widgetSettingsBulk = dbSettingsBulk
+    }
 }
 
 
@@ -122,7 +125,7 @@ async function sessDBCompare() {
                 }
             }
             if(conflictors.length>0){
-                createUrgentPopUp(`Warning: HOGA has detected some conflicts between the settings stored in our database and your browser. Please select your most recent settings presets to recover.`, overwriteDB, overwriteLocal, "Database Settings", "Local Settings")
+                createUrgentPopUp(`Warning: HOGA has detected some conflicts between the settings stored in our server database and that of your browser. Whilst there is a stronger possibility your browser settings are more up to date, you may select which source to recover from.`, overwriteDB, overwriteLocal, "Local Settings", "Server Settings")
             }
         }
         //if not, ignore.
