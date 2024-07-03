@@ -124,7 +124,6 @@ async function sessRegenTry() {
         widgetSettingsBulk = dbSettingsBulk
     } else {
         //if nothing is set, RING ALARM:
-        alert("BOOO USER HAS NOTHING!")
         spawnTutorial()
         //
     }
@@ -135,6 +134,7 @@ function promptLogin() {
 
     popupImportant.style.display = "flex";   
     popupImpWindow.style.display = "none";
+    popupSpecial1.style.display = "flex"
 
     fetch(`../static/html/login-widget.html`)
     .then((response) => {
@@ -147,8 +147,10 @@ function promptLogin() {
         // Insert HTML content into the popup
         
         let loginCont = document.createElement("div")
+        loginCont.classList.add("popup-special")
         loginCont.innerHTML = html
-        popupSpecial.appendChild(loginCont)
+        popupSpecial1.appendChild(loginCont)
+        dynaLoadScript("../static/js/login-widget.js");
 
       })
       .catch((error) => {
@@ -160,7 +162,8 @@ function promptLogin() {
 
 //🚧TUTORIAL
 function spawnTutorial() {
-    /*    
+    alert("Starting tutorial session. This is optional and entirely skippable.")
+      
        
        fetch(`../static/html/instructions.html`)
      .then((response) => {
@@ -173,28 +176,20 @@ function spawnTutorial() {
        // Insert HTML content into the popup
        popupImpWindow.style.display = "none";
        popupImportant.style.display = "flex";
+       popupSpecial2.style.display = "flex";
        
        let tutoCont = document.createElement("div")
+       tutoCont.classList.add("popup-special")
        tutoCont.innerHTML = html
-       popupSpecial.appendChild(tutoCont)
-   
-       // Wait for DOMContentLoaded event on the inserted HTML
-       tutoCont.addEventListener('DOMContentLoaded', (event) => {
-         // This block will run when DOMContentLoaded event fires
-         console.log('DOMContentLoaded event fired for dynamically loaded content');
-         // You can execute additional logic here if needed
-       });
-   
-       // If DOMContentLoaded has already fired for the inserted HTML
-       if (document.readyState === 'complete' || document.readyState === 'interactive') {
-         console.log('DOMContentLoaded event already fired for main document');
-         // Execute additional logic immediately if needed
-       }
+       
+       popupSpecial2.appendChild(tutoCont)
+       dynaLoadScript("../static/js/instructions.js");
+    
      })
      .catch((error) => {
        console.error('Error loading HTML:', error);
        // Handle error if needed
-     });  */
+     });  
 }
 
 
@@ -218,6 +213,14 @@ async function sessDBCompare() {
         //if not, ignore.
         console.log("User settings are in sync.")
     }
+}
+
+function dynaLoadScript(_scriptPath) {
+    const script = document.createElement('script');
+    script.src = _scriptPath;
+    script.onload = () => console.log(`Script ${_scriptPath} loaded successfully.`);
+    script.onerror = () => console.error(`Error loading script ${_scriptPath}.`);
+    document.body.appendChild(script);
 }
 
 
@@ -298,6 +301,9 @@ def bring_user_settings(_item, _res):
 function onStartStrLine() {
     autoLogin()
     sessRegenTry()
+    if (!localStorage.hogaWidgetData){
+        spawnTutorial()
+    }
     //startUpMark() //🚧deprecated
     //userClockSetup() //🚧deprecated
 }
