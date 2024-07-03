@@ -50,15 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }) */
 
     
-    themesBtnArr.forEach((theme)=>{
-        if (theme.classList.contains('themeSwitch')){
+    Array.from(document.querySelectorAll(".themeSwitch")).forEach((theme)=>{
+        
             
 
             const _th = theme.dataset.themename
             console.log("THEME DETECT? ", _th)
             theme.addEventListener("click", ()=>{console.log("At button click time, what is _th? ", _th)
             loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../static/html/${_th}.html`, _th)})
-        }
+        
     })
 
     thDevBtn.addEventListener("click", ()=>{
