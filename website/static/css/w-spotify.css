@@ -1,7 +1,8 @@
 * {
   font-family: "Albert Sans";
 }
-.container {
+
+.widget-w-spotify .container {
   width: 100%;
   max-width: 400px;
   top: 10px;
@@ -9,6 +10,7 @@
   /* background-color: #191414; */
   border-radius: 5px;
   /* border-color: 1px black; */
+  overflow: auto;
 }
 .results-container {
   margin: auto;
@@ -17,8 +19,9 @@
 
 #search-form {
   padding: 10px;
-  margin: 0 20%;
+  margin: 0 25%;
   display: inline-flex;
+
 }
 
 input {
@@ -30,15 +33,15 @@ input {
   color: black;
 }
 .results-container .result-item {
-  width: -webkit-fill-available;
-  margin: 10px 0;
-  padding: 10px 10px;
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px 5px;
   border: 1px solid black;
   background-color: white;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.8rem;
-/*   line-height: 0.2rem; */
+  /*   line-height: 0.2rem; */
   color: black;
 }
 
@@ -73,4 +76,10 @@ p {
   padding: 3px 5px;
 }
 
-
+iframe#spotify-widget {
+  overflow: auto;
+  /* flex: 0; */
+  position: relative;
+  max-height: 400px;
+  height: 100px;
+}
