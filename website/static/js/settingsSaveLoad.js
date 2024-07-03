@@ -117,8 +117,8 @@ async function sessRegenTry() {
 }
 
 function spawnTutorial(){
+ /*    
     
-    /* ⚠️⚠️⚠️
     fetch(`../static/html/instructions.html`)
   .then((response) => {
     if (!response.ok) {
@@ -151,7 +151,7 @@ function spawnTutorial(){
   .catch((error) => {
     console.error('Error loading HTML:', error);
     // Handle error if needed
-  }); */
+  });  */
 }
 
 

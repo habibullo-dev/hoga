@@ -90,3 +90,83 @@ function setupFX(_type, _num){
     }
     
 }
+
+/* SFX AND MUSIC PLAYERS */
+
+let playingMusic = new Audio();
+playingMusic.onpause = function (){}
+playingMusic.onplay = function (){}
+playingMusic.onended = function (){}
+
+const BGMBar = document.getElementById('BGMBar');
+const BGMBarContainer = document.getElementById('BGMBarContainer');
+const BGMCurrentTime = document.getElementById('BGMCurrentTime');
+const BGMDuration = document.getElementById('BGMDuration');
+const BGMtitle = document.getElementById(`BGMtitle`)
+
+let playingBGSFX = new Audio();
+playingBGSFX.loop = true;
+
+
+
+playingMusic.ontimeupdate = ()=>{
+    const BGMCurrentTime = playingMusic.currentTime;
+    const BGMDuration = playingMusic.duration;
+    const _progressPercent = (BGMCurrentTime / BGMDuration) * 100;
+    BGMBar.style.width = _progressPercent + '%';
+    BGMCurrentTime.textContent = formatTime(BGMCurrentTime);
+};
+
+playingMusic.onloadedmetadata = ()=>{
+    durationDisplay.textContent = formatTime(playingMusic.duration);
+};
+
+function playBGM(){
+    if (playingMusic.src){
+        playingMusic.play();
+    }
+}
+function pauseBGM(){
+    playingMusic.pause();
+}
+function stopBGM(){
+    playingMusic.pause()
+    playingMusic.currentTime = 0
+    playingMusic.src = ""
+    BGMtitle.innerHTML = ""
+}
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return minutes + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+BGMBarContainer.addEventListener('click', function(e) {
+    const rect = BGMBarContainer.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const totalWidth = rect.width;
+    const seekTime = (offsetX / totalWidth) * playingMusic.duration;
+    playingMusic.currentTime = seekTime;
+});
+
+function playSFX(e){
+    if(e.target.dataset.sfx){
+        playingBGSFX.pause()
+        playingBGSFX.currentTime = 0
+        if (e.target.dataset.sfx=="cancel"){return}
+        playingBGSFX.src = `../static/sound/SFX/${e.target.dataset.sfx}.ogg`
+        playingBGSFX.load()
+        playingBGSFX.play()
+    }else if (e.target.dataset.music){
+        playingMusic.pause()
+        playingMusic.currentTime = 0
+        if (e.target.dataset.music=="cancel"){return}
+        playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
+        playingMusic.load()
+        playingMusic.play()
+        BGMtitle.innerHTML = `${e.target.dataset.music}`
+    }
+        
+
+}

@@ -187,3 +187,17 @@ filter: drop-shadow(0 0 1px)
   .dropdown:hover .dropdown-content {display: flex;  position: absolute; z-index: 9999; }
   
   .dropdown:hover .dropbtn {background-color: rgba(150, 150, 150, 0.8);}
+
+
+
+  #BGMBarContainer {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    position: relative;
+  }
+  #BGMBar {
+    height: 100%;
+    background-color: #76c7c0;
+    width: 0;
+  }
