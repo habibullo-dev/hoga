@@ -9,6 +9,7 @@ window.dbSettingsBulk = {};
 window.widgetSettingsBulk = {};
 const popupImportant = document.getElementById("popup-important")
 const popupImpWindow = document.getElementById("popup-imp-window")
+const popupSpecial = document.getElementById("popup-special")
 const popupImpText = document.getElementById("popup-imp-text")
 const popupImpBtn1 = document.getElementById("popup-button1")
 const popupImpBtn2 = document.getElementById("popup-button2")
