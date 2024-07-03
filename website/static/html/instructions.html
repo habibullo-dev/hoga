@@ -119,13 +119,8 @@
   <body>
     <div class="card" id="instructionCard">
       <div class="card-header">
-        <img src="./static/images/logo-rev.png" style="height: 15px" alt="" />
-        <button
-          type="button"
-          class="close"
-          aria-label="Close"
-          onclick="skipInstructions()"
-        >
+        <img src="../images/logo-rev.png" style="height: 15px" alt="" />
+        <button type="button" class="close" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -148,7 +143,7 @@
         <div class="step-content" id="step1">
           <img
             class="inst"
-            src="./static/images/notch.png"
+            src="../images/notch.png"
             style="width: 300px"
             alt=""
           />
@@ -162,7 +157,7 @@
         <div class="step-content" id="step2">
           <img
             class="inst"
-            src="./static/images/top-notch.png"
+            src="../images/top-notch.png"
             style="width: 350px"
             alt=""
           />
@@ -175,7 +170,7 @@
         <div class="step-content" id="step3">
           <img
             class="inst"
-            src="./static/images/dev.png"
+            src="../images/dev.png"
             style="width: 200px"
             alt=""
           />
@@ -188,7 +183,7 @@
         <div class="step-content" id="step4">
           <img
             class="inst"
-            src="./static/images/save.png"
+            src="../images/save.png"
             style="width: 200px"
             alt=""
           />
@@ -203,25 +198,14 @@
             <button
               class="btn btn-primary"
               id="prevButton"
-              onclick="prevStep()"
               style="visibility: hidden"
             >
               &lt;
             </button>
-            <button
-              class="btn btn-secondary mt-3"
-              id="skip"
-              onclick="skipInstructions()"
-            >
+            <button class="btn btn-secondary mt-3" id="skip">
               Skip Instructions
             </button>
-            <button
-              class="btn btn-primary"
-              id="nextButton"
-              onclick="nextStep()"
-            >
-              &gt;
-            </button>
+            <button class="btn btn-primary" id="nextButton">&gt;</button>
           </div>
         </div>
       </div>
@@ -232,9 +216,7 @@
     <script>
       let currentStep = 0;
       const totalSteps = 5;
-      console.log("!!INSTRUCTIONS LOCKED AND LOADED")
 
-      
       function showStep(step) {
         for (let i = 0; i < totalSteps; i++) {
           document.getElementById(`step${i}`).classList.remove("active");
@@ -280,6 +262,15 @@
       function skipInstructions() {
         document.getElementById("instructionCard").style.display = "none";
       }
+
+      document.getElementById("nextButton").addEventListener("click", nextStep);
+      document.getElementById("prevButton").addEventListener("click", prevStep);
+      document
+        .getElementById("skip")
+        .addEventListener("click", skipInstructions);
+      document
+        .querySelector(".close")
+        .addEventListener("click", skipInstructions);
     </script>
   </body>
 </html>

@@ -719,6 +719,14 @@ label[for="nav-toggle"] {
   display: none;
   justify-content: center;
   align-items: center;
+
+}
+#popup-special{
+  width: 100%; 
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #popup-imp-window{
   border-radius: var(--border-radius);
