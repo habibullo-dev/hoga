@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-        rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
     <link rel="stylesheet" href="../static/css/register.css">
+    <style>
+        #thankYouMessage {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,9 +30,34 @@
                     I am not a robot
                 </label>
             </div>
-            <button type="submit">Register</button>
+            <button id="submit" type="submit">Register</button>
         </fieldset>
     </form>
+    <div id="thankYouMessage">
+        <p>Thank you! Please check your email for further instructions.</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            const fieldset = form.querySelector('fieldset');
+            const h1 = fieldset.querySelector('h1');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Hide all elements inside the fieldset except for the h1 element
+                Array.from(fieldset.children).forEach(child => {
+                    if (child !== h1) {
+                        child.style.display = 'none';
+                    }
+                });
+
+                // Display the thank you message
+                thankYouMessage.style.display = 'block';
+            });
+        });
+    </script>
 </body>
 
 </html>
