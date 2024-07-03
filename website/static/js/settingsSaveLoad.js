@@ -144,19 +144,7 @@ function promptLogin() {
         let loginCont = document.createElement("div")
         loginCont.innerHTML = html
         popupSpecial.appendChild(loginCont)
-    
-        // Wait for DOMContentLoaded event on the inserted HTML
-        loginCont.addEventListener('DOMContentLoaded', (event) => {
-          // This block will run when DOMContentLoaded event fires
-          console.log('DOMContentLoaded event fired for dynamically loaded content');
-          // You can execute additional logic here if needed
-        });
-    
-        // If DOMContentLoaded has already fired for the inserted HTML
-        if (document.readyState === 'complete' || document.readyState === 'interactive') {
-          console.log('DOMContentLoaded event already fired for main document');
-          // Execute additional logic immediately if needed
-        }
+
       })
       .catch((error) => {
         console.error('Error loading Login Widget HTML:', error);
