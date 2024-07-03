@@ -1,13 +1,13 @@
 #themeOptions{
     overflow-y: visible;
     background-color: black;
-    right: calc(-1*var(--navbar-width) - 70px);
+    /* right: calc(-1*var(--navbar-width) - 70px); */
     bottom: 0;
     position: absolute;
     color: #8392a5;
-    transition: transform 0.3s ease; 
-    min-height: 40px;
-    min-width: 310px;
+    /* transition: transform 0.3s ease;  */
+    min-height: 20rem;
+    min-width: var(--navbar-width)
 }
 #themeOptions.expand-up {
     transform: translateY(-100%); /* Move container upwards */
@@ -154,7 +154,7 @@ filter: drop-shadow(0 0 1px)
     justify-content: center;
     align-items: center;
     margin: 0.2rem 0;
-
+    text-align: center;
 }
 
 .dropbtn {
@@ -183,7 +183,8 @@ filter: drop-shadow(0 0 1px)
     overflow-y: scroll;
     max-height: 20rem;
     flex-direction: column-reverse;
-    top: calc(-200% - 5rem);
+    top: calc(-200% - 1rem);
+    left: 2rem;
     color: #8392a5;
   }
   

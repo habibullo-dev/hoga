@@ -144,13 +144,13 @@
           <div id="nav-content-highlight"></div>
           <div id="nav-dev-picks" class="display-toggle">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
-              <span>Lo-Fi (Dynamic Weather)</span>
+              <span>Lo-Fi</span>
             </div>
             <div class="nav-button themeSwitch" data-themename="th-isaac1">
               <span>Window (Day/Night System)</span>
             </div>
             <div class="nav-button themeSwitch" data-themename="th-isaac3">
-              <span>Cyberpunk (Animated)</span>
+              <span>Cyberpunk (Interactive)</span>
             </div>
             <div id="nav-content-highlight"></div>
           </div>
@@ -166,13 +166,15 @@
               </div>
               <div class="dropdown">
                     <button class="dropbtn">Particle Effects</button>
-                    <div class="dropdown-content">
+                    <div class="dropdown-content" style="top: -220%;">
                         <a class="selectFXBtn" style="color: red" onclick="(function() { setupFX('cancel'); })()">Remove</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('rain', 60); })()">Rain</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('fireflies', 14); })()">Fireflies</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('snowfall', 40); })()">Snowfall</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('pixie', 50); })()">Pixie</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('shootingstar', 20); })()">Shooting Stars</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('pug', 50); })()">Pug</a>
+                        <a class="selectFXBtn" onclick="(function() { setupFX('energy'); })()">Energy</a>
                     </div>
               </div>    
             </div>
@@ -194,7 +196,7 @@
               </div>
               <div id="musicOptions"> 
                 <div class="dropdown">
-                  <button class="dropbtn">🎵 BGM 🎵</button>
+                  <button class="dropbtn">🎵 BGM</button>
                   <div class="dropdown-content">
                       <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-music="cancel">Remove</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander Nakarada - Free</a>

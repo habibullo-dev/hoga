@@ -57,6 +57,37 @@ function FXCreatePixies(_num){
     }
 }
 
+function FXCreateShootingStars(_num){
+    const nightFX = document.createElement("div")
+    nightFX.classList.add("night")
+    bgFXCont.appendChild(nightFX)
+    for (let i = 0; i<_num; i++){
+        const shootingStar = document.createElement("div")
+        shootingStar.classList.add("shooting_star")
+        nightFX.appendChild(shootingStar)
+    }
+}
+
+function FXCreateFireFlies(_num){
+    for (let i = 0; i<_num; i++){
+        const firefly = document.createElement("div")
+        firefly.classList.add("firefly")
+        bgFXCont.appendChild(firefly)
+    }
+}
+
+function FXCreateEnergy(){
+    const starfield1 = document.createElement("div")
+    starfield1.id = "stars"
+    bgFXCont.appendChild(starfield1)
+    const starfield2 = document.createElement("div")
+    starfield2.id = "stars2"
+    bgFXCont.appendChild(starfield2)
+    const starfield3 = document.createElement("div")
+    starfield3.id = "stars3"
+    bgFXCont.appendChild(starfield3)
+}
+
 function setupFX(_type, _num){
     bgFXCont.innerHTML=""
 
@@ -67,11 +98,7 @@ function setupFX(_type, _num){
             FXCreatePixies(50)
             break;
         case "fireflies":
-            for (let i = 0; i<_num; i++){
-                const firefly = document.createElement("div")
-                firefly.classList.add("firefly")
-                bgFXCont.appendChild(firefly)
-            }
+            FXCreateFireFlies(14)
             break;
         case "snowfall":
             break;
@@ -81,6 +108,12 @@ function setupFX(_type, _num){
             const pugDog = document.createElement("div")
             pugDog.id = "gifPug"
             bgFXCont.appendChild(pugDog)
+            break;
+        case "shootingstar":
+            FXCreateShootingStars(20)
+            break;
+        case "energy":
+            FXCreateEnergy()
             break;
     }
     if (document.getElementById("focusModeSwitch").classList.contains("focusModeOn")){
