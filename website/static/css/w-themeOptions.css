@@ -7,28 +7,32 @@
     color: #8392a5;
     /* transition: transform 0.3s ease;  */
     min-height: 20rem;
-    min-width: var(--navbar-width)
+    min-width: var(--navbar-width);
+    /* padding: 5px; */
 }
 #themeOptions.expand-up {
     transform: translateY(-100%); /* Move container upwards */
 }
 
 #themeOptionsCont{
-    background-color: #f0f0f0;
+    border-bottom: 1px solid;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 2.5rem;
     font-style: bold;
-    font-size: 1.4rem;
-    margin: 0;
-    border-radius: 3%;
-    color: black;
+    font-size: 0.8rem;
+    margin: auto;
+    color: #8392a5;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
     }
 
 #themeParticles{
     display: flex;
-    justify-content: center;
+    justify-content: left;
+    margin-left: 20px;
 }
 
 * {
@@ -37,8 +41,13 @@
     font-family: "Albert Sans";
 }
 
+
+
 #soundsOptionsAll{
     display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
 }
 
 #musicPlayerCont{
@@ -48,7 +57,8 @@
 }
 
 .BGMBtn{
-    padding: 0.3rem;
+    padding: 3px 10px;
+    margin: 5px;
 }
 
 .themeOptionsBtn{
@@ -91,8 +101,8 @@
 .togSwitch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 23px;
+    width: 30px;
+    height: 15px;
     margin-right:0.25rem;
 }
 
@@ -141,8 +151,8 @@ transition: .4s;
 .togRound:before {
 position: absolute;
 content: "";
-height: 23px;
-width: 23px;
+height: 15px;
+width: 15px;
 background-color: white;
 -webkit-transition: .4s;
 transition: .4s;
@@ -158,10 +168,21 @@ filter: drop-shadow(0 0 1px)
 }
 
 .dropbtn {
-    background-color: lightgray;
+    background-color:#8392a5;
     filter:drop-shadow(0 0 1px);
     color: black;
     padding: 0.3rem 16px;
+    border-radius: 5px;
+    size: 0.85rem;
+    border: none;
+    margin: 0.7rem;
+  }
+
+  #musicOptions .dropbtn {
+    background-color:#8392a5;
+    filter:drop-shadow(0 0 1px);
+    color: black;
+    padding: 0 20px;
     border-radius: 5px;
     size: 0.85rem;
     border: none;
@@ -185,6 +206,7 @@ filter: drop-shadow(0 0 1px)
     flex-direction: column-reverse;
     top: calc(-200% - 1rem);
     left: 2rem;
+    border-radius: 5px;
     color: #8392a5;
   }
   
@@ -207,17 +229,27 @@ filter: drop-shadow(0 0 1px)
 
   #BGMBarContainer {
     width: 90%;
-    height: 3px;
-    background-color: #ddd;
+    height: 8px;
+    background-color: #9b9b9b;
     position: relative;
     transform: scaleX(-1); /* Flip the container */
     margin: 0.5rem;
+    border-radius: 10px;
   }
   #BGMBar {
     height: 100%;
-    background-color: #76c7c0;
+    background-color: #409bf1;
     width: 0;
     transform-origin: right; /* Set the origin to the right */
+  }
+
+  #BGMtitle {
+    font-size: 0.8rem !important;
+    margin-bottom: 2px;
+  }
+
+  #musicPlayerCont p {
+    font-size: 0.7rem;
   }
 
   
