@@ -91,8 +91,10 @@ function getAccessToken() {
 
 $(document).ready(function () {
   // Set initial tokens
-  const initialAccessToken = "BQByshJIMIFYOntCaMTwhAjrHlctRPwOjU5jADjVFpR726GuN0wEsEOsXcawZit1pQFqhkJIol-DBdIRwYJXCu6K6K54Ib0Q_7MSufkvkduHDq1Th8wyZYy9pJvi6Qsp1_-_lDFmzhfnTW2hcbVyjpl5HJus-j0Ugh2UXo7DTOFoUrQf1AU-qcR7hkNn48SXCdKruKCgEI6nfvCcviqoFA";
-  const initialRefreshToken = "AQAJILD010tDX904I0DAhM67y6ngi9JGDMFUjHbG3nbUVdhkswoiY2vfSywLAkdxOgL4kq5TMYzcacmgww58RCK98aQkRhKuOst5SOsQQjxoByzSoCL3jO0A0lSXWS5xQog";
+  const initialAccessToken =
+    "BQByshJIMIFYOntCaMTwhAjrHlctRPwOjU5jADjVFpR726GuN0wEsEOsXcawZit1pQFqhkJIol-DBdIRwYJXCu6K6K54Ib0Q_7MSufkvkduHDq1Th8wyZYy9pJvi6Qsp1_-_lDFmzhfnTW2hcbVyjpl5HJus-j0Ugh2UXo7DTOFoUrQf1AU-qcR7hkNn48SXCdKruKCgEI6nfvCcviqoFA";
+  const initialRefreshToken =
+    "AQAJILD010tDX904I0DAhM67y6ngi9JGDMFUjHbG3nbUVdhkswoiY2vfSywLAkdxOgL4kq5TMYzcacmgww58RCK98aQkRhKuOst5SOsQQjxoByzSoCL3jO0A0lSXWS5xQog";
   setInitialTokens(initialAccessToken, initialRefreshToken);
 
   // Function to initialize Spotify functionality
@@ -110,7 +112,9 @@ $(document).ready(function () {
     // Function to search Spotify playlists
     function searchSpotify(query) {
       console.log("Searching Spotify with query:", query);
-      const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=playlist&limit=3`;
+      const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+        query
+      )}&type=playlist&limit=3`;
 
       $.ajax({
         url: url,
@@ -125,7 +129,7 @@ $(document).ready(function () {
           console.error("Error searching Spotify:", xhr.responseText);
           if (xhr.status === 401) {
             console.log("Access token expired. Refreshing token...");
-            refreshAccessToken(function() {
+            refreshAccessToken(function () {
               searchSpotify(query); // Retry the request after refreshing the token
             });
           }
@@ -157,7 +161,12 @@ $(document).ready(function () {
         console.log("Result item clicked. URI:", uri);
         updateWidget(uri);
         resultsContainer.hide();
-        $("#widget-container").show();
+        $("#widget-container")
+          .css({
+            display: "flex",
+            "flex-direction": "column", // Show as flex
+          })
+          .show();
         hidePlaylist();
       });
     }
@@ -166,8 +175,27 @@ $(document).ready(function () {
     function updateWidget(uri) {
       console.log("Updating widget with URI:", uri);
       const widget = document.getElementById("spotify-widget");
-      widget.src = `https://open.spotify.com/embed/playlist/${uri.split(":")[2]}`;
+      widget.src = `https://open.spotify.com/embed/playlist/${
+        uri.split(":")[2]
+      }`;
       $("#search-form").hide();
+
+      // Ensure the widget container flexes
+      $("#widget-container").css({
+        display: "flex",
+        "flex-direction": "column",
+        width: "100%",
+        height: "100%",
+        "max-height": "400px",
+      });
+
+      // // Ensure the widget itself flexes
+      $(widget).css({
+        flex: "1",
+        width: "100%",
+        height: "100%",
+        "max-height": "200px",
+      });
     }
 
     // Function to show top playlist
@@ -214,8 +242,10 @@ $(document).ready(function () {
   }
 
   // Reset Spotify functionality
-  document.getElementById("search-form-reset").addEventListener("click", function () {
-    console.log("Reset button clicked.");
-    resetSpotifyFunctionality();
-  });
+  document
+    .getElementById("search-form-reset")
+    .addEventListener("click", function () {
+      console.log("Reset button clicked.");
+      resetSpotifyFunctionality();
+    });
 });
