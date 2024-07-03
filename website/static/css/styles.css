@@ -133,6 +133,11 @@ body {
   max-height: calc(100% - var(--bar-height, 0%) - var(--content-gap));
 }
 
+
+.widget-w-spotify {
+  max-height: 250px;
+}
+
 .notch {
   position: relative;
   background: black;
