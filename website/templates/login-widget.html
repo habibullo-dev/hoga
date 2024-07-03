@@ -129,7 +129,7 @@
           </fieldset>
         </form>
 
-        <form action="/resetpassword" method="post" id="resetForm">
+        <form action="/passwordrecovery" method="post" id="resetForm">
           <fieldset>
             <p>Enter your email to reset your password:</p>
             <input type="email" name="email" placeholder="Email" required />
@@ -176,7 +176,6 @@
           document.getElementById("thankYou").style.display = "none";
           document.getElementById("userlogin").style.display = "block";
           document.querySelector(".head-login p").style.display = "block";
-          console.log("Submitted!")
         });
     </script>
     <script src="../static/js/DOM.js"></script>
