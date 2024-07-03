@@ -176,44 +176,49 @@
                     </div>
               </div>    
             </div>
-            <div id="SFXoptions"> 
-              <div class="dropdown">
-                <button class="dropbtn">Background Sound</button>
-                <div class="dropdown-content">
-                    <a class="selectFXBtn" style="color: red" onclick="(playSFX(e))" data-sfx="cancel">Remove</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="rain">Rain</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="coffeeShop">Coffee Shop</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="office">Office</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="fields">Fields</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="train">Train</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="forest">Forest</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="sea">Sea</a>                    
-                </div>
-              </div> 
+            <div id="soundsOptionsAll">
+              <div id="SFXoptions"> 
+                <div class="dropdown">
+                  <button class="dropbtn">Background Sound</button>
+                  <div class="dropdown-content">
+                      <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-sfx="cancel">Remove</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="rain">Rain</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="Coffee-Shop">Coffee Shop</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="office">Office</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="fields">Fields</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="train">Train</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="forest">Forest</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="sea">Sea</a>                    
+                  </div>
+                </div> 
+              </div>
+              <div id="musicOptions"> 
+                <div class="dropdown">
+                  <button class="dropbtn">🎵 BGM 🎵</button>
+                  <div class="dropdown-content">
+                      <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-music="cancel">Remove</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander Nakarada - Free</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Traveler">Alexander Nakarada - Traveler</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin Macleod - Easy Lemon">Kevin Macleod - Easy Lemon</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin MacLeod - Life of Riley">Kevin MacLeod - Life of Riley</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>                    
+                  </div>
+                </div> 
+              </div>
             </div>
+            <br>
             <div id="musicPlayerCont">
-              <button id="BGMPlayBtn" onclick="playBGM()">Play</button>
-              <button id="BGMPauseBtn" onclick="pauseBGM()">Pause</button>
-              <button id="BGMStopBtn" onclick="stopBGM()">Stop</button>
+              <div id="BGMBtnCont">
+                <button id="BGMStopBtn" onclick="stopBGM()" class="BGMBtn">Stop</button>
+                <button id="BGMPauseBtn" onclick="pauseBGM()" class="BGMBtn">Pause</button>
+                <button id="BGMPlayBtn" onclick="playBGM()" class="BGMBtn">Play</button>
+              </div>
               <div id="BGMBarContainer"> <div id="BGMBar"></div> </div>
-              <div id="BGMtitle"></div>
-              <p>Current Time: <span id="BGMCurrentTime">0:00</span></p>
-              <p>Duration: <span id="BGMDuration">0:00</span></p>
-            </div>
-            <div id="musicOptions"> 
-              <div class="dropdown">
-                <button class="dropbtn">BGM</button>
-                <div class="dropdown-content">
-                    <a class="selectFXBtn" style="color: red" onclick="(playSFX(e))" data-sfx="cancel">Remove</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander Nakarada - Free</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Traveler">Alexander Nakarada - Traveler</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin Macleod - Easy Lemon">Kevin Macleod - Easy Lemon</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin MacLeod - Life of Riley">Kevin MacLeod - Life of Riley</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
-                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>                    
-                </div>
-              </div> 
+              <div id="BGMtitle" style="font-size: 1rem; display: flex; flex-wrap: wrap;"></div>
+              <p>Play Time: <span id="BGMCurrentTime">0:00</span> - <span id="BGMDuration">0:00</span></p>
+              <br>
             </div>
             <div id="themeExtraOptions"></div>
           </div>

@@ -110,15 +110,15 @@ playingBGSFX.loop = true;
 
 
 playingMusic.ontimeupdate = ()=>{
-    const BGMCurrentTime = playingMusic.currentTime;
-    const BGMDuration = playingMusic.duration;
-    const _progressPercent = (BGMCurrentTime / BGMDuration) * 100;
+    const _BGMCurrentTime = playingMusic.currentTime;
+    const _BGMDuration = playingMusic.duration;
+    const _progressPercent = (_BGMCurrentTime / _BGMDuration) * 100;
     BGMBar.style.width = _progressPercent + '%';
-    BGMCurrentTime.textContent = formatTime(BGMCurrentTime);
+    BGMCurrentTime.textContent = formatTime(_BGMCurrentTime);
 };
 
 playingMusic.onloadedmetadata = ()=>{
-    durationDisplay.textContent = formatTime(playingMusic.duration);
+    BGMDuration.textContent = formatTime(playingMusic.duration);
 };
 
 function playBGM(){
@@ -161,6 +161,7 @@ function playSFX(e){
     }else if (e.target.dataset.music){
         playingMusic.pause()
         playingMusic.currentTime = 0
+        BGMtitle.innerHTML = ""
         if (e.target.dataset.music=="cancel"){return}
         playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
         playingMusic.load()
