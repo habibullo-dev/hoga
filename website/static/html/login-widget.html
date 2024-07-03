@@ -248,48 +248,10 @@
         document.getElementById("userlogin").style.display = "block";
         document.querySelector(".head-login p").style.display = "block";
       });
-
-<<<<<<< HEAD
+  </script>
   <script>
-    /*     onStartStrLine();
-    
-        function onStartStrLine() {
-          autoLogin();
-          sessRegenTry();
-        }
-        function autoLogin() {
-          return fetch("/secure_token_req", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-          })
-            .then((res) => res.json())
-            .then((res) => {
-              try {
-                document.querySelector(
-                  "h1"
-                ).innerHTML = `${res.email} - Welcome, ${res.name}`;
-                console.log(res["message"]);
-                user.email = res["email"];
-                user.name = res["name"];
-                delete res["message"];
-                delete res["name"];
-                delete res["email"];
-                dbSettingsBulk = res;
-              } catch {
-                (error) => {
-                  console.log("autologin failed: ", error);
-                  suggestLogin(); //⚠️WIP function does not exist
-                };
-              }
-            });
-        } */
 
-    suggestLogin;
-=======
-    document.getElementById("loginCloseBtn").addEventListener("click", function () {
-      document.getElementById("instructionCard").style.display = "none";
-    });
->>>>>>> 551e5c9cbccfb17c4b5188a553c0949e4697fe03
+    //emptied for now. the onstart functions are already being called from settingsSaveLoad.
   </script>
 </body>
 
