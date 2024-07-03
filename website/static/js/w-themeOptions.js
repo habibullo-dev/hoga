@@ -168,6 +168,21 @@ function stopBGM(){
     playingMusic.src = ""
     BGMtitle.innerHTML = ""
 }
+function volumeBGM(_value){
+    if (_value == "+"){
+        playingMusic.volume +=0.1
+    } else {
+        playingMusic.volume -=0.1
+    }
+}
+
+function volumeSFX(_value){
+    if (_value == "+"){
+        playingBGSFX.volume +=0.1
+    } else {
+        playingBGSFX.volume -=0.1
+    }
+}
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
