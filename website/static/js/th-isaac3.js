@@ -10,11 +10,8 @@ thOptionsHTML = `
 `
 thFuncArr = [th3ScreenFlip1, th3ScreenFlip2]
 
-
-
-
 th3Particles()
-createWidget("w-themeOptions")
+activeThemeSetup()
 
 function th3ScreenFlip1(){
     const th3Screen1 = document.querySelector("#th3Screen1")
@@ -28,19 +25,9 @@ function th3ScreenFlip2(){
     th3Screen2.src = `../static/images/themes/DXM/V001${th3i1}.webp`
 }
 
+async function th3Particles(){ //⚠️⚠️⚠️redo
 
-
-
-
-
-async function th3Particles(){
-
-    for (let i = 0; i<50; i++){
-        const pixieCont = document.createElement("div")
-        pixieCont.innerHTML = `<div class="pixie"></div>`
-        pixieCont.classList.add("pixie-container")
-        bgFXCont.appendChild(pixieCont)
-    }
+    FXCreatePixies(50)
 
     console.log("Content finished loading. deleting Loading Screen")
     loadingScreen.style.opacity="0";

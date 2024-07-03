@@ -8,12 +8,14 @@ window.user = {
 window.dbSettingsBulk = {};
 window.widgetSettingsBulk = {};
 const popupImportant = document.getElementById("popup-important")
+const popupImpWindow = document.getElementById("popup-imp-window")
 const popupImpText = document.getElementById("popup-imp-text")
 const popupImpBtn1 = document.getElementById("popup-button1")
 const popupImpBtn2 = document.getElementById("popup-button2")
 
 function createUrgentPopUp(_innerText, _btn1, _btn2, _btn1Text, _btn2Text){
     popupImportant.style.display= "flex";
+    popupImpWindow.style.display= "flex";
     popupImpText.innerText = _innerText
     popupImpBtn1.addEventListener("click", _btn1)
     popupImpBtn2.addEventListener("click", _btn2)

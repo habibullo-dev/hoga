@@ -97,24 +97,69 @@ async function sessRegenTry() {
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
         await distribWidgetSettings(widgetSettingsBulk) 
         sessDBCompare() //at later date, compare.
-        return
+        return 
     }
-    console.log("Local settings data not found. Resorting to database fetch") //if no local settings, grab from DB directly
+    //ELSE if no local settings, grab from DB directly
+    console.log("Local settings data not found. Resorting to database fetch") 
     if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0) {
         await autoLogin();
+        console.log("done await login")
     }
-    if (dbSettingsBulk){
-    widgetSettingsBulk = dbSettingsBulk
+    if (!dbSettingsBulk.error){
+        console.log("dbsettingsbulk detected. ", dbSettingsBulk)
+        widgetSettingsBulk = dbSettingsBulk
+    } else {
+        //if nothing is set, RING ALARM:
+        alert("BOOO USER HAS NOTHING!")
+        spawnTutorial()
+        //
     }
 }
 
+function spawnTutorial(){
+ /*    
+    
+    fetch(`../static/html/instructions.html`)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error(`Failed to load HTML: ${response.status}`);
+    }
+    return response.text();
+  })
+  .then(async (html) => {
+    // Insert HTML content into the popup
+    popupImpWindow.style.display = "none";
+    popupImportant.style.display = "flex";
+    
+    let tutoCont = document.createElement("div")
+    tutoCont.innerHTML = html
+    popupImportant.appendChild(tutoCont)
+
+    // Wait for DOMContentLoaded event on the inserted HTML
+    tutoCont.addEventListener('DOMContentLoaded', (event) => {
+      // This block will run when DOMContentLoaded event fires
+      console.log('DOMContentLoaded event fired for dynamically loaded content');
+      // You can execute additional logic here if needed
+    });
+
+    // If DOMContentLoaded has already fired for the inserted HTML
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      console.log('DOMContentLoaded event already fired for main document');
+      // Execute additional logic immediately if needed
+    }
+  })
+  .catch((error) => {
+    console.error('Error loading HTML:', error);
+    // Handle error if needed
+  });  */
+}
 
 
 async function sessDBCompare() {
     await autoLogin();
     let conflictors = []
     if (widgetSettingsBulk) {
-        if (dbSettingsBulk) {
+        if (!dbSettingsBulk.error) {
             for (const key of Object.keys(dbSettingsBulk)) { //compare settings from DB and local, and ask user to choose which one to select.
                 if (dbSettingsBulk[key] != widgetSettingsBulk[key]) {
                     //⚠️RETURNS CALL TO ACTION FROM USER

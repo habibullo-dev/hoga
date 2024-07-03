@@ -1,4 +1,4 @@
-window.themeOptions = document.querySelector("#customThemeOptions") //store the name of the theme options container.
+
 console.log("!!THEMEOPTIONS WAS JUST DEFINED? ", themeOptions)
 const selectFXBtn = Array.from(document.querySelectorAll(".selectFXBtn")) //⚠️ obsolete?
 
@@ -16,11 +16,12 @@ document.querySelector("#focusModeSwitch").addEventListener("click", ()=>{ //To 
         loadingScreen.innerHTML=""
     }
 })
-activeThemeSetup()
+//activeThemeSetup()
 
 
 
-//Theme options widget function - global-level
+
+//Theme options widget function - global-level ⚠️⚠️⚠️
 async function activeThemeSetup(){
     console.log("!! ACTIVETHEMESETUP FUNC RAN")
     /* await createWidget("w-themeOptions") */
@@ -32,7 +33,7 @@ async function activeThemeSetup(){
     console.log("!! WIDGETSETTINGSBULK CURRENTTHEME:", widgetSettingsBulk.currentTheme)
 
 
-    themeOptions.innerHTML = _innerHTML;
+    themeExtraOptions.innerHTML = _innerHTML;
     const themeClickables = Array.from(document.querySelectorAll(".thOptionClickable"))
     themeClickables.forEach((clickable, i)=>{
         try {
@@ -41,10 +42,20 @@ async function activeThemeSetup(){
             console.log(error, ` - Index ${i} out of bounds for _funcArr? `, _funcArr, " - Double-check: ", _funcArr[i])
         }
     })
+    if (themeOptions.classList.contains("display-toggle")){
+        themeOptions.classList.toggle("display-toggle")
+    }
     console.log("Finished setting up clickables for your option theme.", _funcArr)
 }
 
-
+function FXCreatePixies(_num){
+    for (let i = 0; i<_num; i++){
+        const pixieCont = document.createElement("div")
+        pixieCont.innerHTML = `<div class="pixie"></div>`
+        pixieCont.classList.add("pixie-container")
+        bgFXCont.appendChild(pixieCont)
+    }
+}
 
 function setupFX(_type, _num){
     bgFXCont.innerHTML=""
@@ -53,12 +64,7 @@ function setupFX(_type, _num){
         case "cancel":
             return;
         case "pixie":
-            for (let i = 0; i<_num; i++){
-                const pixieCont = document.createElement("div")
-                pixieCont.innerHTML = `<div class="pixie"></div>`
-                pixieCont.classList.add("pixie-container")
-                bgFXCont.appendChild(pixieCont)
-            }
+            FXCreatePixies(50)
             break;
         case "fireflies":
             for (let i = 0; i<_num; i++){
@@ -83,4 +89,85 @@ function setupFX(_type, _num){
         loadingScreen.innerHTML=""
     }
     
+}
+
+/* SFX AND MUSIC PLAYERS */
+
+let playingMusic = new Audio();
+playingMusic.onpause = function (){}
+playingMusic.onplay = function (){}
+playingMusic.onended = function (){}
+
+const BGMBar = document.getElementById('BGMBar');
+const BGMBarContainer = document.getElementById('BGMBarContainer');
+const BGMCurrentTime = document.getElementById('BGMCurrentTime');
+const BGMDuration = document.getElementById('BGMDuration');
+const BGMtitle = document.getElementById(`BGMtitle`)
+
+let playingBGSFX = new Audio();
+playingBGSFX.loop = true;
+
+
+
+playingMusic.ontimeupdate = ()=>{
+    const _BGMCurrentTime = playingMusic.currentTime;
+    const _BGMDuration = playingMusic.duration;
+    const _progressPercent = (_BGMCurrentTime / _BGMDuration) * 100;
+    BGMBar.style.width = _progressPercent + '%';
+    BGMCurrentTime.textContent = formatTime(_BGMCurrentTime);
+};
+
+playingMusic.onloadedmetadata = ()=>{
+    BGMDuration.textContent = formatTime(playingMusic.duration);
+};
+
+function playBGM(){
+    if (playingMusic.src){
+        playingMusic.play();
+    }
+}
+function pauseBGM(){
+    playingMusic.pause();
+}
+function stopBGM(){
+    playingMusic.pause()
+    playingMusic.currentTime = 0
+    playingMusic.src = ""
+    BGMtitle.innerHTML = ""
+}
+
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return minutes + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+BGMBarContainer.addEventListener('click', function(e) {
+    const rect = BGMBarContainer.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const totalWidth = rect.width;
+    const seekTime = (offsetX / totalWidth) * playingMusic.duration;
+    playingMusic.currentTime = seekTime;
+});
+
+function playSFX(e){
+    if(e.target.dataset.sfx){
+        playingBGSFX.pause()
+        playingBGSFX.currentTime = 0
+        if (e.target.dataset.sfx=="cancel"){return}
+        playingBGSFX.src = `../static/sound/SFX/${e.target.dataset.sfx}.ogg`
+        playingBGSFX.load()
+        playingBGSFX.play()
+    }else if (e.target.dataset.music){
+        playingMusic.pause()
+        playingMusic.currentTime = 0
+        BGMtitle.innerHTML = ""
+        if (e.target.dataset.music=="cancel"){return}
+        playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
+        playingMusic.load()
+        playingMusic.play()
+        BGMtitle.innerHTML = `${e.target.dataset.music}`
+    }
+        
+
 }

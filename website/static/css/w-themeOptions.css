@@ -1,6 +1,18 @@
 #themeOptions{
     overflow-y: visible;
+    background-color: black;
+    right: calc(-1*var(--navbar-width) - 70px);
+    bottom: 0;
+    position: absolute;
+    color: #8392a5;
+    transition: transform 0.3s ease; 
+    min-height: 40px;
+    min-width: 310px;
 }
+#themeOptions.expand-up {
+    transform: translateY(-100%); /* Move container upwards */
+}
+
 #themeOptionsCont{
     background-color: #f0f0f0;
     display: flex;
@@ -11,17 +23,32 @@
     font-size: 1.4rem;
     margin: 0;
     border-radius: 3%;
+    color: black;
     }
 
 #themeParticles{
     display: flex;
-
+    justify-content: center;
 }
 
 * {
     padding: 0;
     margin: 0;
     font-family: "Albert Sans";
+}
+
+#soundsOptionsAll{
+    display: flex;
+}
+
+#musicPlayerCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.BGMBtn{
+    padding: 0.3rem;
 }
 
 .themeOptionsBtn{
@@ -55,9 +82,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    size: 0.85rem;
+    size: 1.3rem;
     font-weight: bold;
-    margin: 0.5rem 0;
+    margin-bottom: 0.7rem 0;
 }
 
 
@@ -66,7 +93,7 @@
     display: inline-block;
     width: 40px;
     height: 23px;
-    margin-left: 1rem;
+    margin-right:0.25rem;
 }
 
 .togSwitch input {
@@ -96,6 +123,7 @@ border-radius: 34px;
 
 .togRound:before {
 border-radius: 50%;
+left: -1px;
 }
 
 .togRound {
@@ -125,7 +153,7 @@ filter: drop-shadow(0 0 1px)
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0.2rem;
+    margin: 0.2rem 0;
 
 }
 
@@ -134,6 +162,7 @@ filter: drop-shadow(0 0 1px)
     filter:drop-shadow(0 0 1px);
     color: black;
     padding: 0.3rem 16px;
+    border-radius: 5px;
     size: 0.85rem;
     border: none;
     margin: 0.7rem;
@@ -148,23 +177,46 @@ filter: drop-shadow(0 0 1px)
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 7rem;
+    min-width: 15rem;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 9999;
     overflow-y: scroll;
-    max-height: 5rem;
+    max-height: 20rem;
+    flex-direction: column-reverse;
+    top: calc(-200% - 5rem);
+    color: #8392a5;
   }
   
   .dropdown-content a {
-    color: black;
+    color: #8392a5;
     padding: 5px 5px;
     text-decoration: none;
-    display: block;
+    display: flex;
+    justify-content: flex-end;
     pointer-events: auto; 
   }
   
   .dropdown-content a:hover {background-color: #ddd;}
   
-  .dropdown:hover .dropdown-content {display: block;  position: absolute; z-index: 9999; }
+  .dropdown:hover .dropdown-content {display: flex;  position: absolute; z-index: 9999; }
   
   .dropdown:hover .dropbtn {background-color: rgba(150, 150, 150, 0.8);}
+
+
+
+  #BGMBarContainer {
+    width: 90%;
+    height: 3px;
+    background-color: #ddd;
+    position: relative;
+    transform: scaleX(-1); /* Flip the container */
+    margin: 0.5rem;
+  }
+  #BGMBar {
+    height: 100%;
+    background-color: #76c7c0;
+    width: 0;
+    transform-origin: right; /* Set the origin to the right */
+  }
+
+  

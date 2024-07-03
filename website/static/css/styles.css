@@ -133,6 +133,11 @@ body {
   max-height: calc(100% - var(--bar-height, 0%) - var(--content-gap));
 }
 
+
+.widget-w-spotify {
+  max-height: 250px;
+}
+
 .notch {
   position: relative;
   background: black;
@@ -551,16 +556,17 @@ label[for="nav-toggle"] {
 }
 
 #nav-content {
-  margin: -16px 0;
+  margin: -16px 0 0 0;
   padding: 16px 0;
   position: relative;
   flex: 1;
   width: var(--navbar-width);
   background: var(--navbar-dark-primary);
-  box-shadow: 0 0 0 16px var(--navbar-dark-primary);
+/*   box-shadow: 0 0 0 16px var(--navbar-dark-primary); */
   direction: rtl;
   /* verflow-x: hidden; */
   transition: width 0.2s;
+  border-radius: 0 20px 20px 20px;
 }
 #nav-content::-webkit-scrollbar {
   width: 8px;
@@ -608,8 +614,9 @@ label[for="nav-toggle"] {
   transition: top 0.2s;
   position: absolute;
   right: calc(-1*var(--navbar-width));
-  top: calc(var(--navbar-width)/1.2);
+  top: calc(var(--navbar-width)/0.8);
 }
+
 
 #current-theme{/* 🚧NEW CSS */
   position: absolute;
@@ -717,8 +724,9 @@ label[for="nav-toggle"] {
   border-radius: var(--border-radius);
   background-color: white;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  width: 45rem;
+  min-width: 45rem;
   height: 30rem;
 }
 #popup-imp-text{
@@ -727,7 +735,7 @@ label[for="nav-toggle"] {
 }
 .popup-button{
   min-width: 9rem;
-  min-height: 1.8rem;
+  height: 1.8rem;
   background-color: rgba(200,200,200,0.9);
 }
 .popup-button:hover{

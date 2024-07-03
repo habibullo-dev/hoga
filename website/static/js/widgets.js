@@ -602,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function getInitialSize(widgetId) {
     switch (widgetId) {
       case "w-spotify":
-        return { width: 300, height: "" };
+        return { width: 300, height: "fit-content" };
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
@@ -1003,15 +1003,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
-  //TEST
-  const themeOptionsBtn = document.getElementById("w-themeOptions")
-  themeOptionsBtn.addEventListener("click", function (){toggleWidgetState(themeOptionsBtn)})
-
-/*   console.log("!!WHAT IS THEMEOPTIONS AT, ACTIVE?", widgetSettingsBulk["w-themeOptions"])
-  if (!widgetSettingsBulk["w-themeOptions"]["active"]){
-    toggleWidgetState(themeOptionsBtn, noCreate)
-    console.log("!!YES IT WAS ACTIVE NOW DID THE TOGGLE WORKKKK")
-  } */
+ 
 
 });
 

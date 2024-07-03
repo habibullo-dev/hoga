@@ -13,6 +13,8 @@ let th3i2 = 0
 
 window.thKillSwitch;
 window.loadingScreen = document.createElement("div")
+
+
 loadingScreen.id="loadSCreenCont"
 let loadBars = Array.from(document.querySelectorAll(".loadInner"))
 const parentGrid = document.getElementById("grid-container")
@@ -24,7 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const thDevBtn = document.getElementById("dev-pick-button")
     const thDevPicks = document.getElementById("nav-dev-picks")
+    const themeOptionsBtn = document.getElementById("w-themeOptions")
     const themesBtnArr = Array.from(thDevPicks.children)
+    const themeOptions = document.querySelector("#themeOptions") //store the name of the theme options container.
+    const themeExtraOptions = document.querySelector("#themeExtraOptions")
+
+    Array.from(document.querySelectorAll(".themeSwitch")).forEach((btn)=>{
+        btn.addEventListener("click", ()=>{themeExtraOptions.innerHTML = ""})
+    })
 
 /*     themeOptionsBtn.addEventListener("click", ()=>{
         console.log("!!WIDGETSETTINGSBULK STATUS", widgetSettingsBulk)
@@ -41,16 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }) */
 
     
-
-    themesBtnArr.forEach((theme)=>{
-        if (theme.classList.contains('themeSwitch')){
+    Array.from(document.querySelectorAll(".themeSwitch")).forEach((theme)=>{
+        
             
 
             const _th = theme.dataset.themename
             console.log("THEME DETECT? ", _th)
             theme.addEventListener("click", ()=>{console.log("At button click time, what is _th? ", _th)
             loadThemeSet(`../static/css/${_th}.css`, `../static/js/${_th}.js`, `../static/html/${_th}.html`, _th)})
-        }
+        
     })
 
     thDevBtn.addEventListener("click", ()=>{
@@ -58,6 +66,13 @@ document.addEventListener("DOMContentLoaded", function () {
         thDevPicks.classList.toggle("display-toggle")
     })
 
+
+    
+    themeOptionsBtn.addEventListener("click", ()=>{
+
+        themeOptions.classList.toggle("display-toggle")
+        /* themeOptions.classList.toggle("expand-up") */
+    })
 
 })
 
