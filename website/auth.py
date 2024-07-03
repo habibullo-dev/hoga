@@ -25,7 +25,7 @@ db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1/final 
 smtp_obj = smtplib.SMTP('smtp.gmail.com')
 smtp_obj.ehlo()
 smtp_obj.starttls()
-smtp_obj.login("hogadashboard@gmail.com", "rarv jjoq frpr tbxh") #can use the variable password instead of the actual password
+smtp_obj.login("hogadashboard@gmail.com", "zpos ucbu bcep litr") #can use the variable password instead of the actual password
 
 #GEMINI RELATED CONTENT
 os.environ["API_KEY"] = "AIzaSyAWSgpgHCZ-LyCPGTkvvX_OBP1H9RSEDhI"
@@ -235,44 +235,6 @@ def createlinegraph():
         conn.execute()
 
 #PASSWORD RECOVERY FOR USER
-@auth_bp.post("/passwordrecovery")
-def passwordrecovery():
-    try:
-        rand_hash = str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20)))
-        email = request.form.get("email").lower()
-        with db.begin() as conn:
-            conn.execute(text("UPDATE user SET hash = :hash, hash_expiration = :hash_expiration WHERE email = :email"), {
-                "hash": rand_hash,
-                "hash_expiration" : datetime.now() + timedelta(minutes=30),
-                "email": email
-            })
-            res = conn.execute(text("SELECT email, hash, name FROM user WHERE email = :email"), {
-                "email": email
-            })
-            for acct in res:
-                if acct:
-                    from_address = "hogadashboard@gmail.com"
-                    to_address = acct.email
-                    subject = "You have sent a request to reset your password " + acct.name
-                    message_body = f"""<body>
-                    Please follow the following instructions to reset the password to your account.
-                    Please click <a href='http://127.0.0.1:5000/passwordrecovery/{acct.hash}'>here</a> to reset your password.
-                    </body>"""
-
-                    msg = MIMEMultipart()
-                    msg['From'] = from_address
-                    msg['To'] = to_address
-                    msg['Subject'] = subject
-
-                    message = MIMEText(message_body, 'html')
-                    msg.attach(message)
-
-                    smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                    return {"message": "Your password has been reset"}
-                else:
-                    return {"error": "Account does not exist"}
-    except:
-        return {"error": "There was an error with resetting your password. Please check to see if your email is correct"}
 
 @auth_bp.get("/passwordrecovery/<hash>")
 def passwordrecover(hash):
