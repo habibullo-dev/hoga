@@ -1,6 +1,6 @@
 //⚠️Untested - 6/19/2024
 
-
+window.autologinAttempt=false;
 
 
 
@@ -30,7 +30,12 @@ function overwriteLocal() {
     location.reload(true);
 }
 
-function autoLogin() { //brings in everything about user from DB EXCEPT private information.
+async function autoLogin() { //brings in everything about user from DB EXCEPT private information.
+    if (autologinAttempt){
+        console.log("Warning - Autologin was attempted during this session. Cancelling operation.")
+        return
+    }
+    autologinAttempt = true
     try {
         return fetch("/secure_token_req", {
             method: "POST",
@@ -43,23 +48,32 @@ function autoLogin() { //brings in everything about user from DB EXCEPT private 
                     try {
                         // document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
                         console.log("COOKIE RESPONSE", res["message"])
-                        user.email = res["email"]
-                        user.name = res["name"]
-                        delete res["message"]
-                        delete res["name"]
-                        delete res["email"]
-                        dbSettingsBulk = res
+                        if (res["message"]){
+                            console.log("!!COOKIE has retrieved message - ", res["message"])
+                            user.email = res["email"]
+                            user.name = res["name"]
+                            delete res["message"]
+                            delete res["name"]
+                            delete res["email"]
+                            dbSettingsBulk = res
+                            return
+                        } else {
+                            console.log("autologin was not available");
+                            promptLogin()
+                            return
+                        }
                     } catch (error) {
                         // (error) => {
                         console.log("autologin failed: ", error);
-                        suggestLogin(); //⚠️WIP function does not exist
                     }
                 }
             }).catch(error => console.error('Mainline error fetching or parsing data:', error))
     } catch (error) {
         console.log("Mainline error connecting to database: ", error)
-        resolve();
+        
+        
     }
+    promptLogin()
 }
 
 
@@ -116,13 +130,39 @@ async function sessRegenTry() {
     }
 }
 
+//🚧LOGIN WIDGET
+function promptLogin() {
+    fetch(`../static/html/login-widget.html`)
+    .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to load Login Widget HTML: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(async (html) => {
+        // Insert HTML content into the popup
+        popupImpWindow.style.display = "none";
+        popupImportant.style.display = "flex";
+        
+        let loginCont = document.createElement("div")
+        loginCont.innerHTML = html
+        popupSpecial.appendChild(loginCont)
+
+      })
+      .catch((error) => {
+        console.error('Error loading Login Widget HTML:', error);
+        // Handle error if needed
+      });  
+}
+
+//🚧TUTORIAL
 function spawnTutorial() {
     /*    
        
        fetch(`../static/html/instructions.html`)
      .then((response) => {
        if (!response.ok) {
-         throw new Error(`Failed to load HTML: ${response.status}`);
+         throw new Error(`Failed to load Instructions HTML: ${response.status}`);
        }
        return response.text();
      })
@@ -133,7 +173,7 @@ function spawnTutorial() {
        
        let tutoCont = document.createElement("div")
        tutoCont.innerHTML = html
-       popupImportant.appendChild(tutoCont)
+       popupSpecial.appendChild(tutoCont)
    
        // Wait for DOMContentLoaded event on the inserted HTML
        tutoCont.addEventListener('DOMContentLoaded', (event) => {
@@ -163,7 +203,6 @@ async function sessDBCompare() {
             for (const key of Object.keys(dbSettingsBulk)) { //compare settings from DB and local, and ask user to choose which one to select.
                 if (dbSettingsBulk[key] != widgetSettingsBulk[key]) {
                     //⚠️RETURNS CALL TO ACTION FROM USER
-                    //"SYNCRHONIZING SETTINGS"
                     console.log(`Found discrepancy between local storage and database settings: DB ${dbSettingsBulk[key]} and Local ${widgetSettingsBulk[key]}`)
                     conflictors.push(dbSettingsBulk[key])
                     conflictors.push(widgetSettingsBulk[key])

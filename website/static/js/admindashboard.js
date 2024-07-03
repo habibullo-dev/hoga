@@ -30,3 +30,5 @@ new Chart(ctx, {
         }
     }
 });
+
+fetch("")
