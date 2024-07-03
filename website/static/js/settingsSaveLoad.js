@@ -17,13 +17,13 @@ tasklist_setting
 mood_setting
 */
 
-function overwriteDB(){
+function overwriteDB() {
     dbSettingsBulk = widgetSettingsBulk
     saveSettings()
     console.log("local settings overwriting DB")
 }
 
-function overwriteLocal(){
+function overwriteLocal() {
     widgetSettingsBulk = dbSettingsBulk
     localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
     console.log("DB settings overwriting local")
@@ -95,17 +95,17 @@ async function sessRegenTry() {
     //unpack whatever was fetched from DB
     if (localStorage.hogaWidgetData) {
         widgetSettingsBulk = JSON.parse(localStorage.hogaWidgetData) //access local machine settings and store in var
-        await distribWidgetSettings(widgetSettingsBulk) 
+        await distribWidgetSettings(widgetSettingsBulk)
         sessDBCompare() //at later date, compare.
-        return 
+        return
     }
     //ELSE if no local settings, grab from DB directly
-    console.log("Local settings data not found. Resorting to database fetch") 
+    console.log("Local settings data not found. Resorting to database fetch")
     if (Object.getOwnPropertyNames(dbSettingsBulk).length === 0) {
         await autoLogin();
         console.log("done await login")
     }
-    if (!dbSettingsBulk.error){
+    if (!dbSettingsBulk.error) {
         console.log("dbsettingsbulk detected. ", dbSettingsBulk)
         widgetSettingsBulk = dbSettingsBulk
     } else {
@@ -116,42 +116,42 @@ async function sessRegenTry() {
     }
 }
 
-function spawnTutorial(){
- /*    
-    
-    fetch(`../static/html/instructions.html`)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`Failed to load HTML: ${response.status}`);
-    }
-    return response.text();
-  })
-  .then(async (html) => {
-    // Insert HTML content into the popup
-    popupImpWindow.style.display = "none";
-    popupImportant.style.display = "flex";
-    
-    let tutoCont = document.createElement("div")
-    tutoCont.innerHTML = html
-    popupImportant.appendChild(tutoCont)
-
-    // Wait for DOMContentLoaded event on the inserted HTML
-    tutoCont.addEventListener('DOMContentLoaded', (event) => {
-      // This block will run when DOMContentLoaded event fires
-      console.log('DOMContentLoaded event fired for dynamically loaded content');
-      // You can execute additional logic here if needed
-    });
-
-    // If DOMContentLoaded has already fired for the inserted HTML
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      console.log('DOMContentLoaded event already fired for main document');
-      // Execute additional logic immediately if needed
-    }
-  })
-  .catch((error) => {
-    console.error('Error loading HTML:', error);
-    // Handle error if needed
-  });  */
+function spawnTutorial() {
+    /*    
+       
+       fetch(`../static/html/instructions.html`)
+     .then((response) => {
+       if (!response.ok) {
+         throw new Error(`Failed to load HTML: ${response.status}`);
+       }
+       return response.text();
+     })
+     .then(async (html) => {
+       // Insert HTML content into the popup
+       popupImpWindow.style.display = "none";
+       popupImportant.style.display = "flex";
+       
+       let tutoCont = document.createElement("div")
+       tutoCont.innerHTML = html
+       popupImportant.appendChild(tutoCont)
+   
+       // Wait for DOMContentLoaded event on the inserted HTML
+       tutoCont.addEventListener('DOMContentLoaded', (event) => {
+         // This block will run when DOMContentLoaded event fires
+         console.log('DOMContentLoaded event fired for dynamically loaded content');
+         // You can execute additional logic here if needed
+       });
+   
+       // If DOMContentLoaded has already fired for the inserted HTML
+       if (document.readyState === 'complete' || document.readyState === 'interactive') {
+         console.log('DOMContentLoaded event already fired for main document');
+         // Execute additional logic immediately if needed
+       }
+     })
+     .catch((error) => {
+       console.error('Error loading HTML:', error);
+       // Handle error if needed
+     });  */
 }
 
 
@@ -164,12 +164,12 @@ async function sessDBCompare() {
                 if (dbSettingsBulk[key] != widgetSettingsBulk[key]) {
                     //⚠️RETURNS CALL TO ACTION FROM USER
                     //"SYNCRHONIZING SETTINGS"
-                    console.log(`Found discrepancy between local storage and database settings: DB ${dbSettingsBulk[key]} and Local ${widgetSettingsBulk[key]}` )
+                    console.log(`Found discrepancy between local storage and database settings: DB ${dbSettingsBulk[key]} and Local ${widgetSettingsBulk[key]}`)
                     conflictors.push(dbSettingsBulk[key])
                     conflictors.push(widgetSettingsBulk[key])
                 }
             }
-            if(conflictors.length>0){
+            if (conflictors.length > 0) {
                 createUrgentPopUp(`Warning: HOGA has detected some conflicts between the settings stored in our server database and that of your browser. Whilst there is a stronger possibility your browser settings are more up to date, you may select which source to recover from.`, overwriteDB, overwriteLocal, "Local Settings", "Server Settings")
             }
         }
