@@ -132,6 +132,10 @@ async function sessRegenTry() {
 
 //🚧LOGIN WIDGET
 function promptLogin() {
+
+    popupImportant.style.display = "flex";   
+    popupImpWindow.style.display = "none";
+
     fetch(`../static/html/login-widget.html`)
     .then((response) => {
         if (!response.ok) {
@@ -141,8 +145,6 @@ function promptLogin() {
       })
       .then(async (html) => {
         // Insert HTML content into the popup
-        popupImpWindow.style.display = "none";
-        popupImportant.style.display = "flex";
         
         let loginCont = document.createElement("div")
         loginCont.innerHTML = html
@@ -152,7 +154,8 @@ function promptLogin() {
       .catch((error) => {
         console.error('Error loading Login Widget HTML:', error);
         // Handle error if needed
-      });  
+      });   
+
 }
 
 //🚧TUTORIAL
