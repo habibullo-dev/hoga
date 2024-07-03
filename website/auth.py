@@ -218,7 +218,7 @@ def adminlogin():
                     total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
                     total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
                     revenue_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
-                    revenue_per_user = 0
+                    revenue_per_user = 10
                     for user in revenue_users_data:
                         total_revenue = user.count * revenue_per_user
                     return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data, total_revenue = total_revenue)
@@ -227,6 +227,12 @@ def adminlogin():
                 return render_template("admin.html", error_msg=error_msg)
     else:
         return render_template("admin.html")
+    
+#PATH TO FETCH DATA TO CREATE LINE GRAPH
+@auth_bp.get("/createlinegraph")
+def createlinegraph():
+    with db.begin() as conn:
+        conn.execute()
 
 #PASSWORD RECOVERY FOR USER
 @auth_bp.post("/passwordrecovery")
