@@ -3,9 +3,10 @@
 }
 
 body {
-    background-image: url("../images/waves.jpg");
+    background-image: url("../images/waves.jpg"), linear-gradient(rgba(0, 0, 0, 0.3),rgba(0,0,0,0.3));
+    background-blend-mode: overlay;
     background-size: cover;
-    background-color: #fff;
+    /* background-color: #fff; */
     margin: 0;
     display: flex;
     justify-content: center;
@@ -35,11 +36,11 @@ form {
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     color: #fff;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     border-radius: 10px;
     max-width: 400px;
     width: 100%;
-    margin-bottom: 20px;
+    margin: 0;
 }
 
 fieldset {
@@ -75,4 +76,14 @@ button {
 
 button:hover {
     background: #52E9F0;
+}
+
+.captchaContainer {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.hidden { 
+    display: none; 
 }
