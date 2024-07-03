@@ -133,6 +133,11 @@ body {
   max-height: calc(100% - var(--bar-height, 0%) - var(--content-gap));
 }
 
+
+.widget-w-spotify {
+  max-height: 250px;
+}
+
 .notch {
   position: relative;
   background: black;
@@ -551,16 +556,17 @@ label[for="nav-toggle"] {
 }
 
 #nav-content {
-  margin: -16px 0;
+  margin: -16px 0 0 0;
   padding: 16px 0;
   position: relative;
   flex: 1;
   width: var(--navbar-width);
   background: var(--navbar-dark-primary);
-  box-shadow: 0 0 0 16px var(--navbar-dark-primary);
+/*   box-shadow: 0 0 0 16px var(--navbar-dark-primary); */
   direction: rtl;
   /* verflow-x: hidden; */
   transition: width 0.2s;
+  border-radius: 0 20px 20px 20px;
 }
 #nav-content::-webkit-scrollbar {
   width: 8px;

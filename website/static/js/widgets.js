@@ -602,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function getInitialSize(widgetId) {
     switch (widgetId) {
       case "w-spotify":
-        return { width: 300, height: "" };
+        return { width: 300, height: "fit-content" };
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
