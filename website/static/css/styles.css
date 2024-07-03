@@ -562,7 +562,7 @@ label[for="nav-toggle"] {
   flex: 1;
   width: var(--navbar-width);
   background: var(--navbar-dark-primary);
-  box-shadow: 0 0 0 16px var(--navbar-dark-primary);
+/*   box-shadow: 0 0 0 16px var(--navbar-dark-primary); */
   direction: rtl;
   /* verflow-x: hidden; */
   transition: width 0.2s;
