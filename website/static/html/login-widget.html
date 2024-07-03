@@ -8,10 +8,16 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> 551e5c9cbccfb17c4b5188a553c0949e4697fe03
   <style>
     * {
       font-family: "Albert Sans";
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     .card {
@@ -21,6 +27,13 @@
       backdrop-filter: blur(10px);
       color: rgb(61, 61, 61);
       border-radius: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      position: relative;
+    }
+
+    fieldset {
+      border: none;
     }
 
     h5 {
@@ -34,41 +47,51 @@
       backdrop-filter: blur(10px);
       color: rgb(54, 54, 54);
       border-radius: 0 0 10px 10px;
+      padding: 15px;
     }
 
     p {
       margin-top: 5px;
       font-size: 0.85rem;
       font-weight: 300;
-      padding: 0 20px;
+      text-align: center;
     }
 
     .card-header {
       color: #363636;
       border-radius: 15px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     .head-login {
       margin-bottom: -20px;
       text-align: center;
       padding: 5px;
-      display: block;
-      text-align: center;
     }
 
     .buttons-btm button {
       border-radius: 10px;
       font-size: 0.8rem;
       border: none;
+      padding: 8px 12px;
+      cursor: pointer;
     }
 
     .card img {
-      display: flex;
-      justify-items: center;
-      margin: auto;
+      display: block;
+      margin: 10px auto;
+      max-width: 100%;
     }
 
     .reset-btn {
+      background-color: rgb(191, 9, 9);
+      color: white;
+    }
+
+    #resetPasswordBtn {
       background-color: rgb(191, 9, 9);
     }
 
@@ -82,11 +105,11 @@
       display: flex;
       font-family: "Albert Sans";
       font-size: 0.8rem;
-      padding: 3px 10px;
+      padding: 5px 10px;
       border-radius: 10px;
       border: 1px solid rgb(188, 188, 188);
-      justify-items: center;
-      margin: 5px auto;
+      width: 100%;
+      margin: 5px 0;
     }
 
     #resetForm,
@@ -109,11 +132,48 @@
       right: 0.3rem;
       border-radius: 20%;
       border: 1px solid grey;
+      background-color: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     #loginCloseBtn:hover {
       background-color: #363636;
       color: white;
+    }
+
+    .btn-secondary {
+      background-color: rgb(109, 160, 205);
+      color: white;
+    }
+
+    .d-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mt-2 {
+      margin-top: 10px;
+    }
+
+    .mt-3 {
+      margin-top: 15px;
+    }
+
+    .mx-2 {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .justify-content-evenly {
+      justify-content: space-evenly;
+    }
+
+    .justify-content-center {
+      justify-content: center;
     }
   </style>
 </head>
@@ -122,8 +182,13 @@
   <div class="card" id="instructionCard">
     <div class="card-body">
       <div class="head-login">
-        <button id="loginCloseBtn" onclick="popupImportant.style.display = 'none';">X</button>
+<<<<<<< HEAD
+        <button id="loginCloseBtn">X</button>
         <img src="../images/logo-rev.png" style="width: 40%" alt="" />
+=======
+        <button id="loginCloseBtn" onclick="popupImportant.style.display = 'none';">X</button>
+        <img src="../static/images/logo-rev.png" style="width: 40%" alt="" />
+>>>>>>> origin/main
         <p>Please login to your account</p>
       </div>
 
@@ -138,7 +203,7 @@
                 Login
               </button>
               <button type="button" class="btn btn-secondary mt-3 mx-2 reset-btn" id="resetPasswordBtn">
-                Reset Password
+                Reset
               </button>
             </div>
           </div>
@@ -187,8 +252,8 @@
         document.getElementById("userlogin").style.display = "block";
         document.querySelector(".head-login p").style.display = "block";
       });
-  </script>
 
+<<<<<<< HEAD
   <script>
     /*     onStartStrLine();
     
@@ -224,6 +289,11 @@
         } */
 
     suggestLogin;
+=======
+    document.getElementById("loginCloseBtn").addEventListener("click", function () {
+      document.getElementById("instructionCard").style.display = "none";
+    });
+>>>>>>> 551e5c9cbccfb17c4b5188a553c0949e4697fe03
   </script>
 </body>
 
