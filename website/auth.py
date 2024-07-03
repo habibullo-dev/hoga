@@ -53,6 +53,10 @@ def savesettings():
             "tasklist_list": request.json.get("tasklist_list"),
             "email": request.json.get("email")
         })
+#RENDER TEMPLATE FOR REGISTRATION
+@auth_bp.get("/register")
+def register():
+    return render_template("register.html")
 
 #REGISTRATION FOR USER
 @auth_bp.post("/registeruser")
@@ -274,6 +278,11 @@ def adminlogout():
             "email": request.json.get("email")
         })
         return redirect(url_for("auth.admin"))
+    
+#LANDING PAGE
+@auth_bp.get("/landingpage")
+def landingpage():
+    return render_template("landing.html")
     
     
 #Session restore through token identification
