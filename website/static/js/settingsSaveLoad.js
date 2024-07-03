@@ -49,28 +49,31 @@ async function autoLogin() { //brings in everything about user from DB EXCEPT pr
                         // document.querySelector("h1").innerHTML = `${res.email} - Welcome, ${res.name}`
                         console.log("COOKIE RESPONSE", res["message"])
                         if (res["message"]){
+                            console.log("!!COOKIE has retrieved message - ", res["message"])
                             user.email = res["email"]
                             user.name = res["name"]
                             delete res["message"]
                             delete res["name"]
                             delete res["email"]
                             dbSettingsBulk = res
+                            return
                         } else {
                             console.log("autologin was not available");
                             promptLogin()
+                            return
                         }
                     } catch (error) {
                         // (error) => {
                         console.log("autologin failed: ", error);
-                        promptLogin()
                     }
                 }
             }).catch(error => console.error('Mainline error fetching or parsing data:', error))
     } catch (error) {
         console.log("Mainline error connecting to database: ", error)
         
-        resolve();
+        
     }
+    promptLogin()
 }
 
 
