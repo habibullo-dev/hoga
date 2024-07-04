@@ -606,7 +606,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
-        return { width: 220, height: 200 };
+        return { width: 220, height: 500 };
       case "w-timer":
         return { width: 300, height: "fit-content" };
       case "w-youtube":

@@ -6,7 +6,7 @@ let currentRound = 1; // Current round
 let isWorking = true; // Flag to track if it's work time or break time
 let timerInterval; // Interval ID for timer
 
-window.clockSettingsBulk = {}; //shove all the rounds, worktime, breaktime, current round, current time and isworking here.
+window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
 
 const progressBar = document.getElementById("progress-bar");
 
@@ -68,14 +68,15 @@ function updateProgressBar() {
   }
 
   // Update completed circles based on progress
-  const circles = progressBar.querySelectorAll(".circle");
+  const circles = progressBar.querySelectorAll('.circle');
   circles.forEach((circle, index) => {
     const circleProgress = ((index + 1) / (rounds + 1)) * 100;
     if (progressWidth >= circleProgress) {
-      circle.classList.add("completed");
-    }
+      circle.classList.add('completed');
+    } 
   });
 }
+
 
 // Function to start the timer
 function startTimer() {
@@ -217,43 +218,41 @@ window.addEventListener("message", function (event) {
 // Initial render of the progress bar
 renderProgressBar();
 
+
 window.addEventListener("unload", function () {
   clockSettingsBulk.currentTime = currentTime;
-  const _payload = JSON.stringify({
-    clock_info: clockSettingsBulk,
-    email: user.email,
-  });
-  navigator.sendBeacon("/user_clock_settings", _payload);
+  const _payload = JSON.stringify({ clock_info: clockSettingsBulk, email: user.email });
+  navigator.sendBeacon('/user_clock_settings', _payload);
 });
 
-window.addEventListener("beforeunload", function (evt) {
-  if (isWorking) {
-    evt.returnValue =
-      "Timer is currently running. Would you like to confirm leaving the page?";
-    return "Timer is currently running. Would you like to confirm leaving the page?";
+window.addEventListener('beforeunload', function (evt) {
+  if (isWorking){
+    evt.returnValue = 'Timer is currently running. Would you like to confirm leaving the page?';
+    return 'Timer is currently running. Would you like to confirm leaving the page?';
   }
 });
 
-function timerCurrentSave() {
-  clockSettingsBulk.rounds = rounds;
-  clockSettingsBulk.workTime = workTime;
-  clockSettingsBulk.breakTime = breakTime;
-  clockSettingsBulk.currentTime = currentTime;
-  clockSettingsBulk.currentRound = currentRound;
-  clockSettingsBulk.isWorking = isWorking;
-  return clockSettingsBulk;
+function timerCurrentSave(){
+  clockSettingsBulk.rounds = rounds
+  clockSettingsBulk.workTime = workTime
+  clockSettingsBulk.breakTime = breakTime
+  clockSettingsBulk.currentTime = currentTime
+  clockSettingsBulk.currentRound = currentRound
+  clockSettingsBulk.isWorking = isWorking
+  return clockSettingsBulk
 }
 
-async function restoreTimeSettings() {
-  const res = widgetSettingsBulk["w-timer"]["timerValues"];
-  rounds = res.rounds;
-  workTime = res.workTime;
-  breakTime = res.breakTime;
-  currentTime = res.currentTime;
-  currentRound = res.currentRound; 
-  isWorking = res.isWorking;
+async function restoreTimeSettings(){
+  const res = widgetSettingsBulk["w-timer"]["timerValues"]
+  rounds = res.rounds
+  workTime = res.workTime
+  breakTime = res.breakTime
+  currentTime = res.currentTime
+  currentRound = res.currentRound
+  isWorking = res.isWorking
   renderProgressBar();
-  startTimer(); 
+  startTimer() //start and instantly stop the timer to set in the retrieved data.
+  setTimeout(pauseTimer, 1000)
 }
 
-restoreTimeSettings();
+restoreTimeSettings()

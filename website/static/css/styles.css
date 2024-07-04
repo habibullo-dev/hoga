@@ -147,8 +147,14 @@ body {
 .widget-w-tasks {
   max-height: 80rem;
   min-width: 10rem;
-  height: 40rem !important;
+  /* height: 40rem !important; */
   max-width: 32rem;
+  /* min-height: 30rem; */
+}
+
+.widget-w-weather {
+  max-height: 17rem;
+  max-width: 50rem;
 }
 
 .notch {
