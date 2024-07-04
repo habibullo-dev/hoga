@@ -130,6 +130,7 @@
         color: white;
         border-radius: 5px;
         padding: 4px 7px;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -150,10 +151,10 @@
           required
         />
         <div class="captchaContainer">
-          <div id="captchaError">Please verify that you are human.</div>
+          <div id="captchaError">Please accept terms and conditions.</div>
           <label>
             <input type="checkbox" id="humanCheck" required />
-            I'm not a robot &#129302;
+            Agree to terms and conditions
           </label>
         </div>
         <button id="submit" type="submit" disabled>Register</button>
@@ -228,7 +229,7 @@
             captchaPopup.style.display = "block";
             attempts = 0; // Reset attempts when opening captcha
             document.querySelector("#captchaPopup h2").innerText =
-              "Find Habibullo";
+              "Prove you're not a robot. Find Habibullo";
           }
         });
 
