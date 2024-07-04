@@ -253,7 +253,7 @@ async function restoreTimeSettings(){
     isWorking = res.isWorking
     renderProgressBar();
     startTimer() //start and instantly stop the timer to set in the retrieved data.
-    setTimeout(pauseTimer, 1000)
+    setTimeout(pauseTimer, 200)
   }
   console.log("No previous timer data found, restoration aborted")
 }

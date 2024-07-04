@@ -37,7 +37,7 @@ async function distribWidgetSettings(_settings) {
 
 document.addEventListener("DOMContentLoaded", function () {
   // Function to create a new widget
-  createWidget = async function (widgetId, startUp) {
+  createWidget = async function (widgetId, startUp, firstUser) {
     console.log("Running Widget Creator - ", widgetId);
     const existingWidget = widgets[widgetId];
     if (!existingWidget) {
@@ -111,8 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
           gridContainer.appendChild(widget);
 
           // Position the widget dynamically
-          widgetId == "w-themeOptions"
-            ? positionWidget(widget, { top: "60%", left: "20px" })
+          firstUser
+            ? positionWidget(widget, { top: "25%", left: "40%" })
             : positionWidget(widget);
 
           // Load CSS stylesheet for the widget
@@ -186,10 +186,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // Position the widget dynamically
 
-          widgetId == "w-themeOptions"
+    /*       widgetId == "w-themeOptions"
             ? positionWidget(widget, { top: "60%", left: "20px" })
-            : positionWidget(widget);
+            : positionWidget(widget); */
+
           /* widgetId == "w-themeOptions" ?activeThemeSetup():console.log("normal widget setup completed.") */
+
+
           // Store widget instance
           widgets[widgetId] = widget;
           console.log("!!WIDGETS STATUS: ", widgets);
@@ -317,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to toggle widget state
-  function toggleWidgetState(widget, noCreate) {
+  function toggleWidgetState(widget, noCreate, firstUser) {
     if (noCreate) {
       console.log("!! noCreate was TRUE ", noCreate);
     } else {
@@ -350,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function () {
         widgetsClicked.push(widgetId);
         // Call createWidget function when widget is clicked
         if (!noCreate) {
-          createWidget(widgetId);
+          createWidget(widgetId, false, firstUser);
         }
       }
     }
@@ -615,7 +618,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
-        return { width: 220, height: 200 };
+        return { width: 270, height: 200 };
       case "w-timer":
         return { width: "fit-content", height: "fit-content" };
       case "w-youtube":
@@ -638,7 +641,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-calendar":
         return 200;
       case "w-tasks":
-        return 150;
+        return 200;
       case "w-timer":
         return 320;
       case "w-youtube":
@@ -976,6 +979,7 @@ document.addEventListener("DOMContentLoaded", function () {
       widget.style.top = _dynamic.top;
     }
   }
+  
 
   function autoSetupWidget(widget, widgetElem, startUp) {
     //🚧
@@ -1018,4 +1022,18 @@ document.addEventListener("DOMContentLoaded", function () {
       //console.log("WIDGETELEM TOP: ", widgetElem.style.top)
     }
   }
+
+  console.log("does delegator exist, ", delegator)
+  setTimeout(()=>{
+    if (delegator==true){
+      console.log("delegator function launched, timer")
+      editBtnClick()
+      toggleWidgetState(document.querySelectorAll(`#w-timer`)[1], false, true)
+      console.log("togglewidgetstate was passed")
+      saveBtnClick("confirm _skipOverWrite")
+      
+    }
+
+  },5000)
+  
 });
