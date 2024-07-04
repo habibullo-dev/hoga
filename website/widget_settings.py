@@ -28,6 +28,7 @@ def widgets_grab():
                 
             #Query 2 - youtube_setting ⚠️does not exist yet.
             if bulk_widgets["w-youtube"]:
+                print("W_YOUTUBE", bulk_widgets["w-youtube"])
                 query2 = conn.execute(text("UPDATE user SET youtube=:user_yt_setting WHERE email=:email"),{
                     "email": email,
                     "user_yt_setting": json.dumps(bulk_widgets["w-youtube"])
@@ -37,6 +38,7 @@ def widgets_grab():
 
             #Query 3 - calendar_setting
             if bulk_widgets["w-calendar"]:
+                print("W_CALENDAR", bulk_widgets["w-calendar"])
                 query3 = conn.execute(text("UPDATE user SET calendar_setting=:user_cal_setting WHERE email=:email"),{
                     "email": email,
                     "user_cal_setting": json.dumps(bulk_widgets["w-calendar"])
@@ -55,6 +57,7 @@ def widgets_grab():
 
             #Query 5 - weather_setting ⚠️does not exist yet.
             if bulk_widgets["w-weather"]:
+                print("W_WEATHER", bulk_widgets["w-weather"])
                 query5 = conn.execute(text("UPDATE user SET weather:user_weather_setting WHERE email=:email"),{
                     "email": email,
                     "user_weather_setting": json.dumps(bulk_widgets["w-weather"])
