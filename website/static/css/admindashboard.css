@@ -144,17 +144,25 @@ main {
     font-size: 2rem;
 }
 
-table {
-    border: 1px black solid;
-    width: fit-content;
-    height: 30vh;
-    overflow-y: auto;
+#admin-data {
+    width: 100vw;
+    height: 40vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 canvas {
-    width: 100%;
-    margin: auto;
-    max-height: 88%;
-    flex: 1;
+    width: 60%;
+    height: 100%;
+    background-color: black;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+table {
     display: flex;
+    border: 1px black solid;
+    width: 40%;
+    overflow-y: auto;
 }
