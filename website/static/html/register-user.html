@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: "Albert Sans";
+      }
+      form {
+        max-width: 400px;
+        margin: 20% auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+      }
+
+      .captchaContainer {
+        display: flex;
+        margin: auto;
+        text-align: center;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: 80%;
+        padding: 10px;
+        margin: 10px auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        display: flex;
+      }
+      #captchaError {
+        color: red;
+        display: none;
+      }
+      .captchaContainer label {
+        margin: 10px auto;
+        display: flex;
+        font-size: 0.9rem;
+      }
+      #submit {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        margin: 10px auto;
+      }
+      #submit[disabled] {
+        background-color: #ccc;
+        cursor: not-allowed;
+        display: flex;
+        margin: 10px auto;
+      }
+      #captchaPopup {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%; 
+        transform: translate(-50%, -50%); 
+        background-color: white;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+      }
+      #captchaPopup h2 {
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-template-rows: repeat(3, 100px);
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+      }
+      .captcha-cell {
+        position: relative;
+      }
+      .captcha-cell img {
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        opacity: 0.8;
+        visibility: hidden;
+      }
+      .overlay.correct {
+        background-color: green;
+      }
+      .overlay.wrong {
+        background-color: red;
+      }
+      .captcha-cell.greyed img {
+        opacity: 0.5;
+      }
+      #thankYouMessage {
+        display: none;
+        text-align: center;
+      }
+
+      .launch-button {
+        display: flex;
+        margin: auto;
+        background-color: rgb(9, 9, 47);
+        color: white;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="registerForm" action="/registeruser" method="post">
+      <fieldset>
+        <img
+          src="../images/logo-rev.png"
+          style="height: 20px; display: flex; margin: 20px auto"
+          alt=""
+        />
+        <input type="text" name="name" placeholder="Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <div class="captchaContainer">
+          <div id="captchaError">Please verify that you are human.</div>
+          <label>
+            <input type="checkbox" id="humanCheck" required />
+            I'm not a robot &#129302;
+          </label>
+        </div>
+        <button id="submit" type="submit" disabled>Register</button>
+      </fieldset>
+    </form>
+    <div id="thankYouMessage">
+      <p>Thank you! Please check your email for further instructions to activate your account.</p>
+    </div>
+    <div id="captchaPopup">
+      <h2>Find Habibullo</h2>
+      <div class="grid">
+        <div class="captcha-cell">
+          <img src="../images/h-1.png" data-id="1" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-2.png" data-id="2" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-3.png" data-id="3" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-4.png" data-id="4" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-5.png" data-id="5" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-6.png" data-id="6" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-7.png" data-id="7" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-8.png" data-id="8" />
+          <div class="overlay"></div>
+        </div>
+        <div class="captcha-cell">
+          <img src="../images/h-9.png" data-id="9" />
+          <div class="overlay"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const humanCheck = document.getElementById("humanCheck");
+        const submitButton = document.getElementById("submit");
+        const captchaPopup = document.getElementById("captchaPopup");
+        const captchaImages = document.querySelectorAll(".captcha-cell img");
+        const registerForm = document.getElementById("registerForm");
+        const thankYouMessage = document.getElementById("thankYouMessage");
+        const launchAppButton = document.createElement("button");
+        launchAppButton.textContent = "Launch App"; 
+        launchAppButton.classList.add("launch-button"); 
+
+        const fieldset = registerForm.querySelector("fieldset");
+        const logo = fieldset.querySelector("img");
+
+        let captchaSolved = false;
+        let attempts = 0;
+
+        humanCheck.addEventListener("change", function () {
+          if (humanCheck.checked) {
+            registerForm.style.display = "none";
+            captchaPopup.style.display = "block";
+            attempts = 0; // Reset attempts when opening captcha
+            document.querySelector("#captchaPopup h2").innerText =
+              "Find Habibullo";
+          }
+        });
+
+        captchaImages.forEach((img, index) => {
+          img.addEventListener("click", function () {
+            const overlay = img.nextElementSibling;
+            if (this.getAttribute("data-id") === "8") {
+              overlay.classList.add("correct");
+              overlay.style.visibility = "visible";
+              overlay.innerHTML = "✔";
+              captchaImages.forEach((image, i) => {
+                if (i !== index) {
+                  image.parentNode.classList.add("greyed");
+                }
+              });
+              setTimeout(() => {
+                captchaPopup.style.display = "none";
+                registerForm.style.display = "block";
+                submitButton.disabled = false;
+                captchaSolved = true;
+              }, 1000);
+            } else {
+              attempts++;
+              overlay.classList.add("wrong");
+              overlay.style.visibility = "visible";
+              setTimeout(() => {
+                overlay.style.visibility = "hidden";
+                overlay.classList.remove("wrong");
+              }, 1000);
+              if (attempts === 1) {
+                document.querySelector("#captchaPopup h2").innerText =
+                  "Wrong image. 1 chance left.";
+              } else if (attempts >= 2) {
+                document.querySelector("#captchaPopup h2").innerText =
+                  "Wrong image. Please try again later.";
+                setTimeout(() => {
+                  captchaPopup.style.display = "none";
+                  registerForm.style.display = "block";
+                  humanCheck.checked = false;
+                }, 1000);
+              }
+            }
+          });
+        });
+
+        registerForm.addEventListener("submit", function (event) {
+          if (!captchaSolved) {
+            event.preventDefault();
+            document.getElementById("captchaError").style.display = "block";
+          } else {
+            event.preventDefault(); // Prevent reloading
+
+            // Hide elements inside the fieldset
+            Array.from(fieldset.children).forEach((child) => {
+              if (child !== logo) {
+                child.style.display = "none";
+              }
+            });
+
+            // Display thanks message
+            thankYouMessage.style.display = "block";
+            fieldset.appendChild(thankYouMessage);
+
+            // Append button
+            fieldset.appendChild(launchAppButton);
+
+            // Redirect to app
+            launchAppButton.addEventListener("click", function () {
+              window.location.href = "../templates/index.html";
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
