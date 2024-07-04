@@ -16,6 +16,13 @@
   --ease-out: cubic-bezier(0.3, 0.3, 0.5, 1);
   --border-width: 0.4em;
 }
+* {
+  user-select: none !important;
+}
+
+input, textarea {
+  user-select: text !important;
+}
 
 @-webkit-keyframes appear {
   to {

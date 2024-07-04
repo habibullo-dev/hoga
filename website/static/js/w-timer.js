@@ -243,16 +243,19 @@ function timerCurrentSave(){
 }
 
 async function restoreTimeSettings(){
-  const res = widgetSettingsBulk["w-timer"]["timerValues"]
-  rounds = res.rounds
-  workTime = res.workTime
-  breakTime = res.breakTime
-  currentTime = res.currentTime
-  currentRound = res.currentRound
-  isWorking = res.isWorking
-  renderProgressBar();
-  startTimer() //start and instantly stop the timer to set in the retrieved data.
-  setTimeout(pauseTimer, 1000)
+  if (widgetSettingsBulk?.["w-timer"]?.["timerValues"] !== undefined){
+    const res = widgetSettingsBulk["w-timer"]["timerValues"]
+    rounds = res.rounds
+    workTime = res.workTime
+    breakTime = res.breakTime
+    currentTime = res.currentTime
+    currentRound = res.currentRound
+    isWorking = res.isWorking
+    renderProgressBar();
+    startTimer() //start and instantly stop the timer to set in the retrieved data.
+    setTimeout(pauseTimer, 1000)
+  }
+  console.log("No previous timer data found, restoration aborted")
 }
 
 restoreTimeSettings()
