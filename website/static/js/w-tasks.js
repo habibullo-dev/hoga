@@ -306,16 +306,23 @@ async function restoreTasks() { //brings back the tasks for complete and incompl
   console.log("!!attempting to RESTORE tasklist content!")
   
   const res = widgetSettingsBulk["w-tasks"]["taskList"]
-  console.log("!!Restoring tasklist content! what is in the res?", res)
-  console.log("!!res['incompleteTasks']", res["incompleteTasks"])
-  console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
-
-  res["incompleteTasks"].forEach((task)=>{
-    generateNewTask(task.text)
-  })
-  res["completedTasks"].forEach((task)=>{
-    generateNewTask(task.text, true)
-  })
+  // console.log("!!Restoring tasklist content! what is in the res?", res)
+  // console.log("!!res['incompleteTasks']", res["incompleteTasks"])
+  // console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
+  if (res["incompleteTasks"].length === 0 && res["completedTasks"].length === 0) {
+    const placeholderTasks = ["Placeholder Task 1", "Placeholder Task 2", "Placeholder Task 3"];
+    placeholderTasks.forEach(task => {
+      generateNewTask(task);
+    });
+  } else {
+    res["incompleteTasks"].forEach((task) => {
+      generateNewTask(task.text);
+    });
+    res["completedTasks"].forEach((task) => {
+      generateNewTask(task.text, true);
+    });
+  }
+}
 
 /*   fetch("/taskDataPull", {
     method: "POST",
@@ -337,6 +344,4 @@ async function restoreTasks() { //brings back the tasks for complete and incompl
     }
   }) */
   
-}
-
 restoreTasks()
