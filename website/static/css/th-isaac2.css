@@ -84,8 +84,24 @@
 
 #vw-sumer{
   grid-column: 3;
-  grid-row: 29;
-  z-index: 2;
+  grid-row: 27;
+  z-index: 5;
+  width: 30rem;
+  height: 30rem;
+  position: absolute;
+  background-size: contain;
+}
+
+.vw-roll1{
+  background-image: url("../images/themes/DXM/sumer1.webp");
+}
+
+.vw-roll2{
+  background-image: url("../images/themes/DXM/sumer2.webp");
+}
+
+.vw-roll3{
+  background-image: url("../images/themes/DXM/sumer3.webp");
 }
 
 #vw-hoverfront{
