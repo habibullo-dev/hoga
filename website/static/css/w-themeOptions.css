@@ -1,12 +1,13 @@
 #themeOptions{
-    overflow-y: visible;
+    overflow-y: auto;
     background-color: black;
     /* right: calc(-1*var(--navbar-width) - 70px); */
     bottom: 0;
     position: absolute;
     color: #8392a5;
     /* transition: transform 0.3s ease;  */
-    min-height: 15rem;
+    min-height: 25rem;
+    max-height: 55%;
     min-width: var(--navbar-width);
     /* padding: 5px; */
 }
@@ -281,7 +282,7 @@ filter: drop-shadow(0 0 1px)
   }
   #themeMusicSFXVolumeBoxLabels {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
   }
 
   /* no need to rescale svg container can take care of that. edited out */

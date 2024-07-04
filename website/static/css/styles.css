@@ -505,6 +505,8 @@ body {
   /* overflow: hidden; */
   user-select: none;
 }
+
+
 #nav-bar hr,
 #nav-header hr {
   margin: auto;
@@ -666,7 +668,8 @@ label[for="nav-toggle"] {
   cursor: pointer;
   z-index: 1;
   transition: color 0.2s;
-  padding: 11px 4px;
+  padding: 0.65rem 4px; /* 🚧changed to REM */
+  margin-top: 0.2rem;
   letter-spacing: 0.05rem;
 }
 .nav-button span {
