@@ -120,43 +120,64 @@
     font-size: 3rem;
     font-weight: 600;
     position: absolute;
-    width: 8rem;
-    height: 10rem;
+    width: 11rem;
+    height: 5rem;
     top: 20%;
     left: 20%;
     display: flex;
+    flex-wrap: nowrap;
   }
 
   .vaporwave-anim>div>div {
     padding: 4px 12px;
-    height: 44px;
+    height: 2rem;
     margin-bottom: 44px;
-    
+    width: 5rem;
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .vaporwave-anim div:first-child {
-    
+    display: flex;
+    flex-wrap: nowrap;
+    width: auto;
+    height: 5rem;
   }
 
 
   .first-vapor div {
-    color: rgb(32, 157, 215);
+    background: linear-gradient(90deg, rgba(81,166,201,0.8295693277310925) 25%, rgba(251,207,251,1) 69%, rgba(191,33,196,0.908000700280112) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
     position: absolute;
     animation: horizon-skip 10s infinite;
+    white-space: nowrap;
     margin-left: -290px
   }
 
   .second-vapor div {
-    color: rgb(22, 146, 55);
+    background: linear-gradient(90deg, rgba(171,255,254,1) 0%, rgba(255,188,255,1) 59%, rgba(0,212,255,1) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
     position: absolute;
     animation: horizon-skip 10s 2.5s infinite;
+    white-space: nowrap;
     margin-left: -290px
   }
 
   .third-vapor div {
-    color: rgb(144, 16, 18);
+    background: linear-gradient(90deg, rgba(188,250,255,1) 15%, rgba(255,241,171,1) 60%, rgba(33,196,47,0.908000700280112) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
     position: absolute;
     animation: horizon-skip 10s 5s infinite;
+    white-space: nowrap;
     margin-left: -290px
   }
 
