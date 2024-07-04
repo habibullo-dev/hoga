@@ -252,4 +252,54 @@ filter: drop-shadow(0 0 1px)
     font-size: 0.7rem;
   }
 
-  
+  #themeMusicSFXVolumeBox {
+    /* background-color: blue; */
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  #themeMusicVolumeBox {
+    height: 70px;
+    width: 100px;
+    /* background-color: green; */
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  #SFXVolumeBox {
+    height: 70px;
+    /* background-color: rgb(128, 0, 0); */
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  #themeMusicSFXVolumeBoxLabels {
+    display: flex;
+    justify-content: space-around;
+  }
+  #themeMusicVolumeBox svg {
+    scale: 75%;
+    /* transform: rotate(-18deg); */
+  }
+  #SFXVolumeBox svg {
+    scale: 75%;
+  }
+  #volKnobTop1 {
+    height: 50%;
+    width: auto;
+    position: relative;
+    left: 11.5rem;
+    bottom: 1.5rem;
+  }
+  #volKnobTop2 {
+    height: 50%;
+    width: auto;
+    position: relative;
+    left: 11.5rem;
+    bottom: 1.5rem;
+  }
+
