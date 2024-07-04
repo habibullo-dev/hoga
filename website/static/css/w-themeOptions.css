@@ -283,12 +283,18 @@ filter: drop-shadow(0 0 1px)
     display: flex;
     justify-content: space-around;
   }
+
+  /* no need to rescale svg container can take care of that. edited out */
   #themeMusicVolumeBox svg {
-    scale: 75%;
+    /* scale: 75%; */
     /* transform: rotate(-18deg); */
   }
   #SFXVolumeBox svg {
-    scale: 75%;
+    /* scale: 75%; */
+  }
+  .volDialerCont{
+    width: 2.5rem;
+    height: 2.5rem;
   }
   #volKnobTop1 {
     height: 50%;
@@ -304,4 +310,23 @@ filter: drop-shadow(0 0 1px)
     left: 11.5rem;
     bottom: 1.5rem;
   }
+  .volDialerDec{
+    position: relative;
+    top: -151%;
+    width: 143%;
+    height: 110%;
+    left: 20%;
+  }
+  #themeMusicSFXVolumeBox button{
+    background-color: transparent;
+    border: none;
+    outline: none; /* Optional: Remove focus outline */
+    color: white;
+    font-size: 1.2rem;
+    margin: 0, 0.2rem;
+  }
 
+  #themeMusicSFXVolumeBox button:hover{
+    color: #8392a5;
+    font-style: bold;
+  }
