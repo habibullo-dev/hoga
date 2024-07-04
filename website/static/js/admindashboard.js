@@ -14,15 +14,15 @@ const ctx = document.getElementById('myChart');
 
 
 fetch("/createlinegraph")
-    .then(res => res.json)
+    .then(res => res.json())
     .then(res => {
         console.log("RES", res.message)
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'haya', 'heya'],
+                labels: res.time,
                 datasets: [{
-                    label: '# of Votes',
+                    label: 'Number of Verified Accounts',
                     data: res.message,
                     borderWidth: 2
                 }]
