@@ -16,6 +16,8 @@ const ctx = document.getElementById('myChart');
 fetch("/createlinegraph")
     .then(res => res.json())
     .then(res => {
+        Chart.defaults.borderColor = 'white';
+        Chart.defaults.color = 'white';
         console.log("RES", res.message)
         new Chart(ctx, {
             type: 'line',
@@ -24,7 +26,9 @@ fetch("/createlinegraph")
                 datasets: [{
                     label: 'Number of Verified Accounts',
                     data: res.message,
-                    borderWidth: 2
+                    borderWidth: 2,
+                    backgroundColor: 'white',
+                    tickColor: "white"
                 }]
             },
             options: {
