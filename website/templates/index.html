@@ -129,20 +129,22 @@
                   text-transform: uppercase;
                   letter-spacing: 0.2rem;
                   font-size: 0.8rem;
-                ">CUSTOM</span>
+                "></span>
           </div>
           <hr />
-          <div class="nav-button">
-            <span>Background</span>
+          <!-- <div class="nav-button">
+            <span></span>
+          </div> -->
+          <div class="nav-button" style="display: flex" id="w-themeOptions">
+            <span>Theme Options</span><img src="../static/images/purePaint.svg"
+              style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
           </div>
           <div class="nav-button" style="display: flex" id="dev-pick-button">
             <span>Developer Picks</span><img src="../static/images/silverStar.svg"
               style="margin-left: 0.2rem; width: 1.05rem; height: 1.05rem">
           </div>
-          <div class="nav-button" style="display: flex" id="w-themeOptions">
-            <span>Theme Options</span><img src="../static/images/purePaint.svg"
-              style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
-          </div>
+         
+          
           <div id="nav-content-highlight"></div>
           <div id="nav-dev-picks" class="display-toggle">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
@@ -230,6 +232,36 @@
               <div id="BGMtitle" style="font-size: 1rem; display: flex; flex-wrap: wrap;"></div>
               <p>Play Time: <span id="BGMCurrentTime">0:00</span> - <span id="BGMDuration">0:00</span></p>
               <br>
+            </div>
+            <div id="themeMusicSFXVolumeBox">
+              <div id="themeMusicVolumeBox">
+                <button id="themeMusicInc">+</button>
+                <div class="volDialerCont">
+                  <svg id="themeMusicVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg" style="pointer-events: none;">
+                    <path d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z" fill="white" stroke="white" stroke-width="13.3333"/>
+                    </svg>
+                  <svg viewBox="0 0 814 427" fill="none" xmlns="http://www.w3.org/2000/svg" class="volDialerDec">
+                    <path d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z" fill="white" stroke="white" stroke-width="13.3333"/>
+                    </svg>
+                </div>
+                <button id="themeMusicDec">-</button>
+              </div>
+              <div id="SFXVolumeBox">
+                <button id="SFXInc">+</button>
+                <div class="volDialerCont">
+                  <svg id="SFXVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg" style="pointer-events: none;">
+                    <path d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z" fill="white" stroke="white" stroke-width="13.3333"/>
+                    </svg>   
+                  <svg viewBox="0 0 814 427" fill="none" xmlns="http://www.w3.org/2000/svg" class="volDialerDec">
+                    <path d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z" fill="white" stroke="white" stroke-width="13.3333"/>
+                    </svg>
+                </div>
+                <button id="SFXDec">-</button>
+              </div>
+            </div>
+            <div id="themeMusicSFXVolumeBoxLabels">
+              <span>Music volume</span>
+              <span>SFX volume</span>
             </div>
             <div id="themeExtraOptions"></div>
           </div>

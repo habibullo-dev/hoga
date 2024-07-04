@@ -1,7 +1,7 @@
 //⚠️Untested - 6/19/2024
 
 window.autologinAttempt=false;
-
+let delegator = false;
 
 
 
@@ -162,7 +162,7 @@ function promptLogin() {
 
 //🚧TUTORIAL
 function spawnTutorial() {
-    alert("Starting tutorial session. This is optional and entirely skippable.")
+    delegator = true;
       
        
        fetch(`../static/html/instructions.html`)
@@ -184,7 +184,8 @@ function spawnTutorial() {
        
        popupSpecial2.appendChild(tutoCont)
        dynaLoadScript("../static/js/instructions.js");
-    
+        
+
      })
      .catch((error) => {
        console.error('Error loading HTML:', error);

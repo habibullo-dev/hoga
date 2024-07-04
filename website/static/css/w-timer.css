@@ -7,7 +7,7 @@
 .timer {
   text-align: center;
   font-size: 5.625rem;
-  background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
+  background: linear-gradient(112.1deg, rgb(110, 119, 147) 11.4%, rgb(63, 76, 119) 70.2%);
   padding: 0.625rem 1.25rem;
   border-radius: 1.25rem;
 }
@@ -114,7 +114,7 @@
   background: transparent !important;
   border-radius: 0.625rem;
   overflow: hidden;
-  display: flex; /* Ensure flexbox layout */
+  display: flex; 
   justify-content: space-between;
 }
 
@@ -143,7 +143,6 @@
   align-items: center;
 }
 
-/* CSS for circles (steps) */
 .circle {
   width: 1.25rem;
   height: 1.25rem;
@@ -154,7 +153,6 @@
   margin: 0rem 0.0625rem;
 }
 
-/* CSS for completed circles */
 .circle.completed {
   background-color: #ececec; /* Completed color */
 }

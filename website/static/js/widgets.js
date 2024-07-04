@@ -7,47 +7,47 @@ let widgetsClicked = [];
 let createWidget;
 
 async function distribWidgetSettings(_settings) {
-  await new Promise(resolve => {
+  await new Promise((resolve) => {
     document.addEventListener("DOMContentLoaded", resolve);
   });
   Object.keys(_settings).forEach((key) => {
-    console.log("!! At the time of running DistribWidgetSettings, what is widgetSettingsBulk?", widgetSettingsBulk)
-    console.log("!! widgetSettingsBulk and key? ", widgetSettingsBulk[key])
-    console.log("Distributing widget settings!: ", key, typeof key)
+    console.log(
+      "!! At the time of running DistribWidgetSettings, what is widgetSettingsBulk?",
+      widgetSettingsBulk
+    );
+    console.log("!! widgetSettingsBulk and key? ", widgetSettingsBulk[key]);
+    console.log("Distributing widget settings!: ", key, typeof key);
     if (widgetSettingsBulk[key]["active"]) {
-      createWidget(key, true)
+      createWidget(key, true);
     } else {
-      console.log(`${key} was not active: ${widgetSettingsBulk[key]["active"]}`)
+      console.log(
+        `${key} was not active: ${widgetSettingsBulk[key]["active"]}`
+      );
     }
-  })
-  if (_settings.currentTheme){
-    loadThemeSet(`../static/css/${_settings.currentTheme}.css`, `../static/js/${_settings.currentTheme}.js`, `../static/html/${_settings.currentTheme}.html`, _settings.currentTheme)
+  });
+  if (_settings.currentTheme) {
+    loadThemeSet(
+      `../static/css/${_settings.currentTheme}.css`,
+      `../static/js/${_settings.currentTheme}.js`,
+      `../static/html/${_settings.currentTheme}.html`,
+      _settings.currentTheme
+    );
   }
-  
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
-
-
-  
-
-
-
   // Function to create a new widget
-  createWidget = async function (widgetId, startUp) {
-    
-    console.log("Running Widget Creator - ", widgetId)
+  createWidget = async function (widgetId, startUp, firstUser) {
+    console.log("Running Widget Creator - ", widgetId);
     const existingWidget = widgets[widgetId];
     if (!existingWidget) {
-      console.log("!!Creating new Widget after DOM: ", widgetId)
-      console.log("DOM Loaded!")
+      console.log("!!Creating new Widget after DOM: ", widgetId);
+      console.log("DOM Loaded!");
       const widgetHtml = `../static/html/${widgetId}.html`; // Path to HTML content
       const widgetCss = `../static/css/${widgetId}.css`; // Path to CSS styling
       const widgetScript = `../static/js/${widgetId}.js`; // Path to JS
 
-      console.log("WIDGEY", widgetHtml, widgetCss, widgetScript)
+      console.log("WIDGEY", widgetHtml, widgetCss, widgetScript);
 
       // Get initial size based on widget ID
       const { width, height } = getInitialSize(widgetId);
@@ -73,9 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(async (html) => {
           // Load HTML content into widget
-          widget.innerHTML = `${html}`
-          DOMstorage[widgetId] = widget
-            ;
+          widget.innerHTML = `${html}`;
+          DOMstorage[widgetId] = widget;
 
           // After HTML is loaded, ensure any scripts and styles are processed
           // processScripts(widget);
@@ -93,8 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
           widget.style.zIndex = "1";
           widget.style.flexDirection = "column";
           widget.style.display = "flex";
-
-          
 
           // Make widget draggable and resizable
           $(widget)
@@ -114,7 +111,9 @@ document.addEventListener("DOMContentLoaded", function () {
           gridContainer.appendChild(widget);
 
           // Position the widget dynamically
-          widgetId == "w-themeOptions" ?positionWidget(widget, {top:"60%", left: "20px"}):positionWidget(widget);
+          firstUser
+            ? positionWidget(widget, { top: "25%", left: "40%" })
+            : positionWidget(widget);
 
           // Load CSS stylesheet for the widget
           loadWidgetStylesheet(widgetCss);
@@ -137,7 +136,10 @@ document.addEventListener("DOMContentLoaded", function () {
           // Store widget instance
           widgets[widgetId] = widget;
           autoSetupWidget(widgetSettingsBulk[widgetId], widget, startUp);
-          console.log("!!BEFORE AUTOSETUP WIDGET WHAT THE STATUS OF WIDGETSETTINGSBULK, ", widgetSettingsBulk)
+          console.log(
+            "!!BEFORE AUTOSETUP WIDGET WHAT THE STATUS OF WIDGETSETTINGSBULK, ",
+            widgetSettingsBulk
+          );
 
           //   // Call function to restore widget state (if any)
           //   restoreWidgetState(widgetId);
@@ -165,8 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
           widget.style.resize = "both";
           widget.style.zIndex = "1";
 
-          
-
           // Make widget draggable and resizable
           $(widget)
             .draggable({
@@ -185,22 +185,26 @@ document.addEventListener("DOMContentLoaded", function () {
           gridContainer.appendChild(widget);
 
           // Position the widget dynamically
-          
-          widgetId == "w-themeOptions" ?positionWidget(widget, {top:"60%", left: "20px"}):positionWidget(widget);
+
+    /*       widgetId == "w-themeOptions"
+            ? positionWidget(widget, { top: "60%", left: "20px" })
+            : positionWidget(widget); */
+
           /* widgetId == "w-themeOptions" ?activeThemeSetup():console.log("normal widget setup completed.") */
+
+
           // Store widget instance
           widgets[widgetId] = widget;
-          console.log("!!WIDGETS STATUS: ", widgets)
-          console.log("!!WIDGETS STATUS")
+          console.log("!!WIDGETS STATUS: ", widgets);
+          console.log("!!WIDGETS STATUS");
         });
       /*       console.log("TRACK WIDGET DOM 1,", widgetSettingsBulk[widgetId]["widgetDOM"])⚠️⚠️⚠️
             widgetSettingsBulk[widgetId]["widgetDOM"] = widget//🚧adding widget cont to settings to track its DOM
             console.log("TRACK WIDGET DOM 2,", widgetSettingsBulk[widgetId]["widgetDOM"]) */
     } else {
-      console.log("!!Widget already exists: ", widgetId)
+      console.log("!!Widget already exists: ", widgetId);
     }
-  }//createWidget End
-
+  }; //createWidget End
 
   let editClicked = false; // Flag to track if Edit (w-edit) is clicked
   let saveClicked = false; // Flag to track if Save (w-save) is clicked
@@ -213,14 +217,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const widgetButtons = [editButton, saveButton];
 
   const widgets = document.querySelectorAll(".tooltip img");
-  window.otherWidgets = Array.from(widgets).filter( //🚧changed to window global var
+  window.otherWidgets = Array.from(widgets).filter(
+    //🚧changed to window global var
     (widget) => !widgetButtons.includes(widget)
   );
 
   // Event listener for Edit (w-edit) button
   editButton.addEventListener("click", editBtnClick);
-  function editBtnClick() { //🚧changed to named function for reuse.
-    console.log("!!clicked edit Button")
+  function editBtnClick() {
+    //🚧changed to named function for reuse.
+    console.log("!!clicked edit Button");
     editClicked = true;
     saveClicked = false; // Reset saveClicked when Edit is clicked
     document
@@ -246,8 +252,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Event listener for Save (w-save) button
   saveButton.addEventListener("click", saveBtnClick);
-  function saveBtnClick(_skipOverWrite) { //🚧changed to named function for reuse.
-    console.log("!!clicked save Button")
+  function saveBtnClick(_skipOverWrite) {
+    //🚧changed to named function for reuse.
+    console.log("!!clicked save Button");
     if (editClicked) {
       saveButton.style.display = "none";
       editButton.style.display = "inline-block";
@@ -313,12 +320,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to toggle widget state
-  function toggleWidgetState(widget, noCreate) {
-
+  function toggleWidgetState(widget, noCreate, firstUser) {
     if (noCreate) {
-      console.log("!! noCreate was TRUE ", noCreate)
+      console.log("!! noCreate was TRUE ", noCreate);
     } else {
-      console.log("!! noCreate was FALSE ", noCreate)
+      console.log("!! noCreate was FALSE ", noCreate);
     }
 
     const widgetId = widget.id;
@@ -327,15 +333,17 @@ document.addEventListener("DOMContentLoaded", function () {
       resetWidgetStyles(widget);
       // Remove from widgetsClicked array
       widgetsClicked = widgetsClicked.filter((id) => id !== widgetId);
-      console.log("!!toggleWidgetState - what is the widget ", widget) //this is just the fucking image
-      console.log("!!toggleWidgetState - what is the widgetId ", widgetId)
+      console.log("!!toggleWidgetState - what is the widget ", widget); //this is just the fucking image
+      console.log("!!toggleWidgetState - what is the widgetId ", widgetId);
       // Remove widget from grid
       if (widgets[widgetId]) {
         gridContainer.removeChild(widgets[widgetId]);
-        console.log("!!toggleWidgetState - what is widgets[widgetId], ", widgets[widgetId]) //THIS IS THE DAMN DIV! FINALLY
-        widgetSettingsBulk[widgetId].active = false;//🚧consider the widget as inactive.
+        console.log(
+          "!!toggleWidgetState - what is widgets[widgetId], ",
+          widgets[widgetId]
+        ); //THIS IS THE DAMN DIV! FINALLY
+        widgetSettingsBulk[widgetId].active = false; //🚧consider the widget as inactive.
         delete widgets[widgetId];
-
       }
     } else {
       widget.classList.add("clicked");
@@ -345,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function () {
         widgetsClicked.push(widgetId);
         // Call createWidget function when widget is clicked
         if (!noCreate) {
-          createWidget(widgetId);
+          createWidget(widgetId, false, firstUser);
         }
       }
     }
@@ -418,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   }
 
   let saveTimer; // Variable to store the auto-save timer
-    
+
   // Function to initialize auto-save timer
   function initializeAutoSave() {
     // Clear any existing timer
@@ -441,14 +449,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to save widget states with dynamic data points
   function saveWidgetStates(_skipOverWrite) {
     //let widgetStates = [] 🚧CHANGED ARRAY STORAGE TO WINDOW-LEVEL OBJ STORAGE LOGIC - See above
-    console.log("!!Calling saveWidgetStates")
+    console.log("!!Calling saveWidgetStates");
     // Iterate over widgets that are clicked or active
     widgetsClicked.forEach((widgetId) => {
-      console.log("!!how many widgets considered clicked? ", widgetsClicked)
+      console.log("!!how many widgets considered clicked? ", widgetsClicked);
 
       const widget = widgets[widgetId];
       // Initialize widgetData object
-      console.log("!!current widget's data: ", widget.style.top)
+      console.log("!!current widget's data: ", widget.style.top);
       let widgetData = {
         id: widgetId,
         position: {
@@ -462,8 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
         active: true, //🚧 Added new data: active. Defined to make sure js checks if the widget was opened or closed when initalizing page
       };
 
-
-      console.log("!! WIDGET SAVE< WHAT IS WIDGET DATA", widgetData)
+      console.log("!! WIDGET SAVE< WHAT IS WIDGET DATA", widgetData);
       // Extract additional data based on widgetId
       switch (widgetId) {
         // case "w-spotify":
@@ -513,14 +520,19 @@ document.addEventListener("DOMContentLoaded", function () {
       // Push widgetData to widgetStates array
       //widgetStates.push(widgetData); 🚧CHANGED ARRAY STORAGE TO OBJ STORAGE LOGIC - See below
       // Move widgetData as K/V pair to window.widgetStates
-      console.log("!!WHAT IS WIDGETSETTINGSBULK PRESAVE, ", widgetSettingsBulk[widgetId])
-      console.log("Is _skipOverwrite present?", _skipOverWrite)
+      console.log(
+        "!!WHAT IS WIDGETSETTINGSBULK PRESAVE, ",
+        widgetSettingsBulk[widgetId]
+      );
+      console.log("Is _skipOverwrite present?", _skipOverWrite);
       if (_skipOverWrite != "confirm _skipOverWrite") {
-        console.log("Overwriting bulk triggered.")
-        widgetSettingsBulk[widgetId] = widgetData
+        console.log("Overwriting bulk triggered.");
+        widgetSettingsBulk[widgetId] = widgetData;
       }
-      console.log("!!WHAT IS WIDGETSETTINGSBULK POSTSAVE, ", widgetSettingsBulk[widgetId])
-
+      console.log(
+        "!!WHAT IS WIDGETSETTINGSBULK POSTSAVE, ",
+        widgetSettingsBulk[widgetId]
+      );
     });
 
     // Log or process widgetStates array as needed
@@ -533,7 +545,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to create notification
   function createNotification() {
-    console.log("!!Created a notif!")
+    console.log("!!Created a notif!");
     const notification = document.createElement("div");
     notification.classList.add("notification");
 
@@ -606,9 +618,9 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-calendar":
         return { width: 300, height: 300 };
       case "w-tasks":
-        return { width: 220, height: 500 };
+        return { width: 270, height: 200 };
       case "w-timer":
-        return { width: 300, height: "fit-content" };
+        return { width: "fit-content", height: "fit-content" };
       case "w-youtube":
         return { width: 400, height: "fit-content" };
       case "w-weather":
@@ -629,7 +641,7 @@ document.addEventListener("DOMContentLoaded", function () {
       case "w-calendar":
         return 200;
       case "w-tasks":
-        return 150;
+        return 200;
       case "w-timer":
         return 320;
       case "w-youtube":
@@ -707,9 +719,6 @@ document.addEventListener("DOMContentLoaded", function () {
         return 500;
     }
   }
-
-
-
 
   /* // Function to create a new widget //🚧MOVING OUT OF DOMCONTENT LOAD
   function createWidget(widgetId) {
@@ -870,7 +879,8 @@ document.addEventListener("DOMContentLoaded", function () {
   //   });
 
   // Function to load JavaScript file dynamically
-  function loadWidgetScript(jsFile, callback) { //🚧changed to promise for async running purpose
+  function loadWidgetScript(jsFile, callback) {
+    //🚧changed to promise for async running purpose
     return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = jsFile;
@@ -922,8 +932,6 @@ document.addEventListener("DOMContentLoaded", function () {
   //   console.log("iframe loaded successfully.");
   // });
 
-
-
   // Function to position the widget dynamically
   function positionWidget(widget, _dynamic) {
     const existingWidgets = document.querySelectorAll(".widget");
@@ -947,7 +955,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Check if there's enough space on the right
-    if (maxRight + widget.offsetWidth + 10 <= gridRect.right) {
+    if (maxRight + widget.offsetWidth + 10 <= window.innerWidth) {
       left = maxRight + 10;
     } else {
       // Move to the next row
@@ -955,56 +963,77 @@ document.addEventListener("DOMContentLoaded", function () {
       top = maxBottom + 10;
     }
 
-    // Ensure widget does not overflow the bottom
-    if (top + widget.offsetHeight > gridRect.bottom) {
+    // Ensure widget does not overflow the bottom of the viewport
+    if (top + widget.offsetHeight > window.innerHeight) {
       top = 10; // Reset to the top if it overflows
     }
 
     // Set the position of the new widget
     widget.style.left = `${left}px`;
     widget.style.top = `${top}px`;
-    
-    if(_dynamic){
-      console.log("Dynamic Positioning for widget")
-      widget.style.top = _dynamic.top
+
+    if (_dynamic) {
+      console.log("Dynamic Positioning for widget");
+      // If _dynamic object is provided, use its values for position
       widget.style.left = _dynamic.left;
+      widget.style.top = _dynamic.top;
     }
   }
+  
 
-  function autoSetupWidget(widget, widgetElem, startUp) { //🚧
-    console.log("!! - autoSetupWidget, the fuck is widget, widgetElem?", widget, widgetElem)
+  function autoSetupWidget(widget, widgetElem, startUp) {
+    //🚧
+    console.log(
+      "!! - autoSetupWidget, the fuck is widget, widgetElem?",
+      widget,
+      widgetElem
+    );
 
     try {
       // Toggles state of widget (IN ISLAND) to activate if active=true.
       if (widget.active) {
-        console.log("!! autoSetupWidget - Widget detected as active: ", widget, widget.active)
+        console.log(
+          "!! autoSetupWidget - Widget detected as active: ",
+          widget,
+          widget.active
+        );
         //momentarily simulates edit, widget creation then close.
         const decoupleId = document.querySelectorAll(`#${widget["id"]}`);
-        console.log("!!how many id duplicates?: ", decoupleId)
-        startUp ? editBtnClick() : console.log("Not start-up, edit button click aborted")
-        toggleWidgetState(decoupleId[1], true)
-        startUp ? saveBtnClick("confirm _skipOverWrite") : console.log("Not start-up, save button click aborted")
+        console.log("!!how many id duplicates?: ", decoupleId);
+        startUp
+          ? editBtnClick()
+          : console.log("Not start-up, edit button click aborted");
+        toggleWidgetState(decoupleId[1], true);
+        startUp
+          ? saveBtnClick("confirm _skipOverWrite")
+          : console.log("Not start-up, save button click aborted");
       }
 
-      // Automatically sets up position of widget 
+      // Automatically sets up position of widget
       widgetElem.style.left = widget.position.left; //This assumes the measurement value is stored in as well: ex: `250px` or `20vw`
       widgetElem.style.top = widget.position.top;
 
       // Automatically resizes widget
-      widgetElem.style.width = widget.size.width
-      widgetElem.style.height = widget.size.height
-
+      widgetElem.style.width = widget.size.width;
+      widgetElem.style.height = widget.size.height;
     } catch (error) {
       //console.log(`Widget properties not found for: Widget: ${widget.id}, DOM: ${widgetElem}`)
-      console.log(`Error type: ${error} - Restoring default styling`)
+      console.log(`Error type: ${error} - Restoring default styling`);
       //console.log("WIDGETELEM TOP: ", widgetElem.style.top)
     }
-
-
   }
 
- 
+  console.log("does delegator exist, ", delegator)
+  setTimeout(()=>{
+    if (delegator==true){
+      console.log("delegator function launched, timer")
+      editBtnClick()
+      toggleWidgetState(document.querySelectorAll(`#w-timer`)[1], false, true)
+      console.log("togglewidgetstate was passed")
+      saveBtnClick("confirm _skipOverWrite")
+      
+    }
 
+  },5000)
+  
 });
-
-

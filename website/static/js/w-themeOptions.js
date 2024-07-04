@@ -170,21 +170,73 @@ function stopBGM(){
     playingMusic.src = ""
     BGMtitle.innerHTML = ""
 }
+let themeMusicVolumeDialElem = document.getElementById("themeMusicVolumeDial");
+let themeMusicIncElem = document.getElementById("themeMusicInc");
+let themeMusicDecElem = document.getElementById("themeMusicDec");
+let SFXVolumeDialElem = document.getElementById("SFXVolumeDial");
+let SFXIncElem = document.getElementById("SFXInc");
+let SFXDecElem = document.getElementById("SFXDec");
+
+let themeMusicVolumeDialCurrRotation = 0;
+let SFXvolumeDialCurrRotation = 0;
+
+function updateThemeMusicDialRotation(_value) {
+    themeMusicVolumeDialElem.style.transform = `rotate(${_value}deg)`;
+    console.log("updateThemeMusicDialRotation was called");
+}
+playingMusic.volume = 0.5;
 function volumeBGM(_value){
     if (_value == "+"){
-        playingMusic.volume +=0.1
+        playingMusic.volume = Math.round(Math.min(playingMusic.volume + 0.1, 1.0) * 10) / 10;
+        themeMusicVolumeDialCurrRotation = Math.min(themeMusicVolumeDialCurrRotation + 18, 90);
+        console.log("themeMusicVolumeDialCurrRotation was incremented: ", themeMusicVolumeDialCurrRotation);
+        updateThemeMusicDialRotation(themeMusicVolumeDialCurrRotation);
+        console.log(playingMusic.volume);
     } else {
-        playingMusic.volume -=0.1
+        playingMusic.volume = Math.round(Math.max(playingMusic.volume - 0.1, 0) * 10) / 10;
+        themeMusicVolumeDialCurrRotation = Math.max(themeMusicVolumeDialCurrRotation - 18, -90);
+        console.log("themeMusicVolumeDialCurrRotation was decremented: ", themeMusicVolumeDialCurrRotation)
+        updateThemeMusicDialRotation(themeMusicVolumeDialCurrRotation);
+        console.log(playingMusic.volume);
     }
 }
 
+themeMusicIncElem.addEventListener("click", ()=> {
+    volumeBGM("+");
+    console.log("event listener on theme music dial was triggered", );
+})
+themeMusicDecElem.addEventListener("click", ()=> {
+    volumeBGM("-");
+})
+
+
+function updateSFXDialRotation() {
+    SFXVolumeDialElem.style.transform = `rotate(${SFXvolumeDialCurrRotation}deg)`;
+}
+playingBGSFX.volume = 0.5
 function volumeSFX(_value){
     if (_value == "+"){
-        playingBGSFX.volume +=0.1
+        playingBGSFX.volume = Math.round(Math.min(playingBGSFX.volume + 0.1, 1.0) * 10) / 10;
+        SFXvolumeDialCurrRotation = Math.min(SFXvolumeDialCurrRotation + 18, 90);
+        console.log("SFXvolumeDialCurrRotation was incremented: ", SFXvolumeDialCurrRotation);
+        updateSFXDialRotation();
+        console.log(playingBGSFX.volume);
     } else {
-        playingBGSFX.volume -=0.1
+        playingBGSFX.volume = Math.round(Math.max(playingBGSFX.volume - 0.1, 0) * 10) / 10;
+        SFXvolumeDialCurrRotation = Math.ceil(Math.max(SFXvolumeDialCurrRotation - 18, -90));
+        console.log("SFXvolumeDialCurrRotation was decremented: ", SFXvolumeDialCurrRotation);
+        updateSFXDialRotation();
+        console.log(playingBGSFX.volume);
+
     }
 }
+
+SFXIncElem.addEventListener("click", ()=> {
+    volumeSFX("+");
+})
+SFXDecElem.addEventListener("click", ()=> {
+    volumeSFX("-");
+})
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);

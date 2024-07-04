@@ -281,26 +281,34 @@ function extractTaskData() {
 // Function to save task list setup
 function saveTaskListSetup() {
   console.log("!!SAVETASKLISTSETUP CALLED!!!! FETCHING!!")
+  
   const { incompleteTasks, completedTasks } = extractTaskData();
-
-  fetch("/taskDataGrab", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      "tasks": incompleteTasks,
-      "completedTasks": completedTasks,
-      "email": user.email
+  widgetSettingsBulk["w-tasks"].taskList.completedTasks = completedTasks
+  widgetSettingsBulk["w-tasks"].taskList.incompleteTasks = incompleteTasks
+  localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
+  try{
+    fetch("/taskDataGrab", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "tasks": incompleteTasks,
+        "completedTasks": completedTasks,
+        "email": user.email
+      })
     })
-  })
-    .then(res => res.json())
-    .then(res => console.log("SAVETASKLISTSETUP", res));
-  console.log("TASKDATAGRAB FETCH", incompleteTasks, completedTasks)
+      .then(res => res.json())
+      //.then(res => console.log("SAVETASKLISTSETUP", res));
+    console.log("TASKDATAGRAB FETCH", incompleteTasks, completedTasks)
+  }catch(error){
+    console.log(`Warning, could not connect to DB - ${error}`)
+  }
+
 }
 `[[{text: "do groceries", order: 1, completed: false}],[{text: "eat lunch", order: 1, completed: true}]]`
 
-let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
+//let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
 
 async function restoreTasks() { //brings back the tasks for complete and incomplete. function is called when script file is loaded.
   console.log("!!attempting to RESTORE tasklist content!")
