@@ -18,6 +18,8 @@
         background-color: #d5d5d5;
         color: rgb(61, 61, 61);
         border-radius: 10px;
+        position: absolute;
+        pointer-events: all;
       }
 
       h5 {
@@ -115,7 +117,7 @@
   <body>
     <div class="card" id="instructionCard">
       <div class="card-header">
-        <img src="../images/logo-rev.png" style="height: 15px" alt="" />
+        <img src="../static/images/logo-rev.png" style="height: 15px" alt="" />
         <button type="button" class="close" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -139,7 +141,7 @@
         <div class="step-content" id="step1">
           <img
             class="inst"
-            src="../images/notch.png"
+            src="../static/images/notch.png"
             style="width: 300px"
             alt=""
           />
@@ -153,7 +155,7 @@
         <div class="step-content" id="step2">
           <img
             class="inst"
-            src="../images/top-notch.png"
+            src="../static/images/top-notch.png"
             style="width: 350px"
             alt=""
           />
@@ -166,7 +168,7 @@
         <div class="step-content" id="step3">
           <img
             class="inst"
-            src="../images/dev.png"
+            src="../static/images/dev.png"
             style="width: 200px"
             alt=""
           />
@@ -179,7 +181,7 @@
         <div class="step-content" id="step4">
           <img
             class="inst"
-            src="../images/save.png"
+            src="../static/images/save.png"
             style="width: 200px"
             alt=""
           />
@@ -210,63 +212,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script>
-      let currentStep = 0;
-      const totalSteps = 5;
-
-      function showStep(step) {
-        for (let i = 0; i < totalSteps; i++) {
-          document.getElementById(`step${i}`).classList.remove("active");
-        }
-        document.getElementById(`step${step}`).classList.add("active");
-        updateProgressBar(step);
-        updateButtons(step);
-      }
-
-      function updateProgressBar(step) {
-        const progress = (step / (totalSteps - 1)) * 100;
-        document.getElementById("progressBar").style.width = `${progress}%`;
-      }
-
-      function updateButtons(step) {
-        if (step === 0) {
-          document.getElementById("prevButton").style.visibility = "hidden";
-        } else {
-          document.getElementById("prevButton").style.visibility = "visible";
-        }
-
-        if (step === totalSteps - 1) {
-          document.getElementById("nextButton").style.visibility = "hidden";
-        } else {
-          document.getElementById("nextButton").style.visibility = "visible";
-        }
-      }
-
-      function nextStep() {
-        if (currentStep < totalSteps - 1) {
-          currentStep++;
-          showStep(currentStep);
-        }
-      }
-
-      function prevStep() {
-        if (currentStep > 0) {
-          currentStep--;
-          showStep(currentStep);
-        }
-      }
-
-      function skipInstructions() {
-        document.getElementById("instructionCard").style.display = "none";
-      }
-
-      document.getElementById("nextButton").addEventListener("click", nextStep);
-      document.getElementById("prevButton").addEventListener("click", prevStep);
-      document
-        .getElementById("skip")
-        .addEventListener("click", skipInstructions);
-      document
-        .querySelector(".close")
-        .addEventListener("click", skipInstructions);
     </script>
   </body>
 </html>
