@@ -633,7 +633,7 @@ label[for="nav-toggle"] {
   transition: top 0.2s;
   position: absolute;
   right: calc(-1*var(--navbar-width));
-  top: calc(var(--navbar-width)/0.8);
+  top: calc(var(--navbar-width)/0.85);
 }
 
 
