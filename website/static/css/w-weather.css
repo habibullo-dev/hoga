@@ -13,65 +13,57 @@ body {
 
 .weather-container {
   text-align: center;
-  /* max-width: fit-content; */
-  /* width: 100%; */
   max-height: fit-content;
-  padding: 15px 20px !important;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent */
-  backdrop-filter: blur(10px);
+  padding: 0.9375rem 1.25rem !important; 
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.8);
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(0.625rem);
 }
 
 .header {
   font-size: 1rem;
   font-weight: 400;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem; 
   text-align: left;
   color: rgb(255, 255, 255);
-  /* padding: 2px 8px;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.1);  */
-  /* backdrop-filter: blur(10px); */
 }
 
 .location {
   font-size: 0.9rem;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   color: rgb(164, 164, 164);
   text-align: left;
-  margin-top: -10px;
+  margin-top: -0.625rem; 
   font-weight: 500;
-  padding: 0 10px;
+  padding: 0 0.625rem; 
 }
 
 .country {
   font-size: 0.8rem;
   color: #666;
-  margin-top: -10px;
-  margin-left: 10px;
+  margin-top: -0.625rem; 
+  margin-left: 0.625rem; 
   text-transform: uppercase;
 }
 
 .weather-card-container {
   display: flex;
-  /* flex-wrap: wrap; */
   justify-content: space-around;
-  margin-top: 0px;
+  margin-top: 0;
   overflow: scroll;
   position: relative;
 }
 
 .weather-card {
-  padding: 10px;
-  margin: 10px;
-  width: 120px;
+  padding: 0.625rem; 
+  margin: 0.625rem; 
+  width: 7.5rem; 
   cursor: pointer;
   transition: background-color 0.3s ease;
-  /* background-color: rgb(241, 241, 229); */
-  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent */
-  backdrop-filter: blur(10px);
-  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.5); 
+  backdrop-filter: blur(0.625rem);
+  border-radius: 0.625rem; 
 }
 
 .weather-card:hover {
@@ -90,21 +82,21 @@ body {
 }
 
 .weather-card:hover .day {
-    color: #e5e5e5;
-  }
+  color: #e5e5e5;
+}
 
-  .weather-card:hover .temperature {
-    color: #c95714;
-    font-weight: 600;
-  }
+.weather-card:hover .temperature {
+  color: #c95714;
+  font-weight: 600;
+}
 
 .weather-card-container .icon {
-  width: 50px;
+  width: 3.125rem; 
 }
 
 .temperature {
   font-size: 1rem;
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem; 
 }
 
 .description {
@@ -114,21 +106,20 @@ body {
 
 .dropdown-container {
   text-align: right;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem; 
   font-size: 0.8rem;
 }
 
 select {
-  padding: 3px;
+  padding: 0.1875rem; 
   font-size: 1em;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .weather-nav {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  gap: 10px;
+  gap: 0.625rem; 
   align-items: center;
-  padding: 0 10px;
+  padding: 0 0.625rem; 
 }

@@ -138,6 +138,19 @@ body {
   max-height: 250px;
 }
 
+.widget-w-timer {
+  max-height: 17.5rem;
+  min-width: 23rem;
+  max-width: 32rem;
+}
+
+.widget-w-tasks {
+  max-height: 80rem;
+  min-width: 10rem;
+  height: 40rem !important;
+  max-width: 32rem;
+}
+
 .notch {
   position: relative;
   background: black;

@@ -22,19 +22,21 @@ document.querySelector("#focusModeSwitch").addEventListener("click", ()=>{ //To 
 
 
 //Theme options widget function - global-level ⚠️⚠️⚠️
-async function activeThemeSetup(){
+async function activeThemeSetup(_force){
     console.log("!! ACTIVETHEMESETUP FUNC RAN")
     /* await createWidget("w-themeOptions") */
     
-
-    _innerHTML = thOptionsHTML;
+    if (!_force){
+        _innerHTML = thOptionsHTML;
+        themeExtraOptions.innerHTML = _innerHTML;
+    }
     _funcArr = thFuncArr;
     
     console.log("!! WIDGETSETTINGSBULK CURRENTTHEME:", widgetSettingsBulk.currentTheme)
 
 
-    themeExtraOptions.innerHTML = _innerHTML;
     const themeClickables = Array.from(document.querySelectorAll(".thOptionClickable"))
+    console.log("!! WHAT ARE THE THEME CLICKABLES, ", themeClickables)
     themeClickables.forEach((clickable, i)=>{
         try {
             clickable.addEventListener("click", _funcArr[i])
