@@ -144,6 +144,13 @@ body {
   max-width: 32rem;
 }
 
+.widget-w-tasks {
+  max-height: 80rem;
+  min-width: 10rem;
+  height: 40rem !important;
+  max-width: 32rem;
+}
+
 .notch {
   position: relative;
   background: black;

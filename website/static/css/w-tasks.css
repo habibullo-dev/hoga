@@ -27,6 +27,10 @@ body {
   max-height: 300px;
 }
 
+.tasklist input {
+  margin-right: 0 !important;
+}
+
 #taskInput {
   padding: 8px;
   margin-top: 10px;
