@@ -113,7 +113,15 @@ const loadThemeSet = async function(_css, _js, _html, _themeName){
         const htmlContent = await res.text()
         HTML.innerHTML = htmlContent
         parentGrid.insertBefore(HTML, parentGrid.firstChild); //insert as first child of grid-container
-
+        try { //js file is technically optional. You can make a theme without script.           
+            const script = document.createElement("script")
+            script.src = (_js)
+            script.type = "text/javascript"
+            HTML.appendChild(script)
+            /* script.onload = () => {parallaxStartUp({staticTitle:true, distCalc:1.5, rotaCalc:3}, paraStopButton, paraStartButton)} */
+        }  catch (error) {
+            console.log("Failed to load javascript file. Wrong path or file does not exist. ", error)
+        }
     } catch (error) {
         console.log("Theme HTML failed to load. Early exit: ", error);
         document.body.removeChild(HTML);
@@ -123,15 +131,7 @@ const loadThemeSet = async function(_css, _js, _html, _themeName){
     }
 
 
-    try { //js file is technically optional. You can make a theme without script.           
-            const script = document.createElement("script")
-            script.src = (_js)
-            script.type = "text/javascript"
-            HTML.appendChild(script)
-            /* script.onload = () => {parallaxStartUp({staticTitle:true, distCalc:1.5, rotaCalc:3}, paraStopButton, paraStartButton)} */
-    }  catch (error) {
-        console.log("Failed to load javascript file. Wrong path or file does not exist. ", error)
-    }
+    
 
 
 /*     const thKillSwitch = document.createElement("button") //killswitch to remove HTML/CSS/JS
