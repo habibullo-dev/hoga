@@ -178,6 +178,7 @@
   <div class="card" id="loginCard">
     <div class="card-body">
       <div class="head-login">
+        <button id="loginCloseBtn">X</button>
         <img src="../images/logo-rev.png" style="width: 40%" alt="" />
         <button id="loginCloseBtn" onclick="popupImportant.style.display = 'none';">X</button>
         <img src="../static/images/logo-rev.png" style="width: 40%" alt="" />
@@ -225,7 +226,6 @@
     </div>
   </div>
   <script>
-
     document
       .getElementById("resetPasswordBtn")
       .addEventListener("click", function () {
@@ -248,7 +248,8 @@
         document.getElementById("userlogin").style.display = "block";
         document.querySelector(".head-login p").style.display = "block";
       });
-
+  </script>
+  <script>
   </script>
 </body>
 
