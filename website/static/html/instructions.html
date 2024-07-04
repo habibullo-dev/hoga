@@ -11,125 +11,129 @@
     <style>
       * {
         font-family: "Albert Sans";
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
-      .card {
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      .instructions-card {
         max-width: 400px;
-        margin: 20px auto;
         background-color: #d5d5d5;
         color: rgb(61, 61, 61);
         border-radius: 10px;
-        position: absolute;
-        pointer-events: all;
+        overflow: hidden;
+        position: relative;
       }
 
-      h5 {
-        font-size: 1.1rem;
-        font-weight: 400;
-        margin-top: 20px;
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #f5f5f5;
+      }
+
+      .card-header img {
+        height: 15px;
+      }
+
+      .card-header button {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #333;
       }
 
       .card-body {
         background-color: #363636;
         color: white;
+        padding: 20px;
         border-radius: 0 0 10px 10px;
       }
 
-      p {
-        margin-top: 5px;
-        font-size: 0.85rem;
-        font-weight: 300;
-        padding: 0 20px;
-      }
-
-      .card-header {
-        color: #363636;
-        border-radius: 15px;
-      }
       .progress {
         height: 15px;
+        background-color: #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-bottom: 20px;
       }
 
-      .progress-bar {
+      .progress .progress-bar {
+        height: 100%;
         background-color: rgb(109, 160, 205);
+        width: 0;
       }
 
       .step-content {
         display: none;
-        margin-bottom: -20px;
         text-align: center;
-        padding: 5px;
       }
+
       .step-content.active {
         display: block;
-        text-align: center;
       }
 
-      #skip {
-        text-align: center;
-        display: flex;
-        margin: 15px;
-        font-size: 0.8rem;
-        justify-content: center;
-        justify-items: center;
+      h5 {
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 10px;
       }
 
-      #nextButton,
-      #prevButton {
-        font-size: 0.8rem;
-        background-color: rgb(109, 160, 205);
-        margin: auto;
+      p {
+        font-size: 0.85rem;
+        font-weight: 300;
+        margin-bottom: 20px;
       }
 
       .inst {
+        display: block;
+        margin: 0 auto 10px;
+        width: 80%;
+      }
+
+      .buttons-btm {
         display: flex;
-        margin: auto;
-        width: 300px;
-        height: auto;
-        mask-image: radial-gradient(
-            circle,
-            rgba(0, 0, 0, 1) 70%,
-            rgba(0, 0, 0, 0) 100%
-          ),
-          linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 1) 20%,
-            rgba(0, 0, 0, 1) 80%,
-            rgba(0, 0, 0, 0) 100%
-          );
-        -webkit-mask-image: radial-gradient(
-            circle,
-            rgba(0, 0, 0, 1) 80%,
-            rgba(0, 0, 0, 0) 100%
-          ),
-          linear-gradient(
-            to bottom,
-            rgba(0, 0, 0, 0) 0%,
-            rgba(0, 0, 0, 1) 20%,
-            rgba(0, 0, 0, 1) 80%,
-            rgba(0, 0, 0, 0) 100%
-          );
-        mask-composite: intersect;
-        -webkit-mask-composite: destination-in;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .buttons-btm button {
+        font-size: 0.8rem;
+        background-color: rgb(109, 160, 205);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        cursor: pointer;
+      }
+
+      #skip {
+        background-color: #999;
+        margin: 0 10px;
       }
     </style>
   </head>
   <body>
-    <div class="card" id="instructionCard">
+    <div class="instructions-card" id="instructionCard">
       <div class="card-header">
-        <img src="../static/images/logo-rev.png" style="height: 15px" alt="" />
+        <img src="../static/images/logo-rev.png" alt="Logo" />
         <button type="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          &times;
         </button>
       </div>
       <div class="card-body">
-        <div class="progress mb-4">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            style="width: 0%"
-            id="progressBar"
-          ></div>
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
         </div>
         <div class="step-content active" id="step0">
           <h5>Welcome!</h5>
@@ -139,12 +143,7 @@
           </p>
         </div>
         <div class="step-content" id="step1">
-          <img
-            class="inst"
-            src="../static/images/notch.png"
-            style="width: 300px"
-            alt=""
-          />
+          <img class="inst" src="../static/images/notch.png" alt="Instruction Image" />
           <h5>Control Panel</h5>
           <p>
             Hover to the top of the page to initialize the control panel. The
@@ -153,12 +152,7 @@
           </p>
         </div>
         <div class="step-content" id="step2">
-          <img
-            class="inst"
-            src="../static/images/top-notch.png"
-            style="width: 350px"
-            alt=""
-          />
+          <img class="inst" src="../static/images/top-notch.png" alt="Instruction Image" />
           <h5>Interactive Widgets</h5>
           <p>
             Select the edit button and pick any of the available widgets you
@@ -166,12 +160,7 @@
           </p>
         </div>
         <div class="step-content" id="step3">
-          <img
-            class="inst"
-            src="../static/images/dev.png"
-            style="width: 200px"
-            alt=""
-          />
+          <img class="inst" src="../static/images/dev.png" alt="Instruction Image" />
           <h5>Generate Layouts</h5>
           <p>
             Select any of the preset themes or try some of the developer picks
@@ -179,12 +168,7 @@
           </p>
         </div>
         <div class="step-content" id="step4">
-          <img
-            class="inst"
-            src="../static/images/save.png"
-            style="width: 200px"
-            alt=""
-          />
+          <img class="inst" src="../static/images/save.png" alt="Instruction Image" />
           <h5>Save Themes</h5>
           <p>
             Click on the save button to automatically restore your settings for
@@ -192,26 +176,59 @@
           </p>
         </div>
         <div class="buttons-btm">
-          <div class="d-flex justify-content-between mt-4">
-            <button
-              class="btn btn-primary"
-              id="prevButton"
-              style="visibility: hidden"
-            >
-              &lt;
-            </button>
-            <button class="btn btn-secondary mt-3" id="skip">
-              Skip Instructions
-            </button>
-            <button class="btn btn-primary" id="nextButton">&gt;</button>
-          </div>
+          <button id="prevButton" style="visibility: hidden;">&lt;</button>
+          <button id="skip">Skip Instructions</button>
+          <button id="nextButton">&gt;</button>
         </div>
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const steps = document.querySelectorAll('.step-content');
+        const nextButton = document.getElementById('nextButton');
+        const prevButton = document.getElementById('prevButton');
+        const skipButton = document.getElementById('skip');
+        const progressBar = document.getElementById('progressBar');
+        const closeButton = document.querySelector('.close');
+
+        let currentStep = 0;
+
+        function updateStep() {
+          steps.forEach((step, index) => {
+            step.classList.toggle('active', index === currentStep);
+          });
+          progressBar.style.width = `${(currentStep / (steps.length - 1)) * 100}%`;
+          prevButton.style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+          nextButton.textContent = currentStep === steps.length - 1 ? 'Finish' : '>';
+        }
+
+        nextButton.addEventListener('click', () => {
+          if (currentStep < steps.length - 1) {
+            currentStep++;
+            updateStep();
+          } else {
+            document.getElementById('instructionCard').style.display = 'none';
+          }
+        });
+
+        prevButton.addEventListener('click', () => {
+          if (currentStep > 0) {
+            currentStep--;
+            updateStep();
+          }
+        });
+
+        skipButton.addEventListener('click', () => {
+          document.getElementById('instructionCard').style.display = 'none';
+        });
+
+        closeButton.addEventListener('click', () => {
+          document.getElementById('instructionCard').style.display = 'none';
+        });
+
+        updateStep();
+      });
     </script>
   </body>
 </html>

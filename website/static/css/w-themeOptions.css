@@ -6,7 +6,7 @@
     position: absolute;
     color: #8392a5;
     /* transition: transform 0.3s ease;  */
-    min-height: 20rem;
+    min-height: 15rem;
     min-width: var(--navbar-width);
     /* padding: 5px; */
 }
@@ -32,7 +32,7 @@
 #themeParticles{
     display: flex;
     justify-content: left;
-    margin-left: 20px;
+    margin-left: 1rem;
 }
 
 * {
@@ -101,9 +101,10 @@
 .togSwitch {
     position: relative;
     display: inline-block;
-    width: 30px;
-    height: 15px;
-    margin-right:0.25rem;
+    width: 4rem;
+    height: 2rem;
+    margin-right:0.35rem;
+    margin-left: 0.2rem;
 }
 
 .togSwitch input {
@@ -121,9 +122,9 @@ box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .togRound:before {
--webkit-transform: translateX(18px);
--ms-transform: translateX(18px);
-transform: translateX(18px);
+-webkit-transform: translateX(2rem);
+-ms-transform: translateX(2rem);
+transform: translateX(2rem);
 }
 
 /* Rounded sliders */
@@ -145,14 +146,15 @@ right: 0;
 bottom: 0;
 background-color: #ccc;
 -webkit-transition: .4s;
+
 transition: .4s;
 }
 
 .togRound:before {
 position: absolute;
 content: "";
-height: 15px;
-width: 15px;
+height: 2rem;
+width: 2rem;
 background-color: white;
 -webkit-transition: .4s;
 transition: .4s;

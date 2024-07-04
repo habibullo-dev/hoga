@@ -16,6 +16,13 @@
   --ease-out: cubic-bezier(0.3, 0.3, 0.5, 1);
   --border-width: 0.4em;
 }
+* {
+  user-select: none !important;
+}
+
+input, textarea {
+  user-select: text !important;
+}
 
 @-webkit-keyframes appear {
   to {
@@ -136,6 +143,25 @@ body {
 
 .widget-w-spotify {
   max-height: 250px;
+}
+
+.widget-w-timer {
+  max-height: 17.5rem;
+  min-width: 23rem;
+  max-width: 32rem;
+}
+
+.widget-w-tasks {
+  max-height: 80rem;
+  min-width: 10rem;
+  /* height: 40rem !important; */
+  max-width: 32rem;
+  /* min-height: 30rem; */
+}
+
+.widget-w-weather {
+  max-height: 17rem;
+  max-width: 50rem;
 }
 
 .notch {
@@ -614,7 +640,7 @@ label[for="nav-toggle"] {
   transition: top 0.2s;
   position: absolute;
   right: calc(-1*var(--navbar-width));
-  top: calc(var(--navbar-width)/0.8);
+  top: calc(var(--navbar-width)/0.85);
 }
 
 

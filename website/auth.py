@@ -72,11 +72,12 @@ def registeruser():
         #CREATING RANDOM CHARACTER TO VALIDATE USER'S EMAIL
         rand_hash = str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20)))
         with db.begin() as conn:
-            res = conn.execute(text("INSERT INTO user (email, password, created_at, latest_login, name, hash) VALUES (:email, :password, NOW(), NOW(), :name, :hash)"), {
+            res = conn.execute(text("INSERT INTO user (email, password, created_at, latest_login, name, hash, hash_expiration) VALUES (:email, :password, NOW(), NOW(), :name, :hash, :hash_expiration)"), {
                 "email": email,
                 "password": generate_password_hash(request.form.get("password")),
                 "name": request.form.get("name"),
-                "hash": rand_hash
+                "hash": rand_hash,
+                "hash_expiration": datetime.now() + timedelta(minutes=30)
             })
             if res:
                 created_acct = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
@@ -168,9 +169,10 @@ def userlogin():
                     return response
                     #return {"email": info.email, "name": info.name} #🚧⚠️added to response var, see above
                 elif check_password_hash(acct.password,password) and (acct.user_activated == 0):
-                    conn.execute(text("UPDATE user SET hash = :hash WHERE email = :email"), {
+                    conn.execute(text("UPDATE user SET hash = :hash, hash_expiration = :hash_expiration WHERE email = :email"), {
                         "hash": str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20))),
-                        "email": acct.email
+                        "email": acct.email,
+                        "hash_expiration": datetime.now() + timedelta(minutes=30)
                     })
 
                     res = conn.execute(text("SELECT email, name, hash FROM user WHERE email = :email"), {
@@ -195,7 +197,7 @@ def userlogin():
                         msg.attach(message)
 
                         smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                    return {"message": "email sent to activate user's account"}
+                    return redirect(url_for("auth.redir_home_dashboard"))
                 else: return {"error": "user inputted wrong email or password"}
         return {"error": "user inputted wrong email or password"}
     except:
@@ -225,10 +227,11 @@ def adminlogin():
                     total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
                     total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
                     revenue_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
+                    user_info_data = conn.execute(text("SELECT name, email, DATE_FORMAT(latest_login, '%y-%m-%d') AS latest_login, DATE_FORMAT(created_at, '%y-%m-%d') AS created_at FROM user"))
                     revenue_per_user = 10
                     for user in revenue_users_data:
                         total_revenue = user.count * revenue_per_user
-                    return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data, total_revenue = total_revenue)
+                    return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data, total_revenue = total_revenue, user_info_data = user_info_data)
             else:
                 error_msg = {"message":"Incorrect username or password"}
                 return render_template("admin.html", error_msg=error_msg)
@@ -238,8 +241,14 @@ def adminlogin():
 #PATH TO FETCH DATA TO CREATE LINE GRAPH
 @auth_bp.get("/createlinegraph")
 def createlinegraph():
+    list_of_dataset = []
     with db.begin() as conn:
-        conn.execute(text())
+        result = conn.execute(text("WITH RECURSIVE date_sequence AS ( SELECT DATE(NOW() - INTERVAL 1 WEEK) AS date UNION ALL SELECT date + INTERVAL 1 DAY FROM date_sequence WHERE date + INTERVAL 1 DAY <= DATE(NOW()) ), daily_growth AS ( SELECT DATE(created_at) AS date, COUNT(*) AS user_count FROM user WHERE created_at BETWEEN NOW() - INTERVAL 1 WEEK AND NOW() GROUP BY DATE(created_at) ) SELECT ds.date, COALESCE( SUM(dg.user_count) OVER (ORDER BY ds.date) + (SELECT COUNT(*) FROM user WHERE created_at < NOW() - INTERVAL 1 WEEK), (SELECT COUNT(*) FROM user WHERE created_at < ds.date) ) AS cumulative_user_count FROM date_sequence ds LEFT JOIN daily_growth dg ON ds.date = dg.date ORDER BY ds.date;"))
+        for item in result:
+            list_of_dataset.append(int(item.cumulative_user_count))
+    list_of_dates = [(datetime.now().date() - timedelta(days=7)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=6)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=5)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=4)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=3)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=2)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=1)).strftime("%a, %b %d %Y"),(datetime.now().date()).strftime("%a, %b %d %Y")]
+    return {"message":list_of_dataset, "time": list_of_dates}
+
 
 #PASSWORD RECOVERY FOR USER
 

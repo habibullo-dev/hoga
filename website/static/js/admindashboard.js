@@ -12,23 +12,31 @@ logoutButtonElem.addEventListener("click", (evt) => {
 
 const ctx = document.getElementById('myChart');
 
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
 
-fetch("")
+fetch("/createlinegraph")
+    .then(res => res.json())
+    .then(res => {
+        Chart.defaults.borderColor = 'white';
+        Chart.defaults.color = 'white';
+        console.log("RES", res.message)
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: res.time,
+                datasets: [{
+                    label: 'Number of Verified Accounts',
+                    data: res.message,
+                    borderWidth: 2,
+                    backgroundColor: 'white',
+                    tickColor: "white"
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    })

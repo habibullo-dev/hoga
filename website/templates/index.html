@@ -129,24 +129,26 @@
                   text-transform: uppercase;
                   letter-spacing: 0.2rem;
                   font-size: 0.8rem;
-                ">CUSTOM</span>
+                "></span>
           </div>
           <hr />
-          <div class="nav-button">
-            <span>Background</span>
+          <!-- <div class="nav-button">
+            <span></span>
+          </div> -->
+          <div class="nav-button" style="display: flex" id="w-themeOptions">
+            <span>Theme Options</span><img src="../static/images/purePaint.svg"
+              style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
           </div>
           <div class="nav-button" style="display: flex" id="dev-pick-button">
             <span>Developer Picks</span><img src="../static/images/silverStar.svg"
               style="margin-left: 0.2rem; width: 1.05rem; height: 1.05rem">
           </div>
-          <div class="nav-button" style="display: flex" id="w-themeOptions">
-            <span>Theme Options</span><img src="../static/images/purePaint.svg"
-              style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
-          </div>
+         
+          
           <div id="nav-content-highlight"></div>
           <div id="nav-dev-picks" class="display-toggle">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
-              <span>Lo-Fi</span>
+              <span>Vaporwave (Animated)</span>
             </div>
             <div class="nav-button themeSwitch" data-themename="th-isaac1">
               <span>Window (Day/Night System)</span>
@@ -167,7 +169,7 @@
                 </label>
               </div>
               <div class="dropdown">
-                    <button class="dropbtn">Particle Effects</button>
+                    <button class="dropbtn">Effects</button>
                     <div class="dropdown-content" style="top: -220%;">
                         <a class="selectFXBtn" style="color: red" onclick="(function() { setupFX('cancel'); })()">Remove</a>
                         <a class="selectFXBtn" onclick="(function() { setupFX('rain', 60); })()">Rain</a>
@@ -206,6 +208,13 @@
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin Macleod - Easy Lemon">Kevin Macleod - Easy Lemon</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin MacLeod - Life of Riley">Kevin MacLeod - Life of Riley</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="aKu - The Final Blow">aKu - The Final Blow</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Fortune Cookie - Golden Summer">Fortune Cookie - Golden Summer</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Christian Larssen - Kyoto">Christian Larssen - Kyoto</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="AVBE - Night in Tokyo">AVBE - Night in Tokyo</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Tropical Beach">Amaksi - Tropical Beach</a>
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Lo-fi">Amaksi - Lo-fi</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>                    
                   </div>

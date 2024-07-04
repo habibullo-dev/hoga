@@ -183,7 +183,7 @@
         <p>Please login to your account</p>
       </div>
 
-      <form action="/userlogin" method="post" id="userlogin">
+      <form action="/userlogin" method="post" id="userlogin" onsubmit="window.location.href='http://127.0.0.1:5000/'">
         <fieldset>
           <input type="email" name="email" placeholder="Email" required />
           <input type="password" name="password" id="pwd" placeholder="Password" required />
@@ -221,10 +221,30 @@
     </div>
   </div>
   <script>
+    document
+      .getElementById("resetPasswordBtn")
+      .addEventListener("click", function () {
+        document.getElementById("userlogin").style.display = "none";
+        document.querySelector(".head-login p").style.display = "none";
+        document.getElementById("resetForm").style.display = "block";
+      });
+
+    document
+      .getElementById("submitReset")
+      .addEventListener("click", function () {
+        document.getElementById("resetForm").style.display = "none";
+        document.getElementById("thankYou").style.display = "block";
+      });
+
+    document
+      .getElementById("thanksReset")
+      .addEventListener("click", function () {
+        document.getElementById("thankYou").style.display = "none";
+        document.getElementById("userlogin").style.display = "block";
+        document.querySelector(".head-login p").style.display = "block";
+      });
   </script>
   <script>
-
-    //emptied for now. the onstart functions are already being called from settingsSaveLoad.
   </script>
 </body>
 
