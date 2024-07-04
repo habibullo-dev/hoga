@@ -81,6 +81,7 @@ async function autoLogin() { //brings in everything about user from DB EXCEPT pr
 async function saveSettings() {
     //⚠️Create loading wheel pop-up, EX: loadingPopUp.style.display = "block"
     localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk)) //store settings in local machine for future quick access. turns into string
+    console.log("IMPORTANT - Saving settings to Database")
     await fetch("/widget_all_settings", {
         method: "POST",
         body: JSON.stringify({

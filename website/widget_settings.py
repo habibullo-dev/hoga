@@ -19,6 +19,7 @@ def widgets_grab():
         try:
             #Query 1 - spotify_setting ⚠️does not exist yet.
             if bulk_widgets["w-spotify"]:
+                print("W_SPOTIFY", bulk_widgets["w-spotify"])
                 query1 = conn.execute(text("UPDATE user SET spotify=:user_spotify_setting WHERE email=:email"),{
                     "email": email,
                     "user_spotify_setting": json.dumps(bulk_widgets.get("w-spotify"))
@@ -48,6 +49,7 @@ def widgets_grab():
 
             #Query 4 - clock_setting
             if bulk_widgets["w-timer"]:
+                print("W-TIMER", bulk_widgets["w-timer"])
                 query4 = conn.execute(text("UPDATE user SET clock_setting=:user_clock_setting WHERE email=:email"),{
                     "email": email,
                     "user_clock_setting": json.dumps(bulk_widgets["w-timer"])
@@ -67,6 +69,7 @@ def widgets_grab():
 
             #Query 6 - tasklist_setting
             if bulk_widgets["w-tasks"]:
+                print("W_TASKS", bulk_widgets["w-tasks"])
                 query6 = conn.execute(text("UPDATE user SET tasklist_setting=:user_task_setting WHERE email=:email"),{
                     "email": email,
                     "user_task_setting": json.dumps(bulk_widgets["w-tasks"])
@@ -76,6 +79,7 @@ def widgets_grab():
 
             #Query 7 - mood_setting ⚠️does not exist yet.
             if bulk_widgets["currentTheme"]:
+                print("THEME_SELECT", bulk_widgets["currentTheme"])
                 query7 = conn.execute(text("UPDATE user SET mood_setting=:user_mood_setting WHERE email=:email"),{
                     "email": email,
                     "user_mood_setting": json.dumps(bulk_widgets["currentTheme"])
@@ -85,6 +89,7 @@ def widgets_grab():
 
             #Query 8 - Gemini_setting 
             if bulk_widgets["w-search"]:
+                print("W_SEARCH", bulk_widgets["w-search"])
                 query8 = conn.execute(text("UPDATE user SET gemini=:gemini_setting WHERE email=:email"),{
                     "email": email,
                     "user_gemini_setting": json.dumps(bulk_widgets["w-search"])
