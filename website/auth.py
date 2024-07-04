@@ -243,11 +243,11 @@ def adminlogin():
 def createlinegraph():
     list_of_dataset = []
     with db.begin() as conn:
-        result = conn.execute(text("WITH RECURSIVE date_sequence AS (SELECT CURDATE() - INTERVAL 1 WEEK AS date UNION ALL SELECT date + INTERVAL 1 DAY FROM date_sequence WHERE date + INTERVAL 1 DAY <= CURDATE() ), daily_growth AS (SELECT DATE(created_at) AS date, COUNT(*) AS user_count FROM user WHERE created_at BETWEEN CURDATE() - INTERVAL 1 WEEK AND CURDATE() GROUP BY DATE(created_at))SELECT ds.date, COALESCE(SUM(dg.user_count) OVER (ORDER BY ds.date) + (SELECT COUNT(*) FROM user WHERE created_at < CURDATE() - INTERVAL 1 WEEK), (SELECT COUNT(*) FROM user WHERE created_at < ds.date)) AS cumulative_user_count FROM date_sequence ds LEFT JOIN daily_growth dg ON ds.date = dg.date ORDER BY ds.date;"))
+        result = conn.execute(text("WITH RECURSIVE date_sequence AS ( SELECT DATE(NOW() - INTERVAL 1 WEEK) AS date UNION ALL SELECT date + INTERVAL 1 DAY FROM date_sequence WHERE date + INTERVAL 1 DAY <= DATE(NOW()) ), daily_growth AS ( SELECT DATE(created_at) AS date, COUNT(*) AS user_count FROM user WHERE created_at BETWEEN NOW() - INTERVAL 1 WEEK AND NOW() GROUP BY DATE(created_at) ) SELECT ds.date, COALESCE( SUM(dg.user_count) OVER (ORDER BY ds.date) + (SELECT COUNT(*) FROM user WHERE created_at < NOW() - INTERVAL 1 WEEK), (SELECT COUNT(*) FROM user WHERE created_at < ds.date) ) AS cumulative_user_count FROM date_sequence ds LEFT JOIN daily_growth dg ON ds.date = dg.date ORDER BY ds.date;"))
         for item in result:
-            list_of_dataset.append(item.cumulative_user_count)
-    print("AND I SAID HEYAYAYAYAYAYA", list_of_dataset)
-    return {"message":list_of_dataset}
+            list_of_dataset.append(int(item.cumulative_user_count))
+    list_of_dates = [(datetime.now().date() - timedelta(days=7)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=6)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=5)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=4)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=3)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=2)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=1)).strftime("%a, %b %d %Y"),(datetime.now().date()).strftime("%a, %b %d %Y")]
+    return {"message":list_of_dataset, "time": list_of_dates}
 
 
 #PASSWORD RECOVERY FOR USER
