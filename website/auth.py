@@ -208,9 +208,13 @@ def userlogin():
 def admin():
     return render_template("admin.html")
 
+#REVENUE PER USER / GLOBAL VARIABLE
+revenue_per_user = 10
+
 #ADMIN LOG-IN
 @auth_bp.route("/adminlogin", methods=["GET", "POST"])
 def adminlogin():
+    global revenue_per_user
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
@@ -227,8 +231,7 @@ def adminlogin():
                     total_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
                     total_online_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE logged_in = 1"))
                     revenue_users_data = conn.execute(text("SELECT COUNT(*) AS count FROM user WHERE user_activated = 1"))
-                    user_info_data = conn.execute(text("SELECT name, email, DATE_FORMAT(latest_login, '%y-%m-%d') AS latest_login, DATE_FORMAT(created_at, '%y-%m-%d') AS created_at FROM user"))
-                    revenue_per_user = 10
+                    user_info_data = conn.execute(text("SELECT name, email, DATE_FORMAT(latest_login, '%Y-%m-%d') AS latest_login, DATE_FORMAT(created_at, '%Y-%m-%d') AS created_at FROM user"))
                     for user in revenue_users_data:
                         total_revenue = user.count * revenue_per_user
                     return render_template("admindashboard.html", info=info, total_users_data = total_users_data, total_online_data = total_online_data, total_revenue = total_revenue, user_info_data = user_info_data)
@@ -238,6 +241,7 @@ def adminlogin():
     else:
         return render_template("admin.html")
     
+
 #PATH TO FETCH DATA TO CREATE LINE GRAPH
 @auth_bp.get("/createlinegraph")
 def createlinegraph():
@@ -249,25 +253,79 @@ def createlinegraph():
     list_of_dates = [(datetime.now().date() - timedelta(days=7)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=6)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=5)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=4)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=3)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=2)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=1)).strftime("%a, %b %d %Y"),(datetime.now().date()).strftime("%a, %b %d %Y")]
     return {"message":list_of_dataset, "time": list_of_dates}
 
+#PATH TO FETCH DATA TO CREATE BAR GRAPH
+@auth_bp.get("/createbargraph")
+def createbargraph():
+    global revenue_per_user
+    list_of_count_of_users = []
+    with db.begin() as conn:
+        result = conn.execute(text("WITH RECURSIVE date_sequence AS ( SELECT DATE(NOW() - INTERVAL 1 WEEK) AS date UNION ALL SELECT date + INTERVAL 1 DAY FROM date_sequence WHERE date + INTERVAL 1 DAY <= DATE(NOW()) ), daily_growth AS ( SELECT DATE(created_at) AS date, COUNT(*) AS user_count FROM user WHERE created_at BETWEEN NOW() - INTERVAL 1 WEEK AND NOW() GROUP BY DATE(created_at) ) SELECT ds.date, COALESCE( SUM(dg.user_count) OVER (ORDER BY ds.date) + (SELECT COUNT(*) FROM user WHERE created_at < NOW() - INTERVAL 1 WEEK), (SELECT COUNT(*) FROM user WHERE created_at < ds.date) ) AS cumulative_user_count FROM date_sequence ds LEFT JOIN daily_growth dg ON ds.date = dg.date ORDER BY ds.date;"))
+        for item in result:
+            list_of_count_of_users.append(int(item.cumulative_user_count) * revenue_per_user)
+        list_of_dates = [(datetime.now().date() - timedelta(days=7)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=6)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=5)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=4)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=3)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=2)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=1)).strftime("%a, %b %d %Y"),(datetime.now().date()).strftime("%a, %b %d %Y")]
+        return {"message": list_of_count_of_users, "time": list_of_dates}
+
 
 #PASSWORD RECOVERY FOR USER
+
+@auth_bp.post("/passwordrecovery")
+def passwordrecovery():
+    with db.begin() as conn:
+        conn.execute(text("UPDATE user SET hash=:hash, hash_expiration=:hash_expiration WHERE email=:email"), {
+            "hash": str("".join(secrets.choice(string.ascii_letters + string.digits) for x in range(20))),
+            "hash_expiration": datetime.now() + timedelta(minutes=30),
+            "email": request.form.get("email")
+        })
+        res = conn.execute(text("SELECT name, email, hash FROM user WHERE email=:email"), {
+            "email": request.form.get("email")
+        })
+        for act in res:
+            if act:
+                from_address = "hogadashboard@gmail.com"
+                to_address = act.email
+                subject = "You have requested to reset your password " + act.name
+                message_body = f"""<body>
+                Please follow the directions to reset your password.
+                Please click <a href='http://127.0.0.1:5000/passwordrecovery/{act.hash}'>here</a> to reset your password.
+                </body>"""
+
+                msg = MIMEMultipart()
+                msg['From'] = from_address
+                msg['To'] = to_address
+                msg['Subject'] = subject
+
+                message = MIMEText(message_body, 'html')
+                msg.attach(message)
+
+                smtp_obj.sendmail(from_address, to_address, msg.as_string())
+        return redirect(url_for("auth.landingpage"))
+
+
 
 @auth_bp.get("/passwordrecovery/<hash>")
 def passwordrecover(hash):
     #input needs to be hidden to complete form
     #CAN return object for static html file or render_template for Jinja templates
-    return render_template("websitename.html", hash=hash)
+    return render_template("recoverpassword.html", hash=hash)
 
-@auth_bp.post("/resetpassword")
+@auth_bp.route("/resetpassword", methods=["GET", "POST"])
 def resetpassword():
-    try:
-        with db.begin() as conn:
-            res = conn.execute(text("UPDATE user SET password = :password WHERE hash = :hash"), {
-                "password": generate_password_hash(request.form.get("password")),
-                "hash": request.form.get("hash")
-            })
-            return {"message": "password has been reset"}
-    except: return {"error": "too much time has passed. user needs to reset password again"}
+    if request.method == "POST":
+        try:
+            with db.begin() as conn:
+                res = conn.execute(text("UPDATE user SET password = :password WHERE hash = :hash"), {
+                    "password": generate_password_hash(request.form.get("password")),
+                    "hash": request.form.get("hash")
+                })
+                message = {"message": "Your password has been reset"}
+                # return render_template("landingpage.html")
+                return render_template("recoverpassword.html", message=message)
+                
+
+        except: 
+            error = {"error": "Too much time has passed. You need to reset your password again"}
+            # return render_template("recoverpassword.html")
+            return render_template("recoverpassword.html", error = error)
             
 #USER LOGOUT
 @auth_bp.post("/userlogout")

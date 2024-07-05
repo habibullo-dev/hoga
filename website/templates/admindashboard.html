@@ -25,11 +25,6 @@
                     <span> {{user.count}}</span>
                     {% endfor %}
                 </p>
-                <!-- <p>
-            Total Users: 
-            <span> 30</span>
-            
-          </p> -->
             </div>
             <div class="stats">
                 <img src="../static/icons/online.svg" alt="online" class="svg-img" id="second-svg" />
@@ -42,16 +37,10 @@
                     {% endif %}
                     {% endfor %}
                 </p>
-                <!-- <p>
-                    Total Online:
-
-                    <span>100</span>
-                </p> -->
             </div>
             <div class="stats">
                 <img src="../static/icons/currency.svg" alt="currency" class="svg-img" id="third-svg" />
                 <p>Total Revenue: <span> ${{total_revenue}}</span></p>
-                <!-- <p>Total Revenue ($): <span>500</span></p> -->
             </div>
             <div class="stats">
                 <img src="../static/icons/magnifying-glass.svg" alt="currency" class="svg-img" id="third-svg" />
@@ -59,26 +48,30 @@
                 <p>Total Views: <span> 500</span></p>
             </div>
         </div>
-        <div id="admin-data">
-            <canvas id="myChart"></canvas>
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>User's Last Login Date</th>
-                    <th>Account Creation</th>
-                </tr>
-                {% for user in user_info_data %}
-                <tr>
-                    <th>{{user.name}}</th>
-                    <th>{{user.email}}</th>
-                    <th>{{user.latest_login}}</th>
-                    <th>{{user.created_at}}</th>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
     </main>
+    <div id="graph-container">
+        <canvas id="myChart" class="graph"></canvas>
+        <canvas id="myBarGraph" class="graph"></canvas>
+    </div>
+    <div id="main">
+        <!-- <h3 id="database-header">User Database</h3> -->
+        <table>
+            <tr>
+                <th class="table-column">Name</th>
+                <th class="table-column">Email</th>
+                <th class="table-column">User's Last Login Date</th>
+                <th class="table-column">Account Creation</th>
+            </tr>
+            {% for user in user_info_data %}
+            <tr>
+                <td class="user-name">{{user.name}}</th>
+                <td>{{user.email}}</th>
+                <td>{{user.latest_login}}</th>
+                <td>{{user.created_at}}</th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../static/js/admindashboard.js"></script>
 </body>
