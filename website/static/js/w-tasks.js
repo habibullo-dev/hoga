@@ -283,6 +283,13 @@ function saveTaskListSetup() {
   console.log("!!SAVETASKLISTSETUP CALLED!!!! FETCHING!!")
   
   const { incompleteTasks, completedTasks } = extractTaskData();
+  if (!widgetSettingsBulk["w-tasks"]) {
+    widgetSettingsBulk["w-tasks"] = {};
+  }
+  if (!widgetSettingsBulk["w-tasks"].taskList) {
+    widgetSettingsBulk["w-tasks"].taskList = {};
+  }
+  console.log("WHAT IS WIDGETSETTINGSBULK, FOR TASKLIST", widgetSettingsBulk["w-tasks"])
   widgetSettingsBulk["w-tasks"].taskList.completedTasks = completedTasks
   widgetSettingsBulk["w-tasks"].taskList.incompleteTasks = incompleteTasks
   localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
