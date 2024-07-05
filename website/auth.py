@@ -319,11 +319,13 @@ def resetpassword():
                 })
                 message = {"message": "Your password has been reset"}
                 # return render_template("landingpage.html")
-                return {"message": "Your password has been reset"}
+                return render_template("recoverpassword.html", message=message)
+                
+
         except: 
-            error = {"error": "too much time has passed. user needs to reset password again"}
+            error = {"error": "Too much time has passed. You need to reset your password again"}
             # return render_template("recoverpassword.html")
-            return {"error": "too much time has passed. user needs to reset password again"}
+            return render_template("recoverpassword.html", error = error)
             
 #USER LOGOUT
 @auth_bp.post("/userlogout")
