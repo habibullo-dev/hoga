@@ -200,10 +200,10 @@ function loadClient() {
   return gapi.client
     .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(
-      function () {
-        console.log("Loaded");
-        execute("study music"); // Call execute with a default search term
-      },
+      // function () {
+      //   console.log("Loaded");
+      //   execute("study music"); // Call execute with a default search term
+      // },
       function (err) {
         console.error("Error loading", err);
       }
