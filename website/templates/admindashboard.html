@@ -71,6 +71,15 @@
             </tr>
             {% endfor %}
         </table>
+        <form action="/sendemailtouser" method="post" id="sendUserEmail">
+            <label for="userEmail">User's Email:</label>
+            <input type="email" name="userEmail" id="userEmail" placeholder="Email">
+            <label for="subject">Subject:</label>
+            <input type="text" name="subject" id="subject" placeholder="Subject">
+            <label for="body">Body:</label>
+            <textarea name="body" id="body" cols="30" rows="70"></textarea>
+            <button type="submit">Submit</button>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../static/js/admindashboard.js"></script>

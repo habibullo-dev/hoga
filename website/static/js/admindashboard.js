@@ -25,7 +25,7 @@ fetch("/createlinegraph")
             data: {
                 labels: res.time,
                 datasets: [{
-                    label: 'Growth of Verified Accounts in a Week',
+                    label: 'Growth of Verified Accounts in a week',
                     data: res.message,
                     borderWidth: 2,
                     backgroundColor: '#4F200D'
@@ -54,7 +54,7 @@ fetch("/createbargraph")
             data: {
                 labels: res.time,
                 datasets: [{
-                    label: 'Total Revenue in a Week',
+                    label: 'Growth of Total Revenue in a week',
                     data: res.message,
                     borderWidth: 2,
                     backgroundColor: '#062C30',
@@ -71,3 +71,23 @@ fetch("/createbargraph")
             }
         });
     })
+
+const emailForm = document.querySelector("#sendUserEmail").addEventListener("submit", (event) => {
+    event.preventDefault(); // Prevent reloading
+
+    var formData = new FormData(document.getElementById("sendUserEmail"));
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/sendemailtouser", true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200 && xhr.message) {
+            // Handle the response from the server
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.send(formData);
+
+    alert("Your email was sent!")
+    document.getElementById("userEmail").value = "";
+    document.getElementById("subject").value = "";
+    document.getElementById("body").value = "";
+})

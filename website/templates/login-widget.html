@@ -122,6 +122,9 @@
               <button type="button" class="btn btn-secondary mt-3 mx-2 reset-btn" id="resetPasswordBtn">
                 Reset Password
               </button>
+              {% if error %}
+              <p>{{error.error}}</p>
+              {% endif %}
             </div>
           </div>
         </fieldset>

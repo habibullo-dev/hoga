@@ -245,24 +245,7 @@
       });
 
     //DON'T TOUCH THE CODE ABOVE (JAY'S CODE)
-    document.getElementById("userlogin").addEventListener("submit", (event) => {
-      event.preventDefault(); // Prevent default form submission behavior
 
-      var formData = new FormData(document.getElementById("userlogin"));
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "/userlogin", true);
-
-      // Send the form data asynchronously
-      xhr.send(formData);
-
-      // Ensure redirection happens after sending the form data
-      setTimeout(() => {
-        window.location.href = "http://127.0.0.1:5000/";
-      }, 100); // Delay the redirection slightly to ensure the request is sent
-    });
-
-  </script>
-  <script>
   </script>
 </body>
 

@@ -197,7 +197,8 @@ def userlogin():
                         msg.attach(message)
 
                         smtp_obj.sendmail(from_address, to_address, msg.as_string())
-                    return redirect(url_for("auth.redir_home_dashboard"))
+                    error = {"error": "Your account has not been activated. Please check your email to activate your account"}
+                    return render_template("login-widget.html", error=error)
                 else: return {"error": "user inputted wrong email or password"}
         return {"error": "user inputted wrong email or password"}
     except:
@@ -265,6 +266,27 @@ def createbargraph():
         list_of_dates = [(datetime.now().date() - timedelta(days=7)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=6)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=5)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=4)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=3)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=2)).strftime("%a, %b %d %Y"),(datetime.now().date() - timedelta(days=1)).strftime("%a, %b %d %Y"),(datetime.now().date()).strftime("%a, %b %d %Y")]
         return {"message": list_of_count_of_users, "time": list_of_dates}
 
+#ADMIN SEND EMAIL TO USER:
+@auth_bp.post("/sendemailtouser")
+def sendemailtouser():
+    from_address = "hogadashboard@gmail.com"
+    to_address = request.form.get("userEmail")
+    subject = request.form.get("subject")
+    message_body = request.form.get("body")
+
+    msg = MIMEMultipart()
+    msg['From'] = from_address
+    msg['To'] = to_address
+    msg['Subject'] = subject
+
+    message = MIMEText(message_body, 'html')
+    msg.attach(message)
+
+    smtp_obj.sendmail(from_address, to_address, msg.as_string())
+
+    flash('Email sent successfully!')
+
+    return redirect(url_for('auth.adminlogin'))
 
 #PASSWORD RECOVERY FOR USER
 
@@ -298,7 +320,6 @@ def passwordrecovery():
                 msg.attach(message)
 
                 smtp_obj.sendmail(from_address, to_address, msg.as_string())
-        return redirect(url_for("auth.landingpage"))
 
 
 
@@ -348,6 +369,7 @@ def adminlogout():
             "email": request.json.get("email")
         })
         return redirect(url_for("auth.admin"))
+
     
 #LANDING PAGE
 @auth_bp.get("/landingpage")
