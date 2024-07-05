@@ -157,6 +157,10 @@ body {
   max-width: 50rem;
 }
 
+.widget-w-youtube {
+  height: fit-content;
+}
+
 .notch {
   position: relative;
   background: black;
