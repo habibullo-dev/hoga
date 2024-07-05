@@ -21,16 +21,16 @@
   padding: 10px;
   margin: 0 25%;
   display: inline-flex;
-
 }
 
-input {
+#search-form input {
   border-radius: 5px;
   border: none;
   background-color: #dfdfdf;
   margin-right: 5px;
   padding: 5px;
   color: black;
+  width: fit-content;
 }
 .results-container .result-item {
   width: 80%;
@@ -49,20 +49,34 @@ input {
   font-size: 0.6rem;
 }
 
-button {
+#search-form button {
   border-radius: 5px;
   border: none;
   background-color: #1db954;
   color: white;
   font-weight: 500;
+  height: 50%;
+  margin-top: 5px;
 }
+
+#widget-container button {
+  border-radius: 5px;
+  border: none;
+  background-color: #1db954;
+  color: white;
+  font-weight: 500;
+  height: 50%;
+  margin-top: 5px;
+}
+
 .widget-container {
   margin-top: 20px;
   display: none;
 }
 
-p {
+.result-item p {
   text-align: center;
+  margin: 0 !important;
 }
 
 .top-text {
