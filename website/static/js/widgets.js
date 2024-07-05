@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreWidgetStates(); // Restore widget states on Edit click
     enableWidgetInteractions(); // Enable draggable and resizable
     enableOtherWidgets(); // Enable click on other widgets
-    createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 15000, "url(../static/images/editMode.svg)")
+    createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 8000, "url(../static/images/editMode.svg)")
   }
 
   function enableWidgetInteractions() {
@@ -570,11 +570,12 @@ document.addEventListener("DOMContentLoaded", function () {
     notification.style.opacity = "1";
     notification.style.transition = "opacity 0.5s ease-in-out";
     notification.style.display = "flex"
+    notification.style.marginTop = "0.3rem"
 
     if (_img){
       const extraImg = document.createElement("div")
-      extraImg.style.width = "3rem"
-      extraImg.style.height = "3rem"
+      extraImg.style.width = "2rem"
+      extraImg.style.height = "2rem"
       extraImg.style.backgroundSize = "contain"
       extraImg.style.marginRight = "0.6rem"
       extraImg.style.backgroundImage = _img
