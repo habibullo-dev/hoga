@@ -1,5 +1,5 @@
 #themeOptions{
-    overflow-y: auto;
+    overflow-y: visible;
     background-color: black;
     /* right: calc(-1*var(--navbar-width) - 70px); */
     bottom: 0;

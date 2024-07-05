@@ -15,6 +15,8 @@ const popupImpText = document.getElementById("popup-imp-text")
 const popupImpBtn1 = document.getElementById("popup-button1")
 const popupImpBtn2 = document.getElementById("popup-button2")
 
+const notifContBottom = document.getElementById("notifContBottom")
+
 function createUrgentPopUp(_innerText, _btn1, _btn2, _btn1Text, _btn2Text) {
     popupImportant.style.display = "flex";
     popupImpWindow.style.display = "flex";

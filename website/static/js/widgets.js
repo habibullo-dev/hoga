@@ -237,6 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreWidgetStates(); // Restore widget states on Edit click
     enableWidgetInteractions(); // Enable draggable and resizable
     enableOtherWidgets(); // Enable click on other widgets
+    createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 15000, "url(../static/images/editMode.svg)")
   }
 
   function enableWidgetInteractions() {
@@ -264,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
       saveClicked = true; // Set saveClicked to true on Save click
       saveWidgetStates(_skipOverWrite); // Save widget states on Save click
       disableWidgetInteractions(); // Disable draggable and resizable
-      createNotification(); // Add notification on Save click
+      createNotification(305, "Changes successfully saved.", 2000); // Add notification on Save click
       hideSidebar();
     }
   }
@@ -544,23 +545,46 @@ document.addEventListener("DOMContentLoaded", function () {
   initializeAutoSave();
 
   // Function to create notification
-  function createNotification() {
+  function createNotification(_code, _text, _duration, _img) {
+    for (child of (Array.from(notifContBottom.children))){
+      if (child.dataset.code == _code){
+        console.log("duplicate notif detected. Cancelling", _code)
+        return
+      }
+    }
     console.log("!!Created a notif!");
     const notification = document.createElement("div");
     notification.classList.add("notification");
 
     // Styles
-    notification.style.position = "fixed";
-    notification.style.bottom = "20px";
-    notification.style.right = "20px";
+    notification.dataset.code = _code
+    notification.style.position = "relative";
+    notification.style.bottom = "2rem";
+    notification.style.right = "2rem";
     notification.style.backgroundColor = "white";
     notification.style.fontFamily = "Albert Sans";
     notification.style.color = "black";
     notification.style.padding = "10px 20px";
     notification.style.borderRadius = "8px";
-    notification.style.zIndex = "1000";
+    notification.style.zIndex = "10000";
     notification.style.opacity = "1";
     notification.style.transition = "opacity 0.5s ease-in-out";
+    notification.style.display = "flex"
+
+    if (_img){
+      const extraImg = document.createElement("div")
+      extraImg.style.width = "3rem"
+      extraImg.style.height = "3rem"
+      extraImg.style.backgroundSize = "contain"
+      extraImg.style.marginRight = "0.6rem"
+      extraImg.style.backgroundImage = _img
+      notification.appendChild(extraImg)
+    }
+
+    const notifCont1 = document.createElement("div");
+    notifCont1.style.display = "flex"
+    notifCont1.style.flexDirection = "column"
+    notification.appendChild(notifCont1)
 
     // Create and style the icon image
     const icon = document.createElement("img");
@@ -571,15 +595,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Create and style the text element
     const text = document.createElement("div");
-    text.textContent = "Changes successfully saved.";
+    text.textContent = _text;
     text.style.marginTop = "5px"; // Adjust spacing between icon and text
     text.style.fontSize = "0.9rem"; // Adjust font size of the text
 
     // Append icon and text to notification container
-    notification.appendChild(icon);
-    notification.appendChild(text);
+    notifCont1.appendChild(icon);
+    notifCont1.appendChild(text);
 
-    document.body.appendChild(notification);
+    
+    notifContBottom.appendChild(notification);
 
     // Fade out after 2 seconds
     setTimeout(() => {
@@ -587,7 +612,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setTimeout(() => {
         notification.remove();
       }, 500); // Remove element after fade out animation
-    }, 2000);
+    }, _duration);
   }
 
   //   // Function to determine widget type based on widgetId

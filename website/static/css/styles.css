@@ -779,3 +779,12 @@ label[for="nav-toggle"] {
 .popup-button:hover{
   background-color: rgba(150,150,150,0.9);
 }
+#notifContBottom{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+  max-height: 25%;
+}
