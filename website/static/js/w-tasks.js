@@ -293,6 +293,7 @@ function saveTaskListSetup() {
   widgetSettingsBulk["w-tasks"].taskList.completedTasks = completedTasks
   widgetSettingsBulk["w-tasks"].taskList.incompleteTasks = incompleteTasks
   localStorage.setItem("hogaWidgetData", JSON.stringify(widgetSettingsBulk))
+  console.log("saving to localStorage", localStorage.hogaWidgetData)
   try{
     fetch("/taskDataGrab", {
       method: "POST",
@@ -318,9 +319,10 @@ function saveTaskListSetup() {
 //let tasklistAutoSave = setInterval(saveTaskListSetup, 5000) //AUTOSAVES THE LIST SETUP EVERY 5 SECONDS!
 
 async function restoreTasks() { //brings back the tasks for complete and incomplete. function is called when script file is loaded.
-  console.log("!!attempting to RESTORE tasklist content!")
+  
   
   const res = widgetSettingsBulk["w-tasks"]["taskList"]
+  console.log("!!attempting to RESTORE tasklist content!", res)
   // console.log("!!Restoring tasklist content! what is in the res?", res)
   // console.log("!!res['incompleteTasks']", res["incompleteTasks"])
   // console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
@@ -333,6 +335,7 @@ async function restoreTasks() { //brings back the tasks for complete and incompl
     res["incompleteTasks"].forEach((task) => {
       generateNewTask(task.text);
     });
+    console.log("!! completedtasks? ", res["completedTasks"])
     res["completedTasks"].forEach((task) => {
       generateNewTask(task.text, true);
     });
