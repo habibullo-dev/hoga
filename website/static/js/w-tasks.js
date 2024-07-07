@@ -320,25 +320,28 @@ function saveTaskListSetup() {
 
 async function restoreTasks() { //brings back the tasks for complete and incomplete. function is called when script file is loaded.
   
-  
-  const res = widgetSettingsBulk["w-tasks"]["taskList"]
-  console.log("!!attempting to RESTORE tasklist content!", res)
-  // console.log("!!Restoring tasklist content! what is in the res?", res)
-  // console.log("!!res['incompleteTasks']", res["incompleteTasks"])
-  // console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
-  if (res["incompleteTasks"].length === 0 && res["completedTasks"].length === 0) {
-    const placeholderTasks = ["Placeholder Task 1", "Placeholder Task 2", "Placeholder Task 3"];
-    placeholderTasks.forEach(task => {
-      generateNewTask(task);
-    });
-  } else {
-    res["incompleteTasks"].forEach((task) => {
-      generateNewTask(task.text);
-    });
-    console.log("!! completedtasks? ", res["completedTasks"])
-    res["completedTasks"].forEach((task) => {
-      generateNewTask(task.text, true);
-    });
+  try{
+    const res = widgetSettingsBulk["w-tasks"]["taskList"]
+    console.log("!!attempting to RESTORE tasklist content!", res)
+    // console.log("!!Restoring tasklist content! what is in the res?", res)
+    // console.log("!!res['incompleteTasks']", res["incompleteTasks"])
+    // console.log("!!res['incompleteTasks'][0]", res["incompleteTasks"][0])
+    if (res["incompleteTasks"].length === 0 && res["completedTasks"].length === 0) {
+      const placeholderTasks = ["Placeholder Task 1", "Placeholder Task 2", "Placeholder Task 3"];
+      placeholderTasks.forEach(task => {
+        generateNewTask(task);
+      });
+    } else {
+      res["incompleteTasks"].forEach((task) => {
+        generateNewTask(task.text);
+      });
+      console.log("!! completedtasks? ", res["completedTasks"])
+      res["completedTasks"].forEach((task) => {
+        generateNewTask(task.text, true);
+      });
+    }
+  }catch(error){
+    console.log("Error, previous tasklist possibly inexistent - ", error)
   }
 }
 
