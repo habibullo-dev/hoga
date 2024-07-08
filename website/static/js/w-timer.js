@@ -80,6 +80,7 @@ function updateProgressBar() {
 
 // Function to start the timer
 function startTimer() {
+  console.log("!!TIMER CURRENTIME, WORKTIME", currentTime, workTime)
   timerInterval = setInterval(() => {
     currentTime--;
 
@@ -108,6 +109,7 @@ function startTimer() {
         }
       } else {
         currentTime = workTime;
+        
         isWorking = true;
         document.getElementById("timer-state").textContent = "Work";
       }
@@ -145,7 +147,7 @@ function stopTimer() {
 // Function to reset the timer
 function resetTimer() {
   clearInterval(timerInterval);
-  currentTime = workTime;
+  currentTime = workTime
   isWorking = true;
   currentRound = 1;
   document.getElementById("timer-display").textContent = `${Math.floor(
@@ -162,6 +164,7 @@ function resetTimer() {
 
 function updateTimerSettings(data) {
   workTime = data.focusTime * 60; // Convert minutes to seconds
+  console.log("Updating worktime with focusTime - ", data.focusTime)
   breakTime = data.breakTime * 60; // Convert minutes to seconds
   isInfinite = data.isInfinite;
   autoStart = data.autoStart;
@@ -201,7 +204,7 @@ settingsBtn.addEventListener("click", function () {
 
 // Listen for messages from the iframe
 window.addEventListener("message", function (event) {
-  if (event.data && typeof event.data === "object") {
+  if (event.data && typeof event.data === "object" && event.data.focusTime) {
     updateTimerSettings(event.data);
   }
 });
@@ -246,9 +249,9 @@ async function restoreTimeSettings(){
   if (widgetSettingsBulk?.["w-timer"]?.["timerValues"] !== undefined){
     const res = widgetSettingsBulk["w-timer"]["timerValues"]
     rounds = res.rounds
-    workTime = res.workTime
-    breakTime = res.breakTime
-    currentTime = res.currentTime
+    workTime = res.workTime==null?1500:res.workTime
+    breakTime = res.breakTime==null?5:res.workTime
+    currentTime = res.currentTime==null?1500:res.workTime
     currentRound = res.currentRound
     isWorking = res.isWorking
     renderProgressBar();
@@ -259,3 +262,22 @@ async function restoreTimeSettings(){
 }
 
 restoreTimeSettings()
+
+const timerTargetNode = document.getElementById("timer-display");
+const timerConfig = { attributes: true, childList: true};
+
+const timerCallback = (mutationList, timerObserver) => {
+  for (const mutation of mutationList) {
+    if (mutation.type === "childList") {
+      console.log("WARNING A timer child node has been added or removed.");
+    } else if (mutation.type === "attributes") {
+      console.log(`The ${mutation.attributeName} attribute was modified.`);
+    }
+  }
+};
+
+// Create an observer instance linked to the callback function
+const timerObserver = new MutationObserver(timerCallback);
+
+// Start observing the target node for configured mutations
+timerObserver.observe(timerTargetNode, timerConfig);

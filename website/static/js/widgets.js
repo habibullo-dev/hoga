@@ -343,7 +343,9 @@ document.addEventListener("DOMContentLoaded", function () {
           "!!toggleWidgetState - what is widgets[widgetId], ",
           widgets[widgetId]
         ); //THIS IS THE DAMN DIV! FINALLY
-        widgetSettingsBulk[widgetId].active = false; //🚧consider the widget as inactive.
+        if (widgetSettingsBulk[widgetId]){
+          widgetSettingsBulk[widgetId].active = false;
+        } //🚧consider the widget as inactive.
         delete widgets[widgetId];
       }
     } else {
