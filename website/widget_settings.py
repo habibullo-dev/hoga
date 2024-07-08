@@ -3,7 +3,7 @@ import sqlalchemy
 from sqlalchemy import text
 import json
 
-db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
+db = sqlalchemy.create_engine("mysql+mysqlconnector://root:@127.0.0.1:3306/final project")
 
 settings_all_bp = Blueprint("settings_save", __name__)
 

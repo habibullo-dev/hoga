@@ -1,0 +1,460 @@
+/* body display */
+
+body {
+  font-family: "Albert Sans";
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* ------------------ default ------------------ */
+
+.tasklist {
+  height: fit-content;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* width: fit-content; */
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 300px;
+}
+
+.tasklist input {
+  margin-right: 0 !important;
+}
+
+#taskInput {
+  padding: 8px;
+  margin-top: 10px;
+  width: -webkit-fill-available;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+ul {
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  margin-bottom: auto;
+  margin-top: 10px;
+  height: 100%;
+  font-size: 0.8rem;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  margin-bottom: 5px;
+  background-color: rgb(237, 237, 237);
+  border-radius: 4px;
+  text-align: left;
+}
+
+li:hover {
+    background-color: #a1a1a1;
+}
+
+li span {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 10px;
+}
+
+li .delete-btn,
+li .edit-btn {
+  display: none;
+}
+
+li:hover .delete-btn,
+li:hover .edit-btn {
+  display: inline-block; 
+}
+
+.delete-btn {
+  background: #efefef;
+  border: none;
+  cursor: pointer;
+  color: black;
+  margin-left: auto;
+}
+
+.checked-off {
+  background-color: white;
+  padding: 3px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 20px;
+  font-size: 0.8rem;
+  color: lightgray;
+  margin-right: auto;
+}
+
+.tabs {
+  width: 100%;
+  height: fit-content;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-start;
+}
+
+.hide {
+  animation: slideOut 0.6s forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.pop {
+  animation: popOut 0.3s forwards;
+}
+
+@keyframes popOut {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.4);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.edit-btn, .delete-btn {
+    margin-left: 10px;
+    cursor: pointer;
+    border: #8a8a8a solid 1px;
+    border-radius: 5px;
+    height: 20px;
+    padding: 0 5px;
+  }
+
+  .editing {
+    display: flex;
+    align-items: center;
+  }
+
+  .editing input {
+    margin-right: 5px;
+    width: 100%;
+    font-size: 0.75rem;
+    padding: 3px 5px;
+    border: #8a8a8a solid 1px;
+    border-radius: 5px;
+  }
+
+  .edit-confirm-btn, .edit-cancel-btn {
+    margin-left: 5px;
+    cursor: pointer;
+    border: #8a8a8a solid 1px;
+    border-radius: 5px;
+  }
+
+.tabs button {
+  height: 100%;
+  border: none;
+  padding: 5px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  color: rgb(140, 140, 140);
+}
+
+#showIncompleteButton {
+  color: white;
+  background-color: rgb(99, 16, 16);
+  font-size: 0.8rem;
+}
+
+#showCompletedButton {
+  color: white;
+  background-color: rgb(12, 75, 49);
+  font-size: 0.8rem;
+}
+
+/* ---------------- single task ------------------ */
+
+/* .single-task-list .tasklist {
+    height: 150px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.single-task-list #taskInput {
+    padding: 8px;
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.single-task-list ul {
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.single-task-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.single-task-list li span {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.single-task-list .delete-btn {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-left: auto;
+}
+
+.single-task-list .checked-off {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: auto;
+}
+
+.single-task-list .tabs {
+    width: 100%;
+    height: 10vh;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.single-task-list .tabs button {
+    height: 100%;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+} */
+
+/* ----------------- full height ----------------- */
+
+/* .full-height-list .tasklist {
+    height: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-height-list #taskInput {
+    padding: 8px;
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.full-height-list ul {
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.full-height-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.full-height-list li span {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.full-height-list .delete-btn {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-left: auto;
+}
+
+.full-height-list .checked-off {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: auto;
+}
+
+.full-height-list .tabs {
+    width: 100%;
+    height: 10vh;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.full-height-list .tabs button {
+    height: 100%;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+} */
+
+/* ---------------------- max size ----------------------- */
+
+/* .max-size-list .tasklist {
+    height: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 900px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.max-size-list #taskInput {
+    padding: 8px;
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.max-size-list ul {
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: auto;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.max-size-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: left;
+}
+
+.max-size-list li span {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.max-size-list .delete-btn {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-left: auto;
+}
+
+.max-size-list .checked-off {
+    background: none;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    color: #ccc;
+    margin-right: auto;
+}
+
+.max-size-list .tabs {
+    width: 100%;
+    height: 10vh;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.max-size-list .tabs button {
+    height: 100%;
+    border: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+} */
