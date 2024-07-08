@@ -25,7 +25,7 @@ db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1/final 
 smtp_obj = smtplib.SMTP('smtp.gmail.com')
 smtp_obj.ehlo()
 smtp_obj.starttls()
-smtp_obj.login("hogadashboard@gmail.com", "zpos ucbu bcep litr") #can use the variable password instead of the actual password
+smtp_obj.login("hogadashboard@gmail.com", "abyh ksfp hjxe rizx") #can use the variable password instead of the actual password
 
 #GEMINI RELATED CONTENT
 os.environ["API_KEY"] = "AIzaSyAWSgpgHCZ-LyCPGTkvvX_OBP1H9RSEDhI"
@@ -320,6 +320,8 @@ def passwordrecovery():
                 msg.attach(message)
 
                 smtp_obj.sendmail(from_address, to_address, msg.as_string())
+        
+        return render_template("landing.html")
 
 
 
