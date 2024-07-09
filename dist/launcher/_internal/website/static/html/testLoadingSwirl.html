@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            overflow: hidden;
+            margin: 0;
+        }
+
+
+       
+
+        #loadingBarBlackBG{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(200,200,200,0.7);
+            filter:blur(2px);
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #loadBars{
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 2rem;
+        }
+        .loadOuter{
+            background-color: rgba(200,200,200,0.2);
+            padding: 1px;
+            min-width: 30%;
+            min-height: 1px;
+            position: absolute
+        }
+        .loadInner{
+            background-color: white;
+            width: 1%;
+            min-height: 1px;
+            position: absolute;
+            transition: width 0.2s linear;
+        }
+        #hogaLoadLogo{
+            left:calc(50% - 75px); 
+            position:absolute; 
+            width: 150px; 
+        }
+        .loading-circle{
+            left:calc(50% - 175px); 
+            position:absolute; 
+            width: 350px;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="loadingBarBlackBG">
+        <div id="loadBars">
+            <div class="loadOuter" style="left: 10%">
+                <div class="loadInner"></div>
+            </div>        
+            <img src="../images/loading.gif" class="loading-circle">
+            <img src="../images/logo_trans.webp" id="hoga-logo">
+            <div class="loadOuter" style="left: 60%">
+                <div class="loadInner" style="left: 100%; transform-origin: left; transform: scaleX(-1);"></div>
+            </div>           
+        </div>
+    </div>
+    
+</body>
+<script>
+
+    const cako=document.getElementById("loadBars")
+    const loadBars = Array.from(document.getElementsByClassName("loadInner"))
+    cako.addEventListener("click", ()=>{
+        loadBars.forEach((bar)=>bar.style.width="50%")
+    })
+    
+</script>
+</html>

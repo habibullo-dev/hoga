@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "uglify-test.js": "uglifyjs website/static/js/widget.js --output website/static/js-temp/widget.js --compress --mangle",
     "uglify-widget.js": "uglifyjs website/static/js/widget.js --output website/static/js-temp/widget.js --compress --mangle",
     "uglify-admin.js": "uglifyjs website/static/js/admin.js --output website/static/js-temp/admin.js --compress --mangle",
     "uglify-decoupler.js": "uglifyjs website/static/js/decoupler.js --output website/static/js-temp/decoupler.js --compress --mangle",
