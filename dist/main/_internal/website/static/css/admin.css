@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #279EFF, #6F61C0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#adminlogin {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    width: 25%;
+    height: 70%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+h1 {
+    background: -webkit-linear-gradient(#279EFF, #6F61C0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 2rem 0;
+}
+
+input {
+    border-bottom: 1px black solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    margin: 1rem;
+    width: 70%;
+    padding-left: 0.5rem;
+    height: 1rem;
+    font-size: 1rem;
+}
+
+input:focus {
+    border-bottom: 1px black solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+}
+
+/* For Chrome and Safari */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+/* For Firefox */
+input:-moz-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
+    text-fill-color: #000 !important;
+}
+
+#sign-in {
+    width: 70%;
+    margin: 2rem;
+    padding: .5rem 0;
+    background: linear-gradient(to right, #279EFF, skyblue, #6F61C0)
+}
+
+#error_container {
+    margin-top: 1rem;
+    background-color: rgb(253, 225, 230);
+    width: auto;
+    padding: 0.5rem;
+    border: 1px solid rgb(254, 125, 146);
+}
+
+#error_msg {
+    color: red;
+    font-size: 0.8rem;
+}
+
+#sign-in:hover {
+    cursor: pointer;
+    transform: translate(0px, -3px);
+    transition: all 0.2s ease-in;
+    background: linear-gradient(to right, #06D001, #F3FF90)
+}
+
+@media (max-width: 1030px) {
+    #adminlogin {
+        width: 50%;
+        height: 70%;
+    }
+}
+
+@media (max-width: 830px) {
+    #adminlogin {
+        width: 60%;
+        height: 70%;
+    }
+}
+
+@media (max-width: 500px) {
+    #adminlogin {
+        width: 80%;
+        height: 60%;
+    }
+}

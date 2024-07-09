@@ -1,0 +1,227 @@
+/* body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+
+
+
+
+ */
+
+
+
+
+
+.vw-folder{
+    width: 100px;
+    height: 100px;
+    opacity: 0.75;
+    transform: translateX(0);
+    animation: sliderVW 2s linear infinite;
+    animation-duration: 30s;
+    z-index: 1;
+}
+
+
+
+
+/* ANIMS */
+
+@keyframes sliderVW {
+    from {
+      transform: translateX(0vw);
+    }
+  
+    to {
+      transform: translateX(150vw);
+    }
+}
+
+@keyframes sliderXBack {
+    from {
+      transform: translateX(120%);
+    }
+  
+    to {
+      transform: translateX(-100%);
+    }
+}
+
+@keyframes sliderXLong {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    70%{
+        transform: translateX(1220%);
+    }
+  
+    100% {
+        transform: translateX(1220%);
+    }
+}
+#vw-bg{
+  grid-column: 1;
+  position: absolute;
+
+}
+.vapor-band{
+    width: 100vw;
+    height: 3vh;
+    background: linear-gradient(90deg, rgba(171,255,254,1) 0%, rgba(255,188,255,1) 59%, rgba(0,212,255,1) 100%);
+    position: absolute;
+}
+.vw-ds1{
+  
+  left: 50% !important;
+  top:14% !important;
+  width: 35vh !important;
+  height: 22vh !important;
+}
+
+#vw-sumer{
+  grid-column: 3;
+  grid-row: 27;
+  z-index: 5;
+  width: 30rem;
+  height: 30rem;
+  position: absolute;
+  background-size: contain;
+}
+
+.vw-roll1{
+  background-image: url("../images/themes/DXM/sumer1.webp");
+}
+
+.vw-roll2{
+  background-image: url("../images/themes/DXM/sumer2.webp");
+}
+
+.vw-roll3{
+  background-image: url("../images/themes/DXM/sumer3.webp");
+}
+
+#vw-hoverfront{
+    grid-column: 30;
+    grid-row: 1;
+    width: 40rem;
+    height: 40rem;
+    background-image: url("../images/themes/DXM/eru01.webp");
+    background-size: cover;
+    filter:drop-shadow(1px 1px 3px rgb(255 153 255))
+}
+
+#vw-hoverfront:hover{
+    background-image: url("../images/themes/DXM/eru00.webp");
+}
+
+#vw-hoverback{
+    grid-column: 32;
+    grid-row: 1;
+    width: 45rem;
+    height: 45rem;
+    background-image: url("../images/themes/DXM/V20.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+.vaporwave-anim {
+    height: 50px;
+    overflow: hidden;
+    margin-left: 0px;
+    font-size: 3rem;
+    font-weight: 600;
+    position: absolute;
+    width: 11rem;
+    height: 5rem;
+    top: 20%;
+    left: 20%;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .vaporwave-anim>div>div {
+    padding: 4px 12px;
+    height: 2rem;
+    margin-bottom: 44px;
+    width: 5rem;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .vaporwave-anim div:first-child {
+    display: flex;
+    flex-wrap: nowrap;
+    width: auto;
+    height: 5rem;
+  }
+
+
+  .first-vapor div {
+    background: linear-gradient(90deg, rgba(81,166,201,0.8295693277310925) 25%, rgba(251,207,251,1) 69%, rgba(191,33,196,0.908000700280112) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
+    position: absolute;
+    animation: horizon-skip 10s infinite;
+    white-space: nowrap;
+    margin-left: -290px
+  }
+
+  .second-vapor div {
+    background: linear-gradient(90deg, rgba(171,255,254,1) 0%, rgba(255,188,255,1) 59%, rgba(0,212,255,1) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
+    position: absolute;
+    animation: horizon-skip 10s 2.5s infinite;
+    white-space: nowrap;
+    margin-left: -290px
+  }
+
+  .third-vapor div {
+    background: linear-gradient(90deg, rgba(188,250,255,1) 15%, rgba(255,241,171,1) 60%, rgba(33,196,47,0.908000700280112) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2; 
+    display: inline-block;
+    position: absolute;
+    animation: horizon-skip 10s 5s infinite;
+    white-space: nowrap;
+    margin-left: -290px
+  }
+
+  @keyframes horizon-skip {
+    0% {
+      margin-left: -290px;
+    }
+
+    40% {
+      margin-left: -290px;
+    }
+
+    50% {
+      margin-left: 0px;
+    }
+
+    65% {
+      margin-left: 0px;
+    }
+
+    80% {
+      margin-left: 180px;
+    }
+
+    100% {
+      margin-left: 180px;
+    }
+
+
+
+  }

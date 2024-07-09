@@ -1,0 +1,145 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Albert Sans";
+}
+
+.google-img {
+  display: inline-block;
+}
+
+#gemini {
+  border-radius: 10px;
+  width: 100%;
+  flex-basis: inherit;
+  position: relative;
+  overflow: auto;
+  background-color: white;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-height: 400px;
+}
+
+.example-prompt {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.example-1, .example-2 {
+  background-color: lightgray;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 5px;
+  width: 35%;
+  justify-content: center;
+  align-items: center;
+  color: #595e62;
+}
+
+#chat-window {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ffffff;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+#messages {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+}
+
+#gemini-request {
+  width: -webkit-fill-available;
+  height: 5%;
+  border-radius: 10px;
+  border: 1px solid rgb(95, 95, 95);
+  position: sticky;
+  top: 100%;
+  margin: 20px 10px 10px 10px;
+  padding: 5px 10px;
+
+  transform-origin: top;
+
+  box-shadow: 3px -10px 20px -10px rgba(181, 203, 236, 10.8),
+    3px -10px 50px -10px rgba(211, 115, 219, 0.4),
+    3px -20px 30px -20px rgba(181, 203, 236, 0.3),
+    3px -10px 30px -3px rgba(230, 158, 229, 0.5),
+    3px -15px 20px -10px rgba(181, 203, 236, 1);
+}
+
+#new-message {
+  border-radius: 8px;
+  padding: 5px 10px;
+  border: none;
+  color: #2f3942;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+#ask-gemini {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#ask-gemini img {
+  padding: 5px;
+  height: 20px;
+  width: auto;
+}
+
+.top-text {
+  text-align: center;
+  margin-top: 10px;
+  background: linear-gradient(to right, blue, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.user-question {
+  margin-top: 1rem;
+  margin-right: 1rem;
+  font-size: 0.8rem;
+  background-color: #b8cde9;
+  padding: 10px;
+  width: auto;
+  max-width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  align-self: flex-end;
+}
+
+.gemini-response {
+  margin-top: 1rem;
+  margin-left: 1rem;
+  background-color: #cdcdcd;
+  padding: 10px;
+  width: auto;
+  max-width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+#gemini-container {
+  display: flex;
+  overflow: scroll;
+  flex-direction: column;
+  position: relative;
+  flex-grow: 1;
+}
