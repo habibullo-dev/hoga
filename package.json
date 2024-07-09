@@ -1,0 +1,29 @@
+{
+  "name": "hoga",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "uglify-widget.js": "uglifyjs website/static/js/widget.js --output website/static/js-temp/widget.js --compress --mangle",
+    "uglify-admin.js": "uglifyjs website/static/js/admin.js --output website/static/js-temp/admin.js --compress --mangle",
+    "uglify-decoupler.js": "uglifyjs website/static/js/decoupler.js --output website/static/js-temp/decoupler.js --compress --mangle",
+    "uglify-settingsSaveLoad.js": "uglifyjs website/static/js/settingsSaveLoad.js --output website/static/js-temp/settingsSaveLoad.js --compress --mangle",
+    "uglify-size.js": "uglifyjs website/static/js/size.js --output website/static/js-temp/size.js --compress --mangle",
+    "uglify-th-logic.js": "uglifyjs website/static/js/th-logic.js --output website/static/js-temp/th-logic.js --compress --mangle",
+    "uglify-w-calendar.js": "uglifyjs website/static/js/w-calendar.js --output website/static/js-temp/w-calendar.js --compress --mangle",
+    "uglify-w-search.js": "uglifyjs website/static/js/w-search.js --output website/static/js-temp/w-search.js --compress --mangle",
+    "uglify-w-spotify.js": "uglifyjs website/static/js/w-spotify.js --output website/static/js-temp/w-spotify.js --compress --mangle",
+    "uglify-w-tasks.js": "uglifyjs website/static/js/w-tasks.js --output website/static/js-temp/w-tasks.js --compress --mangle",
+    "uglify-w-themeOptions.js": "uglifyjs website/static/js/w-themeOptions.js --output website/static/js-temp/w-themeOptions.js --compress --mangle",
+    "uglify-w-timer.js": "uglifyjs website/static/js/w-timer.js --output website/static/js-temp/w-timer.js --compress --mangle",
+    "uglify-w-weather.js": "uglifyjs website/static/js/w-weather.js --output website/static/js-temp/w-weather.js --compress --mangle",
+    "uglify-w-youtube.js": "uglifyjs website/static/js/w-youtube.js --output website/static/js-temp/w-youtube.js --compress --mangle"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "uglify-js": "^3.18.0"
+  }
+}
