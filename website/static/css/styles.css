@@ -16,6 +16,15 @@
   --ease-out: cubic-bezier(0.3, 0.3, 0.5, 1);
   --border-width: 0.4em;
 }
+:root {
+  --navbar-width: 256px;
+  --navbar-width-min: 80px;
+  --navbar-dark-primary: black;
+  --navbar-dark-secondary: #2c3e50;
+  --navbar-light-primary: rgba(220,220,220,0.3);
+  --navbar-light-secondary: #dadada;
+  --navbar-light-tertiary: #ffffff;
+}
 * {
   user-select: none !important;
 }
@@ -54,8 +63,9 @@ input, textarea {
   height: 100%;
   box-sizing: border-box;
   /* background-color: #5a6268; */
-  background-image: url('../images/urban.jpg');
+  background-image: url('../images/dreamy.webp');
   background-size: cover;
+  background-position: center 70%;
 }
 
 #grid-container::before {
@@ -190,10 +200,11 @@ body {
 
 .notch {
   position: relative;
-  background: black;
+  background: var(--navbar-light-primary);
   border-radius: var(--notch-radius);
   pointer-events: all;
   overflow: hidden;
+  backdrop-filter: blur(5px);
   color: white;
   display: flex;
   cursor: pointer;
@@ -503,14 +514,7 @@ body {
   font-size: 0.95rem;
 }
 
-:root {
-  --navbar-width: 256px;
-  --navbar-width-min: 80px;
-  --navbar-dark-primary: #000000;
-  --navbar-dark-secondary: #2c3e50;
-  --navbar-light-primary: #f5f6fa;
-  --navbar-light-secondary: #8392a5;
-}
+
 
 html,
 body {
@@ -567,7 +571,8 @@ body {
   left: 1vw;
   top: 1vw;
   height: calc(100% - 2vw);
-  background: var(--navbar-dark-primary);
+  background: var(--navbar-light-primary);
+  backdrop-filter: blur(5px);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -601,7 +606,7 @@ body {
   left: 16px;
   width: calc(var(--navbar-width) - 16px);
   min-height: 80px;
-  background: var(--navbar-dark-primary);
+  /* background: var(--navbar-light-primary); */
   border-radius: 16px;
   z-index: 2;
   display: flex;
@@ -633,7 +638,7 @@ label[for="nav-toggle"] {
   position: relative;
   width: 16px;
   height: 2px;
-  background: var(--navbar-dark-primary);
+  background: var(--navbar-light-primary);
   border-radius: 99px;
   transition: background 0.2s;
 }
@@ -644,7 +649,7 @@ label[for="nav-toggle"] {
   top: -6px;
   width: 10px;
   height: 2px;
-  background: var(--navbar-light-primary);
+  background: var(--navbar-light-tertiary);
   border-radius: 99px;
   transform: translate(2px, 8px) rotate(30deg);
   transition: 0.2s;
@@ -660,7 +665,7 @@ label[for="nav-toggle"] {
   position: relative;
   flex: 1;
   width: var(--navbar-width);
-  background: var(--navbar-dark-primary);
+  /* background: var(--navbar-light-primary); */
 /*   box-shadow: 0 0 0 16px var(--navbar-dark-primary); */
   direction: rtl;
   /* verflow-x: hidden; */

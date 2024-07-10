@@ -142,3 +142,45 @@ function parallaxStartUp(_setup, _stopButton, _runButton){ //additional function
     <p id="titleJP" class="parallaxElem parallaxTitle fontKanitMain" data-dynaX="0.025" data-dynaY="0.12" data-dynaZ="0.11" data-dynaDistance="250">Japan</p>]
 <main>
 */
+
+//coolTip
+console.log("DXM: coolTip activated!")
+
+//cooltipCraft(button1, "Hello, World!", {color: "grey", fontSize: "1.5rem"})
+function cooltipCraft(_target, _cooltipText, _obj){
+    let cooltipShell = document.createElement("div")
+    cooltipShell.className = 'cooltipShell'
+    cooltipShell.style.opacity = '0'
+    cooltipShell.style.pointerEvents = 'none'
+    
+    let cooltipCont = document.createElement("div")
+    cooltipCont.innerHTML = `${_cooltipText}`
+    cooltipCont.className = 'cooltipCont'
+    cooltipShell.appendChild(cooltipCont)
+
+    //additional styling:
+    cooltipCont.style.color = _obj.fontColor?_obj.fontColor:'white'
+    cooltipCont.style.fontSize = _obj.fontSize?_obj.fontSize:'1.15rem'
+    cooltipCont.style.fontStyle = _obj.fontStyle?_obj.fontStyle:''
+    cooltipCont.style.backgroundColor = _obj.contColor?_obj.contColor:'rgba(50,50,50,0.5)'
+    //cooltipCont.style.filter = "drop-shadow(" + _obj.shadow?_obj.shadow:'0 0 0.5rem rgba(40,40,40,0.3)' + ")"
+    cooltipShell.style.transition = _obj.transit?_obj.transit:'opacity 0.4s ease-in-out'
+
+    document.querySelector("body").appendChild(cooltipShell)
+
+
+    _target.addEventListener("mousemove", (e)=>{
+        cooltipShell.style.opacity = '1'
+        cooltipShell.style.top = e.clientY + (e.clientY > window.innerHeight ? _obj.yBuffer : -_obj.yBuffer) + 'px'
+        cooltipShell.style.left = (e.clientX + _obj.xBuffer) + 'px'
+    })
+
+    _target.addEventListener("mouseout", ()=>{
+        cooltipShell.style.opacity = '0'
+
+    })
+}
+
+//example:
+//cooltipCraft(DOM Element, Text, Options)
+//cooltipCraft(clockStartBtn, "Click to start the pomodoro clock", {color: "grey", fontSize: "1.1rem", yBuffer:35, xBuffer:15})

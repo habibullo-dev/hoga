@@ -1,24 +1,26 @@
 
 console.log("!!THEMEOPTIONS WAS JUST DEFINED? ", themeOptions)
 const selectFXBtn = Array.from(document.querySelectorAll(".selectFXBtn")) //⚠️ obsolete?
+let currentFX = "cancel";
+let previousFX = "cancel";
+const focusModeSwitch =  document.getElementById("focusModeSwitch")
+document.querySelector("#focusModeSwitch").addEventListener("click", focusModeAct)
+//activeThemeSetup()
 
-
-document.querySelector("#focusModeSwitch").addEventListener("click", ()=>{ //To avoid redeclaration conflict, storing id in variable WITHIN the event listener
-    const focusModeSwitch =  document.getElementById("focusModeSwitch")
+function focusModeAct(){
     console.log("focus mode toggled!")
     focusModeSwitch.classList.toggle("focusModeOn")
     if (focusModeSwitch.classList.contains("focusModeOn")){
         loadingScreen.innerHTML='<div id="loadingBarBlackBG" style="filter: blur(20px); transition: all 1.5sec ease-in;">'
         loadingScreen.style.opacity="0.95"
+        setupFX("cancel")
         
     } else {
         loadingScreen.style.opacity="0"
         loadingScreen.innerHTML=""
+        setupFX(previousFX)
     }
-})
-//activeThemeSetup()
-
-
+}
 
 
 //Theme options widget function - global-level ⚠️⚠️⚠️
@@ -92,6 +94,7 @@ function FXCreateEnergy(){
 
 function setupFX(_type, _num){
     bgFXCont.innerHTML=""
+    previousFX = currentFX
 
     switch (_type){
         case "cancel":
@@ -119,11 +122,9 @@ function setupFX(_type, _num){
             break;
     }
     if (document.getElementById("focusModeSwitch").classList.contains("focusModeOn")){
-        focusModeSwitch.classList.toggle("focusModeOn")
-        loadingScreen.style.opacity="0"
-        loadingScreen.innerHTML=""
+        focusModeAct()
     }
-    
+    currentFX = _type
 }
 
 /* SFX AND MUSIC PLAYERS */
