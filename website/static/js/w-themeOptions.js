@@ -129,7 +129,7 @@ function setupFX(_type, _num){
 
 /* SFX AND MUSIC PLAYERS */
 
-let playingMusic = new Audio();
+
 playingMusic.onpause = function (){}
 playingMusic.onplay = function (){}
 playingMusic.onended = function (){}

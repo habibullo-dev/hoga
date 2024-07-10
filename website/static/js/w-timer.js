@@ -101,6 +101,7 @@ function startTimer() {
           isWorking = false;
           currentRound++;
           document.getElementById("timer-state").textContent = "Break";
+          playAlert(currentAlarm);
         } else {
           document.getElementById("timer-state").textContent = "Completed";
           document.getElementById("startBtn").style.display = "inline-block";
