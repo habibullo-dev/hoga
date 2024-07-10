@@ -21,7 +21,7 @@
   --navbar-width-min: 80px;
   --navbar-dark-primary: black;
   --navbar-dark-secondary: #2c3e50;
-  --navbar-light-primary: rgba(220,220,220,0.3);
+  --navbar-light-primary: rgba(220,220,220,0.45);
   --navbar-light-secondary: #dadada;
   --navbar-light-tertiary: #ffffff;
 }
