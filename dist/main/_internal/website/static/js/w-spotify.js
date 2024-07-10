@@ -92,9 +92,9 @@ function getAccessToken() {
 $(document).ready(function () {
   // Set initial tokens
   const initialAccessToken =
-    "BQByshJIMIFYOntCaMTwhAjrHlctRPwOjU5jADjVFpR726GuN0wEsEOsXcawZit1pQFqhkJIol-DBdIRwYJXCu6K6K54Ib0Q_7MSufkvkduHDq1Th8wyZYy9pJvi6Qsp1_-_lDFmzhfnTW2hcbVyjpl5HJus-j0Ugh2UXo7DTOFoUrQf1AU-qcR7hkNn48SXCdKruKCgEI6nfvCcviqoFA";
+    "";
   const initialRefreshToken =
-    "AQAJILD010tDX904I0DAhM67y6ngi9JGDMFUjHbG3nbUVdhkswoiY2vfSywLAkdxOgL4kq5TMYzcacmgww58RCK98aQkRhKuOst5SOsQQjxoByzSoCL3jO0A0lSXWS5xQog";
+    "";
   setInitialTokens(initialAccessToken, initialRefreshToken);
 
   // Function to initialize Spotify functionality

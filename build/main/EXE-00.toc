@@ -65,7 +65,7 @@
  [],
  False,
  False,
- 1720523718,
+ 1720535568,
  [('run.exe',
    'e:\\CODING\\Babycode\\HOGA-Project\\hoga\\.venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
    'EXECUTABLE')],

@@ -1,4 +1,4 @@
-const apiKey = "1d735e1ab42746265d96032c39b8fe8b"; 
+const apiKey = ""; 
       const apiUrl = "https://api.openweathermap.org/data/2.5/forecast";
       const container = document.getElementById("weatherWidget");
       const viewSelector = document.getElementById("viewSelector");

@@ -28,7 +28,7 @@ smtp_obj.starttls()
 smtp_obj.login("hogadashboard@gmail.com", "abyh ksfp hjxe rizx") #can use the variable password instead of the actual password
 
 #GEMINI RELATED CONTENT
-os.environ["API_KEY"] = "AIzaSyAWSgpgHCZ-LyCPGTkvvX_OBP1H9RSEDhI"
+os.environ["API_KEY"] = ""
 api_key = os.environ["API_KEY"]
 genai.configure(api_key=api_key)
 model = genai.GenerativeModel("gemini-1.5-flash")
