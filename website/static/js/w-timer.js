@@ -102,6 +102,7 @@ function startTimer() {
           currentRound++;
           document.getElementById("timer-state").textContent = "Break";
           playAlert(currentAlarm);
+          createNotification(888, "Break time!", 3000)
         } else {
           document.getElementById("timer-state").textContent = "Completed";
           document.getElementById("startBtn").style.display = "inline-block";
@@ -113,6 +114,7 @@ function startTimer() {
         
         isWorking = true;
         document.getElementById("timer-state").textContent = "Work";
+        createNotification(999, "Timer started.", 3000)
       }
 
       setTimeout(startTimer, 1000);
