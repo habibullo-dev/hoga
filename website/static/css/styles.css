@@ -82,6 +82,18 @@ body {
   font-size: var(--size);
 }
 
+#notchCorner1{
+  justify-content: center;
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  top: var(--pad);
+  right: var(--pad);
+  left: var(--pad);
+  width: 100%;
+  height: 20rem;
+}
+
 .notch-container {
   position: absolute;
   z-index: 3;
@@ -92,6 +104,7 @@ body {
   justify-content: center;
   height: 100%;
   max-height: calc(var(--notch-radius) * 2);
+  
   pointer-events: none;
   outline: none;
   transition: var(--notch-duration) var(--ease);
@@ -115,12 +128,19 @@ body {
 
 .notch-container:hover .notch,
 .notch-container:focus-within .notch {
-  max-width: 50%;
-  max-height: 80%;
+  max-width: 100%;
+  max-height: 70%;
   pointer-events: all;
   transform: scale3d(0.7, 0.7, 1);
   transition: max-height var(--notch-duration) var(--ease),
     transform var(--notch-duration) var(--ease);
+}
+
+@media only screen and (max-width: 1000px) {
+  .notch-container:hover .notch,
+.notch-container:focus-within .notch {
+  transform: scale3d(1, 1, 1);
+  }
 }
 
 .notch-container:hover,
@@ -177,20 +197,61 @@ body {
   color: white;
   display: flex;
   cursor: pointer;
-  width: 60%;
+  width: 50%;
   transition: inherit;
   transition-property: inherit;
   will-change: inherit;
   filter: drop-shadow(0 1em 2em hsla(0 0% 0% / var(--shadow-opacity, 0)));
   transform: scale3d(0.3, 0.3, 1);
   transform-origin: top;
-  box-shadow: 0 0 20px 10px rgb(255, 255, 255, 0.2),
-    /* inner */ 0 0 80px 10px rgb(255, 0, 255, 0.2),
-    /* middle */ 0 0 100px 20px rgb(0, 255, 255, 0.5); /* outer */
+  box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.2),
+    /* inner */ 0 0 60px 2px rgb(255, 0, 255, 0.2),
+    /* middle */ 0 0 40px 2px rgb(0, 255, 255, 0.5); /* outer */
+}
+
+@media only screen and (max-width: 1000px) {
+  .notch {
+    width: 100%;
+    transform: scale3d(0.8, 0.8, 1);
+  }
+}
+
+.notch::after{
+  background: linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+  position: absolute;
+  content: "";
+  top: -900%;
+  left: -360%;
+  width: 245rem;
+  height: 70rem;
+  opacity: 0.6;
+  pointer-events: none;
+  filter: blur(5px);
+  /* transition: translate 0.2s ease-in-out; */
+  animation: 10s buttonShineDiag infinite running; 
+}
+
+.notch:hover::after {
+  opacity: 0; 
+}
+
+@keyframes buttonShineDiag {
+  0% {
+    transform: translateX(0%, 0%);
+    transform: rotate(-45deg);
+  }
+
+  88% {
+    transform: translateX(0%, 0%);
+  }
+
+  100% {
+    transform: translate(1000%, 400%);
+  }
 }
 
 .content {
-  --content-padding: 1.75em;
+ /*  --content-padding: 1.5em; */
   --duration-height: 0.5em;
   --content-gap: 1em;
   width: 100%;
@@ -216,7 +277,7 @@ body {
 
 .notch-container:hover .logo-center img {
   visibility: hidden;
-  transition: transform var(--notch-duration) var(--ease);
+  transition: transform var(--notch-duration) var(--ease) ;
 }
 
 .left img {
@@ -256,6 +317,12 @@ body {
   align-items: center;
   gap: 1em;
   margin: 0 7%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .content .left {
+    margin: 0 1%;
+  }
 }
 
 .content,
@@ -320,7 +387,7 @@ body {
 }
 
 .tooltip img {
-  width: 150%;
+  width: 3rem;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
   -o-transition: all 0.1s ease-out;
@@ -374,7 +441,7 @@ body {
   z-index: 999; /* Ensure appears below hidden */
 }
 
-.control-panel:hover + .hidden {
+.control-panel:hover + .hidden{
   opacity: 1;
 }
 
@@ -396,7 +463,7 @@ body {
 }
 
 .widget-tooltip img {
-  width: 150%;
+  width: 2rem;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
   -o-transition: all 0.1s ease-out;
