@@ -1,14 +1,9 @@
-let rounds = 3; // Number of rounds
-let workTime = 25 * 60; // Work time in seconds
-let breakTime = 5 * 60; // Break time in seconds
-let currentTime = workTime; // Initialize current time to work time
-let currentRound = 1; // Current round
-let isWorking = true; // Flag to track if it's work time or break time
-let timerInterval; // Interval ID for timer
-
-window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
+(function() {
 
 const progressBar = document.getElementById("progress-bar");
+const settingsBtn = document.getElementById("settingsBtn"); // Event listeners for settings button and iframe
+const iframe = document.getElementById("task-frame");
+console.log("!! settingsBtn defined, ", settingsBtn)
 
 // Function to create a step (circle) in the progress bar
 function createStep(isCompleted) {
@@ -189,9 +184,7 @@ document.getElementById("pauseBtn").addEventListener("click", pauseTimer);
 document.getElementById("stopBtn").addEventListener("click", stopTimer);
 document.getElementById("resetBtn").addEventListener("click", resetTimer);
 
-// Event listeners for settings button and iframe
-const settingsBtn = document.getElementById("settingsBtn");
-const iframe = document.getElementById("task-frame");
+
 
 // Ensure iframe is initially hidden
 if (iframe) {
@@ -238,15 +231,6 @@ window.addEventListener('beforeunload', function (evt) {
   }
 });
 
-function timerCurrentSave(){
-  clockSettingsBulk.rounds = rounds
-  clockSettingsBulk.workTime = workTime
-  clockSettingsBulk.breakTime = breakTime
-  clockSettingsBulk.currentTime = currentTime
-  clockSettingsBulk.currentRound = currentRound
-  clockSettingsBulk.isWorking = isWorking
-  return clockSettingsBulk
-}
 
 async function restoreTimeSettings(){
   if (widgetSettingsBulk?.["w-timer"]?.["timerValues"] !== undefined){
@@ -284,3 +268,15 @@ const timerObserver = new MutationObserver(timerCallback);
 
 // Start observing the target node for configured mutations
 timerObserver.observe(timerTargetNode, timerConfig);
+
+})()
+
+function timerCurrentSave(){
+  clockSettingsBulk.rounds = rounds
+  clockSettingsBulk.workTime = workTime
+  clockSettingsBulk.breakTime = breakTime
+  clockSettingsBulk.currentTime = currentTime
+  clockSettingsBulk.currentRound = currentRound
+  clockSettingsBulk.isWorking = isWorking
+  return clockSettingsBulk
+}

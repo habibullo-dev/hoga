@@ -393,7 +393,6 @@ body {
   width: 30px;
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
   margin-right: 20px;
 }
 
@@ -539,13 +538,18 @@ body {
   transform: translate(-50%);
 }
 #nav-toggle:checked ~ #nav-header #nav-toggle-burger {
-  background: var(--navbar-light-primary);
+  background: var(--navbar-light-secondary);
 }
 #nav-toggle:checked ~ #nav-header #nav-toggle-burger:before,
 #nav-toggle:checked ~ #nav-header #nav-toggle-burger::after {
-  width: 16px;
   background: var(--navbar-light-secondary);
   transform: translate(0, 0) rotate(0deg);
+}
+#nav-toggle:checked ~ #nav-header #nav-toggle-burger:before{
+  transform: translate(0, -0.3rem) rotate(0deg);
+}
+#nav-toggle:checked ~ #nav-header #nav-toggle-burger:after{
+  transform: translate(0, 0.3rem) rotate(0deg);
 }
 #nav-toggle:checked ~ #nav-content .nav-button span {
   opacity: 0;
@@ -569,7 +573,7 @@ body {
 #nav-bar {
   position: absolute;
   left: 1vw;
-  top: 1vw;
+  top: 1vh;
   height: calc(100% - 2vw);
   background: var(--navbar-light-primary);
   backdrop-filter: blur(5px);
@@ -636,9 +640,9 @@ label[for="nav-toggle"] {
 
 #nav-toggle-burger {
   position: relative;
-  width: 16px;
-  height: 2px;
-  background: var(--navbar-light-primary);
+  width: 60%;
+  height: 0.3rem;
+  background: rgba(0, 0, 0, 0);
   border-radius: 99px;
   transition: background 0.2s;
 }
@@ -647,16 +651,16 @@ label[for="nav-toggle"] {
   content: "";
   position: absolute;
   top: -6px;
-  width: 10px;
-  height: 2px;
+  width: 100%;
+  height: 0.3rem;
   background: var(--navbar-light-tertiary);
   border-radius: 99px;
-  transform: translate(2px, 8px) rotate(30deg);
+  transform: translate(-0.5rem, 0.8rem) rotate(30deg);
   transition: 0.2s;
 }
 #nav-toggle-burger:after {
   top: 6px;
-  transform: translate(2px, -8px) rotate(-30deg);
+  transform: translate(-0.5rem, -0.8rem) rotate(-30deg);
 }
 
 #nav-content {

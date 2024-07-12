@@ -7,6 +7,23 @@ window.user = {
 };
 window.dbSettingsBulk = {};
 window.widgetSettingsBulk = {};
+
+// w-timer Vars
+
+let rounds = 3; // Number of rounds
+let workTime = 25 * 60; // Work time in seconds
+let breakTime = 5 * 60; // Break time in seconds
+let currentTime = workTime; // Initialize current time to work time
+let currentRound = 1; // Current round
+let isWorking = true; // Flag to track if it's work time or break time
+let timerInterval; // Interval ID for timer
+
+window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
+
+
+
+// Pop-up Vars
+
 const popupImportant = document.getElementById("popup-important")
 const popupImpWindow = document.getElementById("popup-imp-window")
 const popupSpecial1 = document.getElementById("popup-special1")
@@ -34,6 +51,9 @@ function closeUrgentPopUp(_btn, _btnFunc) {
     popupImpText.innerHTML = ""
     _btn.removeEventListener("click", _btnFunc)
 }
+
+
+//Music/SFX Vars
 
 window.playingMusic = new Audio(); //used in theme options
 let currentAlarm = "alarm2.mp3"
