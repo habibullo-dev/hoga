@@ -25,8 +25,32 @@
   --navbar-light-secondary: #dadada;
   --navbar-light-tertiary: #ffffff;
 }
+:root{
+  --timerFont: "Inter";
+  --timerFontColor: rgba(255,255,255,1);
+}
 * {
   user-select: none !important;
+}
+
+.animPause{
+  animation-play-state: paused !important;
+}
+
+.animPlay{
+  animation-play-state: running !important;
+}
+
+.th-oblongBase{
+  background-color: rgba(220, 220, 220, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 7px rgba(227, 228, 237, 0.37);
+  border: 2px solid rgba(255, 255, 255 0.58)
+}
+
+.th-oblongNoAura{
+  background-color: rgba(220, 220, 220, 0.3);
+  backdrop-filter: blur(15px);
 }
 
 input, textarea {
@@ -572,9 +596,9 @@ body {
 
 #nav-bar {
   position: absolute;
-  left: 1vw;
-  top: 1vh;
-  height: calc(100% - 2vw);
+  left: 0.5vw;
+  top: 0.5vh;
+  height: calc(100% - 0.5vw);
   background: var(--navbar-light-primary);
   backdrop-filter: blur(5px);
   border-radius: 16px;
@@ -868,3 +892,4 @@ label[for="nav-toggle"] {
   flex-direction: column;
   max-height: 25%;
 }
+

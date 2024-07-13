@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #watchCont{
+            display: flex;
+            justify-content: center;
+        }
+        #watchMain{
+            width: 30rem;
+            height: 50rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            background-image: url("../images/themes/timer/tissot1.png");
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        #watchMain:after, #watchMain:before{
+            background-image: url("../images/themes/timer/tissot2.png");
+            background-size: contain;
+            content: "";
+            position: absolute;
+            width: 20rem;
+            height: 20rem;
+            animation: watchRotate 360s linear;
+        }
+        #watchMain:before{
+            background-image: url("../images/themes/timer/tissot3.png");
+            background-size: contain;
+            animation: watchRotate 60s steps(60, end);
+        }
+        @keyframes watchRotate{
+            0%{
+                transform:rotate(0deg)
+            }
+            100%{
+                transform:rotate(360deg)
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="watchCont">
+        <div id="watchMain"></div>
+    </div>
+</body>
+</html>

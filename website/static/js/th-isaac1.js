@@ -1,12 +1,12 @@
 themeExtraOptions.innerHTML = `
 <div class="themeOptionsCat">Background Customization
-    <div class="optionCont" style="color:#8392a5;"><p id="th1CityName">Tokyo</p>
+    <div class="optionCont"><p id="th1CityName">Tokyo</p>
         <label class="togSwitch"> 
             <input type="checkbox" id="th1CitySwitch" class="thOptionClickable">
             <span class="togRound"></span>
         </label>
     </div>
-    <div class="optionCont" style="color:#8392a5;"><p id=th1TimeName>Day</p>
+    <div class="optionCont"><p id=th1TimeName>Day</p>
         <label class="togSwitch"> 
             <input type="checkbox" id="th1TimeSwitch" class="thOptionClickable">
             <span class="togRound"></span>

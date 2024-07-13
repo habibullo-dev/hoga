@@ -129,10 +129,12 @@ function setupFX(_type, _num){
 
 /* SFX AND MUSIC PLAYERS */
 
+const allBGMTracks = Array.from(document.querySelector("#musicDropDown").children).slice(1) //all tracks except the "cancel" one
 
 playingMusic.onpause = function (){}
 playingMusic.onplay = function (){}
-playingMusic.onended = function (){}
+
+
 
 const BGMBar = document.getElementById('BGMBar');
 const BGMBarContainer = document.getElementById('BGMBarContainer');
@@ -153,9 +155,7 @@ playingMusic.ontimeupdate = ()=>{
     BGMCurrentTime.textContent = formatTime(_BGMCurrentTime);
 };
 
-playingMusic.onloadedmetadata = ()=>{
-    BGMDuration.textContent = formatTime(playingMusic.duration);
-};
+
 
 function playBGM(){
     if (playingMusic.src){
@@ -171,6 +171,7 @@ function stopBGM(){
     playingMusic.src = ""
     BGMtitle.innerHTML = ""
 }
+
 let themeMusicVolumeDialElem = document.getElementById("themeMusicVolumeDial");
 let themeMusicIncElem = document.getElementById("themeMusicInc");
 let themeMusicDecElem = document.getElementById("themeMusicDec");
@@ -254,23 +255,34 @@ BGMBarContainer.addEventListener('click', function(e) {
 });
 
 function playSFX(e){
-    if(e.target.dataset.sfx){
+    console.log("PLAYING MUZIK")
+    if(e !="suite" && e.target.dataset.sfx){
         playingBGSFX.pause()
         playingBGSFX.currentTime = 0
         if (e.target.dataset.sfx=="cancel"){return}
         playingBGSFX.src = `../static/sound/SFX/${e.target.dataset.sfx}.ogg`
+        playingBGSFX.onloadedmetadata = function(){
+            playingBGSFX.play()
+        }
         playingBGSFX.load()
-        playingBGSFX.play()
-    }else if (e.target.dataset.music){
+    } else {
         playingMusic.pause()
         playingMusic.currentTime = 0
         BGMtitle.innerHTML = ""
-        if (e.target.dataset.music=="cancel"){return}
-        playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
-        playingMusic.load()
-        playingMusic.play()
-        BGMtitle.innerHTML = `${e.target.dataset.music}`
-    }
-        
-
+        const suiteBGM = allBGMTracks[Math.floor(Math.random() * allBGMTracks.length)].dataset.music
+        if (e == "suite"){
+            playingMusic.src = `../static/sound/Music/${suiteBGM}.mp3`
+        } else {
+            if (e.target.dataset.music=="cancel"){return} 
+            playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
+        } 
+        playingMusic.onloadedmetadata = function(){
+            playingMusic.play()
+            BGMtitle.innerHTML = e=="suite"?suiteBGM:e.target.dataset.music
+            BGMDuration.textContent = formatTime(playingMusic.duration);
+        }
+        playingMusic.load()   
+    } 
 }
+
+playingMusic.onended = function(){playSFX("suite")}
