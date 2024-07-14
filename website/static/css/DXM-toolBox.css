@@ -112,3 +112,46 @@
         transform: translateX(1220%);
     }
 }
+
+
+.dragLockPoint{
+    background-color: rgba(225, 225, 225, 0.2);
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(250, 250, 250, 0.3);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 0.2rem;
+    cursor:move;
+}
+
+.dragLockPoint:after{
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 25%;
+    height: 25%;
+
+    border-radius: 50%;
+    border: 2px solid rgba(250, 250, 250, 0.5);
+} 
+
+.dragLockPoint::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    box-shadow:
+        -6px -6px 0 -4px rgba(250, 250, 250, 0.8),
+        6px 6px 0 -4px rgba(250, 250, 250, 0.8),
+        6px -6px 0 -4px rgba(250, 250, 250, 0.8),
+        -6px 6px 0 -4px rgba(250, 250, 250, 0.8);
+    transform: rotate(45deg)
+} 

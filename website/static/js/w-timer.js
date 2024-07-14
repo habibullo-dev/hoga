@@ -77,6 +77,11 @@ function updateProgressBar() {
   });
 }
 
+function updateTimerDisplay(minutes, seconds){
+  document.getElementById("timer-display").textContent = `${minutes
+    .toString()
+    .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+}
 
 // Function to start the timer
 function startTimer() {
@@ -84,54 +89,62 @@ function startTimer() {
 
   const minutes = Math.floor(currentTime / 60);
   const seconds = currentTime % 60;
-    document.getElementById("timer-display").textContent = `${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
+  updateTimerDisplay(minutes, seconds)
+  thEnclencherWatch(minutes, seconds)
   timerPaused = false;
   clearInterval(timerInterval)
+
   timerInterval = setInterval(() => {
     currentTime--;
-
+    
     const minutes = Math.floor(currentTime / 60);
     const seconds = currentTime % 60;
-    document.getElementById("timer-display").textContent = `${minutes
-      .toString()
-      .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
-
-    updateProgressBar();
-    thEnclencherWatch(minutes, seconds)
-    if (currentTime <= 0) {
-      clearInterval(timerInterval);
-
-      if (isWorking) {
-        if (currentRound < rounds) {
-          currentTime = breakTime;
-          isWorking = false;
-          currentRound++;
-          document.getElementById("timer-state").textContent = "Break";
-          playAlert(currentAlarm);
-          createNotification(888, "Break time!", 3000)
-        } else {
-          document.getElementById("timer-state").textContent = "Completed";
-          document.getElementById("startBtn").style.display = "inline-block";
-          document.getElementById("pauseBtn").style.display = "none";
-          return;
-        }
-      } else {
-        currentTime = workTime;
-        
-        isWorking = true;
-        document.getElementById("timer-state").textContent = "Work";
-        createNotification(999, "Timer started.", 3000)
-      }
-
-      setTimeout(startTimer, 1000);
+    watchSeconds.style.transform= `rotate(${seconds*6%360}deg)`;
+    if (seconds === 0){
+      watchMinutes.style.transform= `rotate(${minutes*6%360}deg)`;
     }
+    updateTimerDisplay(minutes, seconds)
+    updateProgressBar();
+    timerIntervalCheck() 
   }, 1000);
 
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("pauseBtn").style.display = "inline-block";
+}
+
+function timerIntervalCheck(){
+  if (currentTime <= 0) {
+    clearInterval(timerInterval);
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = currentTime % 60;
+    updateTimerDisplay(minutes, seconds)
+    if (isWorking) {
+      if (currentRound < rounds) {
+        //moving to break time
+        currentTime = breakTime;
+        isWorking = false;
+        currentRound++;
+        document.getElementById("timer-state").textContent = "Break";
+        playAlert(currentAlarm);
+        createNotification(888, "Break time!", 3000)
+      } else {
+        //timer finished. ⚠️⚠️⚠️
+        document.getElementById("timer-state").textContent = "Completed";
+        document.getElementById("startBtn").style.display = "inline-block";
+        document.getElementById("pauseBtn").style.display = "none";
+        return;
+      }
+    } else {
+      //going back to work time
+      currentTime = workTime;
+      
+      isWorking = true;
+      document.getElementById("timer-state").textContent = "Work";
+      createNotification(999, "Timer started.", 3000)
+    }
+
+    setTimeout(startTimer, 1000);
+  }
 }
 
 // Function to pause the timer
@@ -140,7 +153,6 @@ function pauseTimer() {
   timerPaused = true;
   document.getElementById("startBtn").style.display = "inline-block";
   document.getElementById("pauseBtn").style.display = "none";
-  thStopWatchTicks()
 }
 
 // Function to stop the timer
@@ -259,21 +271,19 @@ async function restoreTimeSettings(){
     const res = widgetSettingsBulk["w-timer"]["timerValues"]
     rounds = res.rounds
     workTime = res.workTime==null?1500:res.workTime
-    breakTime = res.breakTime==null?5:res.workTime
+    breakTime = res.breakTime==null?300:res.breakTime
     currentTime = res.currentTime==null?1500:res.currentTime
-    console.log("what is res.currentTime, ", res.currentTime)
-    console.log("!!what is currentTime: ", currentTime)
     currentRound = res.currentRound
     isWorking = res.isWorking
     renderProgressBar();
-    startTimer() //start and instantly stop the timer to set in the retrieved data.
+    startTimer() //start and almost instantly stop the timer to set in the retrieved data.
     setTimeout(pauseTimer, 100)
-
   }
   console.log("No previous timer data found, restoration aborted")
 }
 
 restoreTimeSettings()
+let backgroundInterval;
 
 function timerSync(_live){
   if (timerPaused == false){
@@ -281,6 +291,8 @@ function timerSync(_live){
       tsTimerDesync = Date.now()/1000; // Capture timestamp when tab is unfocused by user
       tsTimerCurrent = currentTime
       console.log("!!User out of focus. TStimerCurrent + TSDesync: ", tsTimerCurrent, tsTimerDesync)
+      currentTime = currentTime
+      backgroundInterval = setInterval(timerIntervalCheck,1000)
     }
     if (document.visibilityState === 'visible') {
       tsTimerResync = Date.now()/1000
@@ -291,6 +303,7 @@ function timerSync(_live){
       console.log("!!then what is currentTime, ", currentTime)
       tsTimerDesync = 0;
       tsTimerResync = 0;
+      clearInterval(backgroundInterval)
       createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")
     }
   }
@@ -324,25 +337,15 @@ timerObserver.observe(timerTargetNode, timerConfig);
 //special watch theme stuff
 function thEnclencherWatch(_minRota, _secRota){
   _secRota = !_secRota?60:_secRota;
-  watchSeconds.style.animationPlayState = "paused"
-  watchSeconds.style.transform= `rotate(${_secRota*6}deg)`
-  console.log("ROTA FOR SECONDS AT: ", _secRota*6)
-  watchSeconds.style.animationPlayState = "running"
-  watchMinutes.style.animationPlayState = "paused"
-  watchMinutes.style.transform= `rotate(${_minRota*6}deg)`
+  watchSeconds.style.transform= `rotate(${_secRota*6%360}deg)`
+  watchMinutes.style.transform= `rotate(${_minRota*6%360}deg)`
   console.log("ROTA FOR MINUTES AT: ", _minRota*6)
-  watchMinutes.style.animationPlayState = "running"
 } 
 
-function thStopWatchTicks(){
-  watchSeconds.style.animationPlayState = "paused"
-  watchMinutes.style.animationPlayState = "paused"
-}
 
 function thResetWatchTicks(){
-  watchSeconds.style.transform= `rotate(0deg)`
-  watchMinutes.style.transform= `rotate(0deg)`
-  thStopWatchTicks()
+  watchSeconds.style.transform= `rotate(${currentTime%60}deg)`
+  watchMinutes.style.transform= `rotate(${Math.floor(currentTime/60)}deg)`
 }
 
 })() //end of IIFE

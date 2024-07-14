@@ -2,7 +2,8 @@
 
 
 
-console.log("multiParallax package loaded! Original system by True Coder. Modified by DXM")
+console.log("DXM: multiParallax package loaded! Original system by True Coder. Modified by DXM")
+console.log("Find the original tutorial here: https://www.youtube.com/watch?v=Yo3j_Dx4u7c&t=38s&ab_channel=TrueCoder")
 //fixed DOMS
 let paraStopButton = document.querySelector("#paraStop");
 let paraStartButton = document.querySelector("#paraStart");
@@ -184,3 +185,61 @@ function cooltipCraft(_target, _cooltipText, _obj){
 //example:
 //cooltipCraft(DOM Element, Text, Options)
 //cooltipCraft(clockStartBtn, "Click to start the pomodoro clock", {color: "grey", fontSize: "1.1rem", yBuffer:35, xBuffer:15})
+
+
+//dragLock
+
+console.log("DXM: dragLock function ready! call initDragLock() to enable it on .dragLockPoint elements. call cancelDragLock() to clear the event listeners.")
+
+let dragPointHold = false;
+let dragLockObj = {x:"", y:"", mouseDown:false}
+
+
+function initDragLock(_keepPosition){
+    console.log("dragLock function initialized.")
+    const _dragPoint = Array.from(document.getElementsByClassName("dragLockPoint")) //Select the draggable point (child) of an element.
+    console.log("_dragPoint, ", _dragPoint)
+    _dragPoint.forEach((child)=>{
+        child.style.display="flex"
+        if (!_keepPosition){
+            _parent=child.parentElement
+            const topValue = window.getComputedStyle(_parent).getPropertyValue('top');
+            const leftValue = window.getComputedStyle(_parent).getPropertyValue('left');
+            _parent.style.position = "absolute"
+            _parent.style.top = topValue;
+            _parent.style.left = leftValue;
+        }
+
+        function dragLockMoveHandler(event){
+            if (dragLockObj.mouseDown) {
+                child.parentElement.style.left = event.clientX - dragLockObj.x + 'px';
+                child.parentElement.style.top = event.clientY - dragLockObj.y + 'px';
+            }
+        }
+        child.addEventListener("mousedown", (event)=>{
+            event.preventDefault()
+            dragLockObj.mouseDown = true
+            dragLockObj.x = event.clientX - child.getBoundingClientRect().left;
+            dragLockObj.y = event.clientY - child.getBoundingClientRect().top;
+
+            document.addEventListener('mousemove', dragLockMoveHandler);      
+            document.addEventListener("mouseup", (event)=>{
+                dragLockObj.mouseDown = false
+                document.removeEventListener('mousemove', dragLockMoveHandler);
+            })
+        })
+    })
+}
+
+function cancelDragLock(){
+    console.log("dragLock function removed.")
+    const _dragPoint = Array.from(document.getElementsByClassName("dragLockPoint")) 
+    _dragPoint.forEach((_elem)=>{
+        const _clone = _elem.cloneNode(true);
+        _clone.style.display="none"
+        _elem.parentNode.replaceChild(_clone, _elem);
+    })
+}
+
+
+//test area:

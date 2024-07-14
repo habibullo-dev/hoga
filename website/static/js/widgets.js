@@ -237,6 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreWidgetStates(); // Restore widget states on Edit click
     enableWidgetInteractions(); // Enable draggable and resizable
     enableOtherWidgets(); // Enable click on other widgets
+    initDragLock()
     createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 8000, "url(../static/icons/gearsAnim.gif)")
   }
 
@@ -263,6 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector(".notch-container")
         .removeAttribute("data-edit-mode");
       saveClicked = true; // Set saveClicked to true on Save click
+      cancelDragLock()
       saveWidgetStates(_skipOverWrite); // Save widget states on Save click
       disableWidgetInteractions(); // Disable draggable and resizable
       createNotification(305, "Changes successfully saved.", 2000, "url(../static/icons/save3d.gif)"); // Add notification on Save click
@@ -993,5 +995,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
   },5000)
+
+
   
 });
