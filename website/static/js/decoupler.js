@@ -175,3 +175,42 @@ function createNotification(_code, _text, _duration, _img) {
         }, 500); // Remove element after fade out animation
     }, _duration);
 }
+
+//Push Notification and Web Workers
+if ("Notification" in window) {
+    Notification.requestPermission().then(function (permission) {
+        if (permission === "granted") {
+            console.log("Notification permission granted");
+        } else if (permission === "denied") {
+            console.log("Notification permission denied");
+            // Handle denied permission
+        } else {
+            console.log("Notification permission default (dismissed)");
+            // Handle default (dismissed) permission
+        }
+    });
+}
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js")
+        .then(function(registration) {
+            console.log("Service Worker registered with scope:", registration.scope);
+        })
+        .catch(function(error) {
+            console.error("Service Worker registration failed:", error);
+        });
+}
+
+function showNotification(_title, _text) {
+    if (Notification.permission === "granted") {
+        const notification = new Notification(_title, {
+            body: _text
+            // Other options like icon, image, etc., can be added
+        });
+        // Handle notification events (e.g., onclick)
+        notification.onclick = function () {
+            console.log("Notification clicked");
+            // Perform actions when notification is clicked
+        };
+    }
+}

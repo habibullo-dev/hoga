@@ -105,15 +105,15 @@ function startTimer() {
     }
     updateTimerDisplay(minutes, seconds)
     updateProgressBar();
-    timerIntervalCheck() 
+    timerIntervalCheck(currentTime) 
   }, 1000);
 
   document.getElementById("startBtn").style.display = "none";
   document.getElementById("pauseBtn").style.display = "inline-block";
 }
 
-function timerIntervalCheck(){
-  if (currentTime <= 0) {
+function timerIntervalCheck(_valChk){
+  if (_valChk <= 0) {
     clearInterval(timerInterval);
     const minutes = Math.floor(currentTime / 60);
     const seconds = currentTime % 60;
@@ -126,6 +126,7 @@ function timerIntervalCheck(){
         currentRound++;
         document.getElementById("timer-state").textContent = "Break";
         playAlert(currentAlarm);
+        showNotification(`Break Time!", "You've finished a Pomodoro session. How about a ${breakTime} minute(s) break?`)
         createNotification(888, "Break time!", 3000)
       } else {
         //timer finished. ⚠️⚠️⚠️
@@ -137,7 +138,7 @@ function timerIntervalCheck(){
     } else {
       //going back to work time
       currentTime = workTime;
-      
+      showNotification(`Pomodoro Started!", "HOGA detected your break time was completed. We started your next ${workTime} minute Pomodoro session for you.`)
       isWorking = true;
       document.getElementById("timer-state").textContent = "Work";
       createNotification(999, "Timer started.", 3000)
@@ -283,7 +284,7 @@ async function restoreTimeSettings(){
 }
 
 restoreTimeSettings()
-let backgroundInterval;
+let timerFrameId;
 
 function timerSync(_live){
   if (timerPaused == false){
@@ -291,8 +292,7 @@ function timerSync(_live){
       tsTimerDesync = Date.now()/1000; // Capture timestamp when tab is unfocused by user
       tsTimerCurrent = currentTime
       console.log("!!User out of focus. TStimerCurrent + TSDesync: ", tsTimerCurrent, tsTimerDesync)
-      currentTime = currentTime
-      backgroundInterval = setInterval(timerIntervalCheck,1000)
+      timerFrameReq()
     }
     if (document.visibilityState === 'visible') {
       tsTimerResync = Date.now()/1000
@@ -303,8 +303,8 @@ function timerSync(_live){
       console.log("!!then what is currentTime, ", currentTime)
       tsTimerDesync = 0;
       tsTimerResync = 0;
-      clearInterval(backgroundInterval)
       createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")
+      cancelAnimationFrame(timerFrameId)
     }
   }
 }
@@ -312,6 +312,15 @@ function timerSync(_live){
 document.addEventListener('visibilitychange', () => {
   timerSync()
 });
+
+function timerFrameReq(){
+  timerFrameId = requestAnimationFrame(testRenameLater)
+}
+
+function testRenameLater(){
+    const bgTimeChk = tsTimerCurrent - (tsTimerDesync - Date.now()/1000)
+    timerIntervalCheck(bgTimeChk)
+}
 
 
 //mutation observer - testing purpose
