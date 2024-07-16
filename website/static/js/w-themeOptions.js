@@ -255,7 +255,7 @@ BGMBarContainer.addEventListener('click', function(e) {
 });
 
 function playSFX(e){
-    console.log("PLAYING MUZIK")
+    console.log("!!PLAYING MUZIK")
     if(e !="suite" && e.target.dataset.sfx){
         playingBGSFX.pause()
         playingBGSFX.currentTime = 0
@@ -269,12 +269,19 @@ function playSFX(e){
         playingMusic.pause()
         playingMusic.currentTime = 0
         BGMtitle.innerHTML = ""
+        //⚠️⚠️⚠️redo the suite logic to rather use an array we can update.
         const suiteBGM = allBGMTracks[Math.floor(Math.random() * allBGMTracks.length)].dataset.music
         if (e == "suite"){
             playingMusic.src = `../static/sound/Music/${suiteBGM}.mp3`
         } else {
-            if (e.target.dataset.music=="cancel"){return} 
-            playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
+        //   end of redo
+            if (e.target.dataset.music=="cancel"){
+                return
+            } else if (e.target.classList.contains("userAddedFile")){
+                playingMusic.src = URL.createObjectURL(userMusicArr[e.target.dataset.index]);
+            } else {
+                playingMusic.src = `../static/sound/Music/${e.target.dataset.music}.mp3`
+            }
         } 
         playingMusic.onloadedmetadata = function(){
             playingMusic.play()
@@ -283,6 +290,26 @@ function playSFX(e){
         }
         playingMusic.load()   
     } 
+}
+
+//User music upload function
+let userMusicArr = [];
+function loadUserMusic() {
+    const userMusicInput = document.getElementById('userMusicInput');
+    userMusicArr = Array.from(userMusicInput.files);
+    console.log("Loaded new music files from user machine: ", userMusicArr)
+    userMusicArr.forEach((file, index) => {
+    if (file.type.startsWith('audio/')) {
+        const audioList = document.createElement('a');
+        audioList.textContent = file.name;
+        audioList.dataset.music = file.name;
+        audioList.dataset.index = index
+        audioList.classList.add("selectFXBtn")
+        audioList.classList.add("userAddedFile")
+        audioList.onclick = ()=> playSFX(event); 
+        musicDropDown.appendChild(audioList);
+    }
+    });
 }
 
 playingMusic.onended = function(){playSFX("suite")}

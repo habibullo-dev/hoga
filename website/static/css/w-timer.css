@@ -196,6 +196,7 @@ height: 0 !important;
 }
 #watchMinutes{
   background-image: url("../images/themes/timer/tissot2.png");
+  transition: transform 0.2s ease-out;
 }
 #watchSeconds{
   background-image: url("../images/themes/timer/tissot3.png");

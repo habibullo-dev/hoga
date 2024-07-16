@@ -115,15 +115,13 @@ function startTimer() {
 function timerIntervalCheck(_valChk){
   if (_valChk <= 0) {
     clearInterval(timerInterval);
-    const minutes = Math.floor(currentTime / 60);
-    const seconds = currentTime % 60;
-    updateTimerDisplay(minutes, seconds)
     if (isWorking) {
       if (currentRound < rounds) {
         //moving to break time
-        currentTime = breakTime;
+        console.log("!! Entering breaktime: current time, break time ", currentTime, breakTime)
         isWorking = false;
         currentRound++;
+        currentTime = breakTime;
         document.getElementById("timer-state").textContent = "Break";
         playAlert(currentAlarm);
         showNotification(`Break Time!", "You've finished a Pomodoro session. How about a ${breakTime} minute(s) break?`)
@@ -133,6 +131,7 @@ function timerIntervalCheck(_valChk){
         document.getElementById("timer-state").textContent = "Completed";
         document.getElementById("startBtn").style.display = "inline-block";
         document.getElementById("pauseBtn").style.display = "none";
+        timerPaused = true;
         return;
       }
     } else {
@@ -143,7 +142,9 @@ function timerIntervalCheck(_valChk){
       document.getElementById("timer-state").textContent = "Work";
       createNotification(999, "Timer started.", 3000)
     }
-
+    const minutes = Math.floor(currentTime / 60);
+    const seconds = currentTime % 60;
+    updateTimerDisplay(minutes, seconds)
     setTimeout(startTimer, 1000);
   }
 }
@@ -292,7 +293,8 @@ function timerSync(_live){
       tsTimerDesync = Date.now()/1000; // Capture timestamp when tab is unfocused by user
       tsTimerCurrent = currentTime
       console.log("!!User out of focus. TStimerCurrent + TSDesync: ", tsTimerCurrent, tsTimerDesync)
-      timerFrameReq()
+      /* timerFrameReq() */
+      console.log("!!Tab visibility false - Starting worker1")
     }
     if (document.visibilityState === 'visible') {
       tsTimerResync = Date.now()/1000
@@ -301,10 +303,10 @@ function timerSync(_live){
       console.log("!!User back in focus. tsTimerResync - tsTimerDesync", tsTimerResync, tsTimerDesync)
       console.log("!!User back in focus. timerCurrent - the above: ", tsTimerCurrent, Math.ceil(tsTimerResync-tsTimerDesync))
       console.log("!!then what is currentTime, ", currentTime)
+      console.log("!!Tab visibility true - Interrupting worker1")
       tsTimerDesync = 0;
       tsTimerResync = 0;
-      createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")
-      cancelAnimationFrame(timerFrameId)
+      createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")     
     }
   }
 }
@@ -312,7 +314,7 @@ function timerSync(_live){
 document.addEventListener('visibilitychange', () => {
   timerSync()
 });
-
+/* 
 function timerFrameReq(){
   timerFrameId = requestAnimationFrame(testRenameLater)
 }
@@ -321,7 +323,7 @@ function testRenameLater(){
     const bgTimeChk = tsTimerCurrent - (tsTimerDesync - Date.now()/1000)
     timerIntervalCheck(bgTimeChk)
 }
-
+ */
 
 //mutation observer - testing purpose
 const timerTargetNode = document.getElementById("timer-display");
@@ -357,6 +359,22 @@ function thResetWatchTicks(){
   watchMinutes.style.transform= `rotate(${Math.floor(currentTime/60)}deg)`
 }
 
+//Worker for background timer
+
+var worker = new Worker('../static/js/worker.js');
+
+worker.onmessage = function() { //called every 1 second according to the worker in worker.js
+  if (document.visibilityState !== 'visible') {
+    const bgTimeChk = tsTimerCurrent + (tsTimerDesync - Date.now()/1000); 
+    console.log("!!running worker in background. bgTimeChk val: ", bgTimeChk)
+    console.log("!!tsTimerCurrent!!: ", tsTimerCurrent)
+    console.log("!!tsTimerDesync: ", tsTimerDesync)
+    console.log("!!date now: ", Date.now()/1000)
+    console.log("!!then wtf is timer desync - date now?? ", tsTimerDesync-Date.now()/1000)
+    timerIntervalCheck(bgTimeChk)
+  }
+};
+
 })() //end of IIFE
 
 function timerCurrentSave(){
@@ -369,6 +387,7 @@ function timerCurrentSave(){
   console.log("saving current timer settings.")
   return clockSettingsBulk
 }
+
 
 
 

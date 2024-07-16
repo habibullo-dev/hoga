@@ -146,7 +146,7 @@
          
           
           <div id="nav-content-highlight"></div>
-          <div id="nav-dev-picks" class="display-toggle">
+          <div id="nav-dev-picks" class="display-toggle th-oblongNoAura">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
               <span>Vaporwave (Animated)</span>
             </div>
@@ -199,6 +199,10 @@
                 </div> 
               </div>
               <div id="musicOptions"> 
+                <!-- TEMPORARY PLACEMENT -->
+                <input type="file" id="userMusicInput" multiple>
+                <button onclick="loadUserMusic()">Load Music</button> 
+
                 <div class="dropdown">
                   <button class="dropbtn">🎵 Music</button>
                   <div class="dropdown-content" id="musicDropDown">
@@ -216,7 +220,10 @@
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Tropical Beach">Amaksi - Tropical Beach</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Lo-fi">Amaksi - Lo-fi</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>                    
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>   
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Barradeen - Bedtime After A Coffee">Barradeen - Bedtime After A Coffee</a>    
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="WELC0MEN0 - 18021603">WELC0MEN0 - 18021603</a> 
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Ghostrifter - Morning Routine">Ghostrifter - Morning Routine</a>         
                   </div>
                 </div> 
               </div>
@@ -348,6 +355,7 @@
   <!-- DEPENDENCY STACK -->
   <script src="../static/js/settingsSaveLoad.js"></script>
   <script src="https://apis.google.com/js/api.js"></script>
+  <script src="../static/js/worker.js"></script>
   <script src="../static/js/service-worker.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {

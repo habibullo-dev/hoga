@@ -190,7 +190,7 @@ if ("Notification" in window) {
         }
     });
 }
-
+/* 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js")
         .then(function(registration) {
@@ -200,7 +200,7 @@ if ("serviceWorker" in navigator) {
             console.error("Service Worker registration failed:", error);
         });
 }
-
+ */
 function showNotification(_title, _text) {
     if (Notification.permission === "granted") {
         const notification = new Notification(_title, {
@@ -214,3 +214,5 @@ function showNotification(_title, _text) {
         };
     }
 }
+
+window.worker1Interval

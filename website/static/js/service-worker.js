@@ -16,3 +16,4 @@ self.addEventListener("notificationclick", function(event) {
 }); */
 
 //WIP
+

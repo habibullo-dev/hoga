@@ -747,9 +747,9 @@ label[for="nav-toggle"] {
 }
 
 #nav-dev-picks{/* 🚧NEW CSS */
-  box-shadow: 16px 16px var(--background);
+  /* background-color: var(--navbar-light-primary);
+  backdrop-filter: ; */
   width: var(--navbar-width);
-  background-color: black;
   transition: top 0.2s;
   position: absolute;
   right: calc(-1*var(--navbar-width));
@@ -774,7 +774,9 @@ label[for="nav-toggle"] {
   height: fit-content;
   display: flex;
   align-items: center;
-  color: var(--navbar-light-secondary);
+  /* color: var(--navbar-light-secondary); */
+  color: white;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
   direction: ltr;
   cursor: pointer;
   z-index: 1;
