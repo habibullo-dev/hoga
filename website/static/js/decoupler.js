@@ -7,6 +7,7 @@ window.user = {
 };
 window.dbSettingsBulk = {};
 window.widgetSettingsBulk = {};
+window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
 
 // w-timer Vars
 
@@ -24,7 +25,7 @@ let tsTimerDesync=0;
 let tsTimerResync=0;
 let tsTimerCurrent=0;
 
-window.clockSettingsBulk = {}//shove all the rounds, worktime, breaktime, current round, current time and isworking here.
+
 
 
 

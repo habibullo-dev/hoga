@@ -5,6 +5,12 @@ let currentFX = "cancel";
 let previousFX = "cancel";
 const focusModeSwitch =  document.getElementById("focusModeSwitch")
 document.querySelector("#focusModeSwitch").addEventListener("click", focusModeAct)
+
+
+const allBGMTracks = Array.from(document.querySelector("#musicDropDown").children).slice(1) //all tracks except the "cancel" one
+let userMusicArr = [];
+let suiteArr = [...allBGMTracks]
+
 //activeThemeSetup()
 
 function focusModeAct(){
@@ -129,7 +135,7 @@ function setupFX(_type, _num){
 
 /* SFX AND MUSIC PLAYERS */
 
-const allBGMTracks = Array.from(document.querySelector("#musicDropDown").children).slice(1) //all tracks except the "cancel" one
+
 
 playingMusic.onpause = function (){}
 playingMusic.onplay = function (){}
@@ -254,6 +260,8 @@ BGMBarContainer.addEventListener('click', function(e) {
     playingMusic.currentTime = seekTime;
 });
 
+
+
 function playSFX(e){
     console.log("!!PLAYING MUZIK")
     if(e !="suite" && e.target.dataset.sfx){
@@ -270,9 +278,16 @@ function playSFX(e){
         playingMusic.currentTime = 0
         BGMtitle.innerHTML = ""
         //⚠️⚠️⚠️redo the suite logic to rather use an array we can update.
-        const suiteBGM = allBGMTracks[Math.floor(Math.random() * allBGMTracks.length)].dataset.music
+        
         if (e == "suite"){
-            playingMusic.src = `../static/sound/Music/${suiteBGM}.mp3`
+            _randInt = Math.floor(Math.random() * suiteArr.length)
+            try{
+                suiteBGM = suiteArr[_randInt].dataset.music
+                playingMusic.src = `../static/sound/Music/${suiteBGM}.mp3`
+            } catch(error) {
+                console.log(error, "Attempted to dictate audio.src to normal path. Trying user track path...")
+                playingMusic.src = URL.createObjectURL(suiteArr[_randInt]);
+            }
         } else {
         //   end of redo
             if (e.target.dataset.music=="cancel"){
@@ -293,23 +308,24 @@ function playSFX(e){
 }
 
 //User music upload function
-let userMusicArr = [];
+
 function loadUserMusic() {
     const userMusicInput = document.getElementById('userMusicInput');
     userMusicArr = Array.from(userMusicInput.files);
     console.log("Loaded new music files from user machine: ", userMusicArr)
     userMusicArr.forEach((file, index) => {
-    if (file.type.startsWith('audio/')) {
-        const audioList = document.createElement('a');
-        audioList.textContent = file.name;
-        audioList.dataset.music = file.name;
-        audioList.dataset.index = index
-        audioList.classList.add("selectFXBtn")
-        audioList.classList.add("userAddedFile")
-        audioList.onclick = ()=> playSFX(event); 
-        musicDropDown.appendChild(audioList);
-    }
+        if (file.type.startsWith('audio/')) {
+            const audioList = document.createElement('a');
+            audioList.textContent = file.name;
+            audioList.dataset.music = file.name;
+            audioList.dataset.index = index
+            audioList.classList.add("selectFXBtn")
+            audioList.classList.add("userAddedFile")
+            audioList.onclick = ()=> playSFX(event); 
+            musicDropDown.appendChild(audioList);
+        }
     });
+    suiteArr = [...allBGMTracks, ...userMusicArr]
 }
 
 playingMusic.onended = function(){playSFX("suite")}

@@ -1,8 +1,10 @@
 
 
-   
+   //single-thread worker for visiblity check
     setInterval(function() {
-        postMessage('');
+        if (document.visibilityState !== 'visible') {
+            postMessage('');
+        }
     }, 1000);
 
 
