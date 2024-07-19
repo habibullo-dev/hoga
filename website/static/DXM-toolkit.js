@@ -92,4 +92,4 @@ function cooltipCraft(_target, _cooltipText, _obj){
 
 //test, remove after:
 //cooltipCraft(DOM Element, Text, Options)
-cooltipCraft(clockStartBtn, "Click to start the pomodoro clock", {color: "grey", fontSize: "1.1rem", yBuffer:35, xBuffer:15})
+//cooltipCraft(clockStartBtn, "Click to start the pomodoro clock", {color: "grey", fontSize: "1.1rem", yBuffer:35, xBuffer:15})

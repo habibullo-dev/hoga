@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../static/images/favIconHoga.webp" />
   <link rel="stylesheet" href="../static/css/styles.css" />
   <link rel="stylesheet" href="../static/css/animation.css" />
   <link rel="stylesheet" href="../static/css/DXM-toolBox.css" />
@@ -93,7 +94,7 @@
       <div id="nav-bar">
         <input id="nav-toggle" type="checkbox" />
         <div id="nav-header">
-          <img id="logo" class="logo" src="../static/images/b-logo.png" style="width: 50%" alt="" />
+          <img id="logo" class="logo" src="../static/images/logo_trans.webp" style="width: 50%" alt="" />
 
           <label for="nav-toggle"><span id="nav-toggle-burger"></span></label>
           <hr />
@@ -146,7 +147,7 @@
          
           
           <div id="nav-content-highlight"></div>
-          <div id="nav-dev-picks" class="display-toggle">
+          <div id="nav-dev-picks" class="display-toggle th-oblongNoAura">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
               <span>Vaporwave (Animated)</span>
             </div>
@@ -199,9 +200,13 @@
                 </div> 
               </div>
               <div id="musicOptions"> 
+                <!-- TEMPORARY PLACEMENT -->
+                <input type="file" id="userMusicInput" multiple>
+                <button onclick="loadUserMusic()">Load Music</button> 
+
                 <div class="dropdown">
                   <button class="dropbtn">🎵 Music</button>
-                  <div class="dropdown-content">
+                  <div class="dropdown-content" id="musicDropDown">
                       <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-music="cancel">Remove</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander Nakarada - Free</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Traveler">Alexander Nakarada - Traveler</a>
@@ -216,7 +221,10 @@
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Tropical Beach">Amaksi - Tropical Beach</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Lo-fi">Amaksi - Lo-fi</a>
                       <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>                    
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>   
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Barradeen - Bedtime After A Coffee">Barradeen - Bedtime After A Coffee</a>    
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="WELC0MEN0 - 18021603">WELC0MEN0 - 18021603</a> 
+                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Ghostrifter - Morning Routine">Ghostrifter - Morning Routine</a>         
                   </div>
                 </div> 
               </div>
@@ -273,15 +281,15 @@
     <!-- <div id="timer-controls-container">
         <iframe id="task-frame" src="task.html"></iframe>
       </div> -->
-    <div class="hidden">
+    <div id="notchCorner" style="z-index: 1000;">
       <div class="notch-container" tabindex="0">
         <div class="notch">
           <div class="content">
             <div class="logo-center">
-              <img src="../static/images/logo.jpg" style="width: 25%" alt="" />
+              <img src="../static/images/logo_trans.webp" style="width: 25%" alt="" />
             </div>
             <div class="left">
-              <img src="../static/images/logo.jpg" style="width: 25%" alt="" />
+              <img src="../static/images/logo_trans.webp" style="width: 25%" alt="" />
               <!-- <div class="title"></div> -->
               <div class="text">
                 <div class="icon">
@@ -348,6 +356,8 @@
   <!-- DEPENDENCY STACK -->
   <script src="../static/js/settingsSaveLoad.js"></script>
   <script src="https://apis.google.com/js/api.js"></script>
+  <script src="../static/js/worker.js"></script>
+  <script src="../static/js/service-worker.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const navToggle = document.getElementById("nav-toggle");
@@ -359,7 +369,7 @@
       navToggle.addEventListener("change", function () {
         if (navToggle.checked) {
           logo.style.display = "none"; // Hide logo when sidebar is expanded
-          navBar.style.height = "80px";
+          navBar.style.height = "5rem";
           navBar.style.backgroundColor = "50%";
           navCon.style.display = "none";
         } else {

@@ -138,7 +138,7 @@
 
 #gemini-container {
   display: flex;
-  overflow: scroll;
+  overflow: auto;
   flex-direction: column;
   position: relative;
   flex-grow: 1;

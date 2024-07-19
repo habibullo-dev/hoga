@@ -237,7 +237,8 @@ document.addEventListener("DOMContentLoaded", function () {
     restoreWidgetStates(); // Restore widget states on Edit click
     enableWidgetInteractions(); // Enable draggable and resizable
     enableOtherWidgets(); // Enable click on other widgets
-    createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 8000, "url(../static/images/editMode.svg)")
+    initDragLock()
+    createNotification(200, "⚠️ Editing Mode Enabled ⚠️", 8000, "url(../static/icons/gearsAnim.gif)")
   }
 
   function enableWidgetInteractions() {
@@ -263,9 +264,10 @@ document.addEventListener("DOMContentLoaded", function () {
         .querySelector(".notch-container")
         .removeAttribute("data-edit-mode");
       saveClicked = true; // Set saveClicked to true on Save click
+      cancelDragLock()
       saveWidgetStates(_skipOverWrite); // Save widget states on Save click
       disableWidgetInteractions(); // Disable draggable and resizable
-      createNotification(305, "Changes successfully saved.", 2000); // Add notification on Save click
+      createNotification(305, "Changes successfully saved.", 2000, "url(../static/icons/save3d.gif)"); // Add notification on Save click
       hideSidebar();
     }
   }
@@ -546,77 +548,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Call initializeAutoSave() to start the auto-save mechanism
   initializeAutoSave();
 
-  // Function to create notification
-  function createNotification(_code, _text, _duration, _img) {
-    for (child of (Array.from(notifContBottom.children))){
-      if (child.dataset.code == _code){
-        console.log("duplicate notif detected. Cancelling", _code)
-        return
-      }
-    }
-    console.log("!!Created a notif!");
-    const notification = document.createElement("div");
-    notification.classList.add("notification");
-
-    // Styles
-    notification.dataset.code = _code
-    notification.style.position = "relative";
-    notification.style.bottom = "2rem";
-    notification.style.right = "2rem";
-    notification.style.backgroundColor = "white";
-    notification.style.fontFamily = "Albert Sans";
-    notification.style.color = "black";
-    notification.style.padding = "10px 20px";
-    notification.style.borderRadius = "8px";
-    notification.style.zIndex = "10000";
-    notification.style.opacity = "1";
-    notification.style.transition = "opacity 0.5s ease-in-out";
-    notification.style.display = "flex"
-    notification.style.marginTop = "0.3rem"
-
-    if (_img){
-      const extraImg = document.createElement("div")
-      extraImg.style.width = "2rem"
-      extraImg.style.height = "2rem"
-      extraImg.style.backgroundSize = "contain"
-      extraImg.style.marginRight = "0.6rem"
-      extraImg.style.backgroundImage = _img
-      notification.appendChild(extraImg)
-    }
-
-    const notifCont1 = document.createElement("div");
-    notifCont1.style.display = "flex"
-    notifCont1.style.flexDirection = "column"
-    notification.appendChild(notifCont1)
-
-    // Create and style the icon image
-    const icon = document.createElement("img");
-    icon.src = "../static/images/logo-rev.png";
-    icon.alt = "Icon";
-    icon.style.width = "40px"; // Adjust the width of the icon as needed
-    icon.style.display = "block"; // Ensure icon is on its own line
-
-    // Create and style the text element
-    const text = document.createElement("div");
-    text.textContent = _text;
-    text.style.marginTop = "5px"; // Adjust spacing between icon and text
-    text.style.fontSize = "0.9rem"; // Adjust font size of the text
-
-    // Append icon and text to notification container
-    notifCont1.appendChild(icon);
-    notifCont1.appendChild(text);
-
-    
-    notifContBottom.appendChild(notification);
-
-    // Fade out after 2 seconds
-    setTimeout(() => {
-      notification.style.opacity = "0";
-      setTimeout(() => {
-        notification.remove();
-      }, 500); // Remove element after fade out animation
-    }, _duration);
-  }
+  
 
   //   // Function to determine widget type based on widgetId
   //   function determineWidgetType(widgetId) {
@@ -1063,5 +995,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
   },5000)
+
+
   
 });

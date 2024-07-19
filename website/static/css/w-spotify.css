@@ -10,7 +10,8 @@
   /* background-color: #191414; */
   border-radius: 5px;
   /* border-color: 1px black; */
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .results-container {
   margin: auto;
