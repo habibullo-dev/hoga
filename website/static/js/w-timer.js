@@ -300,6 +300,7 @@
         console.log("!!User out of focus. TStimerCurrent + TSDesync: ", tsTimerCurrent, tsTimerDesync)
         /* timerFrameReq() */
         console.log("!!Tab visibility false - Starting worker1")
+        workerMsgInterval = true;
       }
       if (document.visibilityState === 'visible') {
         tsTimerResync = Date.now()/1000
@@ -312,6 +313,7 @@
         tsTimerDesync = 0;
         tsTimerResync = 0;
         createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")     
+        workerMsgInterval = false
       }
     }
   }

@@ -95,7 +95,7 @@ function generateNewTask(_setup, _completed){
       editBtn.addEventListener("click", function (e) {
         const taskItem = e.currentTarget.parentNode;
         const taskText = taskItem.querySelector("span").textContent;
-        taskItem.innerHTML = `<input type="text" value="${taskText}" /><button class="edit-confirm-btn">&#10003;</button><button class="edit-cancel-btn">&#10007;</button>`;
+        taskItem.innerHTML = `<input type="text" value="${taskText}" maxlength="500"/><button class="edit-confirm-btn">&#10003;</button><button class="edit-cancel-btn">&#10007;</button>`;
 
         const editInput = taskItem.querySelector("input");
         const confirmBtn = taskItem.querySelector(".edit-confirm-btn");
