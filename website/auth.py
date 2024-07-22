@@ -16,7 +16,8 @@ import google.generativeai as genai
 import os
 
 auth_bp = Blueprint("auth", __name__) #required to be exported and registered as blueprint.
-db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1/final project")
+# db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1/final project")
+db = sqlalchemy.create_engine("mariadb+pymysql://root:@127.0.0.1/final project")
 
 #SUPPOSED TO HIDE THE PASSWORD - SAME AS input() but safer
 # password = getpass("Input the password for hogadashboard@gmail.com")

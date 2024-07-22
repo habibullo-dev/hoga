@@ -24,6 +24,7 @@
   --navbar-light-primary: rgba(220,220,220,0.45);
   --navbar-light-secondary: #dadada;
   --navbar-light-tertiary: #ffffff;
+  --backdrop-blur-rem: blur(0.625rem)
 }
 :root{
   --timerFont: "Inter";
@@ -43,14 +44,14 @@
 
 .th-oblongBase{
   background-color: rgba(220, 220, 220, 0.3);
-  backdrop-filter: blur(10px);
+  backdrop-filter: var(--backdrop-blur-rem);
   box-shadow: 0px 0px 7px rgba(227, 228, 237, 0.37);
   border: 2px solid rgba(255, 255, 255 0.58)
 }
 
 .th-oblongNoAura{
   background-color: rgba(220, 220, 220, 0.3);
-  backdrop-filter: blur(15px);
+  backdrop-filter: var(--backdrop-blur-rem);
 }
 
 input, textarea {
@@ -231,11 +232,11 @@ body {
 
 .notch {
   position: relative;
-  background: var(--navbar-light-primary);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: var(--notch-radius);
   pointer-events: all;
   overflow: hidden;
-  backdrop-filter: blur(5px);
+  backdrop-filter: var(--backdrop-blur-rem);
   color: white;
   display: flex;
   cursor: pointer;
@@ -246,9 +247,10 @@ body {
   filter: drop-shadow(0 1em 2em hsla(0 0% 0% / var(--shadow-opacity, 0)));
   transform: scale3d(0.3, 0.3, 1);
   transform-origin: top;
-  box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.2),
-    /* inner */ 0 0 60px 2px rgb(255, 0, 255, 0.2),
-    /* middle */ 0 0 40px 2px rgb(0, 255, 255, 0.5); /* outer */
+  border: solid 2px (255,255,255,0.8);
+  box-shadow: 0 0 10px 2px rgb(255, 255, 255, 0.1),
+    /* inner */ 0 0 30px 2px rgb(255, 255, 255, 0.1),
+    /* middle */ 0 0 20px 2px rgba(255, 255, 255, 0.4); /* outer */
 }
 
 @media only screen and (max-width: 1000px) {
@@ -606,8 +608,8 @@ body {
   left: 0.5vw;
   top: 0.5vh;
   height: calc(100% - 0.5vw);
-  background: var(--navbar-light-primary);
-  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: var(--backdrop-blur-rem);
   border-radius: 16px;
   display: flex;
   flex-direction: column;

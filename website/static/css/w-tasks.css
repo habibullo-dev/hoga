@@ -14,9 +14,10 @@ body {
 
 .tasklist {
   height: fit-content;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.2);
   padding: 15px;
   border-radius: 8px;
+  backdrop-filter: var(--backdrop-blur-rem);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   /* width: fit-content; */
   text-align: center;
