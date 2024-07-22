@@ -105,7 +105,7 @@ function th1TokyoDay(){
 }
 
 function th1TokyoNight(){
-    th1BG.src = "../static/images/themes/DXM/008.webp"
+    th1BG.src = "../static/images/themes/DXM/008c.webp"
     th1TimeBoundCont.innerHTML = `
     <img src="../static/images/themes/DXM/007.webp" class="parallaxElem timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="287" style="top:15%; width:110%">
     <img src="../static/images/themes/DXM/006.webp" class="parallaxElem timeBound" data-dynaX="0.025" data-dynaY="0.09" data-dynaZ="0.01" data-dynaDistance="500" style="left: 90%; top:20%; width:3.5rem; height:3.5rem">
