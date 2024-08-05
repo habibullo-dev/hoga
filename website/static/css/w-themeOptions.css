@@ -1,7 +1,8 @@
 #themeOptions{
     overflow-y: visible;
+    margin-top: 2rem;
     /* right: calc(-1*var(--navbar-width) - 70px); */
-    bottom: 0;
+    bottom: 20%;
     position: absolute;
 /*     color: #8392a5; */
     color: var(--navbar-light-secondary);
@@ -16,7 +17,7 @@
 }
 
 #themeOptionsCont{
-    border-bottom: 1px solid;
+    border-bottom: 1px solid var(--navbar-dark-secondary);
     width: 100%;
     display: flex;
     justify-content: center;

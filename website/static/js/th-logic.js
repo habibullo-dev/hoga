@@ -24,8 +24,11 @@ parentGrid.insertBefore(loadingScreen, parentGrid.firstChild)
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const thDevBtn = document.getElementById("dev-pick-button")
-    const thDevPicks = document.getElementById("nav-dev-picks")
+    const thDevBtn = document.getElementById("dev-pick-button"),
+        thDevPicks = document.getElementById("nav-dev-picks"),
+        thThemeBtn = document.getElementById("theme-pick-button"),
+        thThemeSimple = document.getElementById("nav-themes-simple")
+
     const themeOptionsBtn = document.getElementById("w-themeOptions")
     const themesBtnArr = Array.from(thDevPicks.children)
     const themeOptions = document.querySelector("#themeOptions") //store the name of the theme options container.
@@ -62,14 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     thDevBtn.addEventListener("click", ()=>{
-        
         thDevPicks.classList.toggle("display-toggle")
+        thDevBtn.classList.toggle("nav-focused")
     })
 
+    thThemeBtn.addEventListener("click", ()=>{
+        thThemeSimple.classList.toggle("display-toggle")
+        thThemeBtn.classList.toggle("nav-focused")
+    })
 
     
     themeOptionsBtn.addEventListener("click", ()=>{
-
         themeOptions.classList.toggle("display-toggle")
         /* themeOptions.classList.toggle("expand-up") */
     })

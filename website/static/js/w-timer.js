@@ -124,23 +124,23 @@
           currentRound++;
           currentTime = breakTime;
           document.getElementById("timer-state").textContent = "Break";
-          playAlert(currentAlarm);
-          //
           createNotification(888, "Break time!", 3000)
         } else {
-          //timer finished. ⚠️⚠️⚠️
+          //timer finished. ⚠️⚠️⚠️ it is not pausing, currently i believe. check
           document.getElementById("timer-state").textContent = "Completed";
           document.getElementById("startBtn").style.display = "inline-block";
           document.getElementById("pauseBtn").style.display = "none";
           timerPaused = true;
           return;
         }
+        playAlert(currentAlarm1);
       } else {
         //going back to work time
         currentTime = workTime;
         //showNotification(`Pomodoro Started!", "HOGA detected your break time was completed. We started your next ${workTime} minute Pomodoro session for you.`)
         isWorking = true;
         document.getElementById("timer-state").textContent = "Work";
+        playAlert(currentAlarm2);
         createNotification(999, "Timer started.", 3000)
       }
       tsTimerCurrent = currentTime
@@ -148,7 +148,7 @@
       const minutes = Math.floor(currentTime / 60);
       const seconds = currentTime % 60;
       updateTimerDisplay(minutes, seconds)
-      showNotification(`Timer display should update.`)
+      showNotification(`HOGA: Alert`)
       /* setTimeout(startTimer, 1000); */
       startTimer()
     }
@@ -300,7 +300,6 @@
         console.log("!!User out of focus. TStimerCurrent + TSDesync: ", tsTimerCurrent, tsTimerDesync)
         /* timerFrameReq() */
         console.log("!!Tab visibility false - Starting worker1")
-        workerMsgInterval = true;
       }
       if (document.visibilityState === 'visible') {
         tsTimerResync = Date.now()/1000
@@ -313,7 +312,6 @@
         tsTimerDesync = 0;
         tsTimerResync = 0;
         createNotification(560, "Timer synchronization in progress...", 2700, "url(../static/icons/timerAnim.gif)")     
-        workerMsgInterval = false
       }
     }
   }
@@ -371,6 +369,7 @@
   var worker = new Worker('../static/js/worker.js');
 
   worker.onmessage = function() { //called every 1 second according to the worker in worker.js
+    if (document.visibilityState !== "visible"){
       const bgTimeChk = tsTimerCurrent + (tsTimerDesync - Date.now()/1000); 
   /*     console.log("!!running worker in background. bgTimeChk val: ", bgTimeChk)
       console.log("!!tsTimerCurrent!!: ", tsTimerCurrent)
@@ -378,6 +377,7 @@
       console.log("!!date now: ", Date.now()/1000)
       console.log("!!then wtf is timer desync - date now?? ", tsTimerDesync-Date.now()/1000) */
       timerIntervalCheck(bgTimeChk)
+    }
   };
 
 })() //end of IIFE

@@ -108,36 +108,25 @@
                 ">Themes</span>
           </div>
           <hr />
-          <div class="nav-button themeSwitch" data-themename="th-dreamy">
-            <span>Dreamy</span>
-          </div>
-          <div class="nav-button themeSwitch" data-themename="th-retro">
-            <span>Retro</span>
-          </div>
-
-          <div class="nav-button themeSwitch" data-themename="th-cosy">
-            <span>Disco</span>
-          </div>
-          <div class="nav-button themeSwitch" data-themename="th-minimal">
-            <span>Zen</span>
-          </div>
-          <div class="nav-button themeSwitch" data-themename="th-bold">
-            <span>Galactic</span>
-          </div>
-          <br />
+          
+<!--           <br />
           <div class="nav-button">
             <span id="headerSide" style="
                   text-transform: uppercase;
                   letter-spacing: 0.2rem;
                   font-size: 0.8rem;
                 "></span>
-          </div>
+          </div> -->
           <hr />
           <!-- <div class="nav-button">
             <span></span>
           </div> -->
           <div class="nav-button" style="display: flex" id="w-themeOptions">
-            <span>Theme Options</span><img src="../static/images/purePaint.svg"
+            <span>Customization</span><img src="../static/images/purePaint.svg"
+              style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
+          </div>
+          <div class="nav-button" style="display: flex" id="theme-pick-button">
+            <span>Background Themes</span><img src="../static/images/themeSel.svg"
               style="margin-left: 0.3rem; width: 0.95rem; height: 0.95rem">
           </div>
           <div class="nav-button" style="display: flex" id="dev-pick-button">
@@ -145,9 +134,25 @@
               style="margin-left: 0.2rem; width: 1.05rem; height: 1.05rem">
           </div>
          
-          
+          <div id="nav-themes-simple" class="display-toggle th-oblongBase"> <!-- WORKING ON THIS -->
+            <div class="nav-button themeSwitch" data-themename="th-dreamy">
+              <span>Dreamy</span>
+            </div>
+            <div class="nav-button themeSwitch" data-themename="th-retro">
+              <span>Retro</span>
+            </div>
+            <div class="nav-button themeSwitch" data-themename="th-cosy">
+              <span>Disco</span>
+            </div>
+            <div class="nav-button themeSwitch" data-themename="th-minimal">
+              <span>Zen</span>
+            </div>
+            <div class="nav-button themeSwitch" data-themename="th-bold">
+              <span>Galactic</span>
+            </div>
+          </div>
           <div id="nav-content-highlight"></div>
-          <div id="nav-dev-picks" class="display-toggle th-oblongNoAura">
+          <div id="nav-dev-picks" class="display-toggle th-oblongBase">
             <div class="nav-button themeSwitch" data-themename="th-isaac2">
               <span>Vaporwave (Animated)</span>
             </div>

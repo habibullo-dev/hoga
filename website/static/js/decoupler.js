@@ -63,7 +63,8 @@ function closeUrgentPopUp(_btn, _btnFunc) {
 //Music/SFX Vars
 
 window.playingMusic = new Audio(); //used in theme options
-let currentAlarm = "alarm2.mp3"
+let currentAlarm1 = "alarm2.mp3"
+let currentAlarm2 = "alarm6.mp3"
 let alarmSound = new Audio();
 
 
@@ -193,7 +194,6 @@ if ("Notification" in window) {
 }
 
 //Worker Special
-window.workerMsgInterval = false
 
 
 /* 
