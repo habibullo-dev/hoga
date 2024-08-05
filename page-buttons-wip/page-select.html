@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page buttons</title>
+    <link rel="stylesheet" href="page-select.css">
+</head>
+
+<body>
+    <div id="dragContainer1" class="dragContainer" style="background-color: fireBrick">
+        <div class="dragLockPoint"></div>
+        <h1>Container 1</h1>
+    </div>
+
+    <div id="dragContainer2" class="dragContainer" style="left:18rem; background-color: forestGreen">
+        <div class="dragLockPoint"></div>
+        <h1>Container 2</h1>
+    </div>
+
+    <div id="dragContainer3" class="dragContainer" style="left:36rem">
+        <div class="dragLockPoint"></div>
+        <h1>Container 3</h1>
+    </div>
+
+    <button id="dragLockCtrl" data-mode="activate">Activate dragLock</button>
+
+
+    <nav>
+        <button class="navButton" id="profile">Profile</button>
+        <button class="navButton" id="leaderboards">Leaderboards</button>
+        <button class="navButton" id="settings">Settings</button>
+    </nav>
+    <br>
+    <button class="menu">MENU</button>
+    <script src="page-select.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+nav {
+  /* background-color: rgb(174, 210, 255); */
+  /* box-shadow: 3px 3px 5px black; */
+  width: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 2rem;
+  position: fixed;
+  bottom: 50px;
+  justify-content: center;
+  gap: 10px;
+}
+.menu {
+  display: block;
+  position: fixed;
+  bottom: 10px;
+}
+#dragLockCtrl {
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-style: bold;
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  backdrop-filter: blur(16px);
+  border: none;
+  filter: drop-shadow(1px 1px 5px rgba(210, 210, 210, 0.7));
+  min-width: 15rem;
+  min-height: 2em;
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  transform: translate(-50%, -50%);
+}
+
+#dragLockCtrl:hover {
+  background-color: white;
+}
+
+/**Note: You can restyle .dragLockPoint as you see fit without breaking any script. Though it is recommended to keep the class position to "absolute" and cursor style to "move"**/
+
+.dragLockPoint {
+  background-color: rgba(225, 225, 225, 0.2);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(250, 250, 250, 0.3);
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0.2rem;
+  cursor: move;
+}
+
+.dragLockPoint:after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 25%;
+  height: 25%;
+
+  border-radius: 50%;
+  border: 2px solid rgba(250, 250, 250, 0.5);
+}
+
+.dragLockPoint::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  box-shadow: -6px -6px 0 -4px rgba(250, 250, 250, 0.8),
+    6px 6px 0 -4px rgba(250, 250, 250, 0.8),
+    6px -6px 0 -4px rgba(250, 250, 250, 0.8),
+    -6px 6px 0 -4px rgba(250, 250, 250, 0.8);
+  transform: rotate(45deg);
+}
