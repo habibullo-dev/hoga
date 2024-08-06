@@ -98,7 +98,7 @@ nav {
   display: flex;
   background-color: fireBrick;
   top: 125px;
-  left: 75px;
+  left: 50%;
   width: 25rem;
   height: 30rem;
 }
@@ -106,7 +106,7 @@ nav {
   display: flex;
   background-color: forestGreen;
   top: 125px;
-  left: 520px;
+  left: 50%;
   width: 25rem;
   height: 30rem;
 }
@@ -114,7 +114,7 @@ nav {
   display: flex;
   background-color: rgb(201, 201, 255);
   top: 125px;
-  left: 970px;
+  left: 50%;
   width: 25rem;
   height: 30rem;
 }

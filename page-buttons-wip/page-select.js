@@ -30,6 +30,9 @@ function toggleProfile() {
     profileContainer.style.display = "none";
   } else {
     profileContainer.style.display = "flex";
+    dragLockCtrlBtn.style.display = "flex";
+    leaderboardsContainer.style.display = "none";
+    settingsContainer.style.display = "none";
   }
 }
 
@@ -40,6 +43,9 @@ function toggleLeaderboards() {
     leaderboardsContainer.style.display = "none";
   } else {
     leaderboardsContainer.style.display = "flex";
+    dragLockCtrlBtn.style.display = "flex";
+    settingsContainer.style.display = "none";
+    profileContainer.style.display = "none";
   }
 }
 
@@ -49,6 +55,9 @@ function toggleSettings() {
     settingsContainer.style.display = "none";
   } else {
     settingsContainer.style.display = "flex";
+    dragLockCtrlBtn.style.display = "flex";
+    leaderboardsContainer.style.display = "none";
+    profileContainer.style.display = "none";
   }
 }
 
