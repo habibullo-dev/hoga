@@ -93,3 +93,28 @@ nav {
     -6px 6px 0 -4px rgba(250, 250, 250, 0.8);
   transform: rotate(45deg);
 }
+
+#dragContainer1 {
+  display: flex;
+  background-color: fireBrick;
+  top: 125px;
+  left: 75px;
+  width: 25rem;
+  height: 30rem;
+}
+#dragContainer2 {
+  display: flex;
+  background-color: forestGreen;
+  top: 125px;
+  left: 520px;
+  width: 25rem;
+  height: 30rem;
+}
+#dragContainer3 {
+  display: flex;
+  background-color: rgb(201, 201, 255);
+  top: 125px;
+  left: 970px;
+  width: 25rem;
+  height: 30rem;
+}

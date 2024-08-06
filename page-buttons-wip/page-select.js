@@ -4,29 +4,52 @@ let navButton = document.querySelector(".navButton");
 let profileButton = document.getElementById("profile");
 let leaderboardsButton = document.getElementById("leaderboards");
 let settingsButton = document.getElementById("settings");
+let profileContainer = document.getElementById("dragContainer1");
+let leaderboardsContainer = document.getElementById("dragContainer2");
+let settingsContainer = document.getElementById("dragContainer3");
+let dragLockCtrlBtn = document.getElementById("dragLockCtrl");
 
 menuButton.addEventListener("click", toggleNav);
+
 function toggleNav() {
   if (nav.style.display === "flex") {
     nav.style.display = "none";
+    profileContainer.style.display = "none";
+    settingsContainer.style.display = "none";
+    leaderboardsContainer.style.display = "none";
+    dragLockCtrlBtn.style.display = "none";
   } else {
     nav.style.display = "flex";
   }
 }
 
 profileButton.addEventListener("click", toggleProfile);
+
 function toggleProfile() {
-  console.log("profile function");
+  if (profileContainer.style.display === "flex") {
+    profileContainer.style.display = "none";
+  } else {
+    profileContainer.style.display = "flex";
+  }
 }
 
 leaderboardsButton.addEventListener("click", toggleLeaderboards);
+
 function toggleLeaderboards() {
-  console.log("leaderboards function");
+  if (leaderboardsContainer.style.display === "flex") {
+    leaderboardsContainer.style.display = "none";
+  } else {
+    leaderboardsContainer.style.display = "flex";
+  }
 }
 
 settingsButton.addEventListener("click", toggleSettings);
 function toggleSettings() {
-  console.log("settings function");
+  if (settingsContainer.style.display === "flex") {
+    settingsContainer.style.display = "none";
+  } else {
+    settingsContainer.style.display = "flex";
+  }
 }
 
 console.log(
