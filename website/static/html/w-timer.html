@@ -131,6 +131,15 @@
     </style>
   </head>
   <body> -->
+    <div id="watchCont">
+      <div class="dragLockPoint" style="z-index: 4"></div>
+      <div id="watchMain" >
+        <div id="watchMinutes" style="animation-play-state: paused;"></div>
+        <div id="watchSeconds" class="watchRotationAnim" style="animation-play-state: paused;"></div>
+      </div>
+    </div>
+
+
     <div class="timer-container">
       
       <div class="timer">
@@ -149,6 +158,7 @@
             <button id="resetBtn" class="btn">Reset</button>
           </div>
       </div>
+      
       
       <div id="timer-controls-container" style="width: 320px; height: fit-content;">
         <iframe id="task-frame" src="../static/html/timer-control.html"></iframe>
