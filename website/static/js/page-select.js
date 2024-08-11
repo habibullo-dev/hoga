@@ -1,63 +1,64 @@
-let menuButton = document.querySelector(".menu");
-let nav = document.querySelector("nav");
-let navButton = document.querySelector(".navButton");
-let profileButton = document.getElementById("profile");
-let leaderboardsButton = document.getElementById("leaderboards");
-let settingsButton = document.getElementById("settings");
-let profileContainer = document.getElementById("dragContainer1");
-let leaderboardsContainer = document.getElementById("dragContainer2");
-let settingsContainer = document.getElementById("dragContainer3");
+let menuButton = document.getElementById("pageSelectMenuButton");
+let pageSelectMenuNav = document.querySelector("#pageSelectMenuNav");
+let profileButton = document.getElementById("profileTabButton");
+let leaderboardsButton = document.getElementById("leaderboardsTabButton");
+let settingsButton = document.getElementById("settingsTabButton");
+let profileTabContainer = document.getElementById("profileTabContainer");
+let leaderboardsTabContainer = document.getElementById(
+  "leaderboardsTabContainer"
+);
+let settingsTabContainer = document.getElementById("settingsTabContainer");
 let dragLockCtrlBtn = document.getElementById("dragLockCtrl");
 
 menuButton.addEventListener("click", toggleNav);
 
 function toggleNav() {
-  if (nav.style.display === "flex") {
-    nav.style.display = "none";
-    profileContainer.style.display = "none";
-    settingsContainer.style.display = "none";
-    leaderboardsContainer.style.display = "none";
+  if (pageSelectMenuNav.style.display === "flex") {
+    pageSelectMenuNav.style.display = "none";
+    profileTabContainer.style.display = "none";
+    settingsTabContainer.style.display = "none";
+    leaderboardsTabContainer.style.display = "none";
     dragLockCtrlBtn.style.display = "none";
   } else {
-    nav.style.display = "flex";
+    pageSelectMenuNav.style.display = "flex";
   }
 }
 
 profileButton.addEventListener("click", toggleProfile);
 
 function toggleProfile() {
-  if (profileContainer.style.display === "flex") {
-    profileContainer.style.display = "none";
+  if (profileTabContainer.style.display === "flex") {
+    profileTabContainer.style.display = "none";
   } else {
-    profileContainer.style.display = "flex";
+    profileTabContainer.style.display = "flex";
     dragLockCtrlBtn.style.display = "flex";
-    leaderboardsContainer.style.display = "none";
-    settingsContainer.style.display = "none";
+    leaderboardsTabContainer.style.display = "none";
+    settingsTabContainer.style.display = "none";
   }
 }
 
 leaderboardsButton.addEventListener("click", toggleLeaderboards);
 
 function toggleLeaderboards() {
-  if (leaderboardsContainer.style.display === "flex") {
-    leaderboardsContainer.style.display = "none";
+  if (leaderboardsTabContainer.style.display === "flex") {
+    leaderboardsTabContainer.style.display = "none";
   } else {
-    leaderboardsContainer.style.display = "flex";
+    leaderboardsTabContainer.style.display = "flex";
     dragLockCtrlBtn.style.display = "flex";
-    settingsContainer.style.display = "none";
-    profileContainer.style.display = "none";
+    settingsTabContainer.style.display = "none";
+    profileTabContainer.style.display = "none";
   }
 }
 
 settingsButton.addEventListener("click", toggleSettings);
 function toggleSettings() {
-  if (settingsContainer.style.display === "flex") {
-    settingsContainer.style.display = "none";
+  if (settingsTabContainer.style.display === "flex") {
+    settingsTabContainer.style.display = "none";
   } else {
-    settingsContainer.style.display = "flex";
+    settingsTabContainer.style.display = "flex";
     dragLockCtrlBtn.style.display = "flex";
-    leaderboardsContainer.style.display = "none";
-    profileContainer.style.display = "none";
+    leaderboardsTabContainer.style.display = "none";
+    profileTabContainer.style.display = "none";
   }
 }
 
@@ -124,6 +125,7 @@ Instructions:
 5. Call cancelDragLock() function to hide the dragging anchors.
 You can use the preset button example below. Note that this is not the most readable way of doing this. 
 */
+// dragLockCtrl.dataset.mode = "activate";
 
 //Test area:
 const dragLockCtrl = document.getElementById("dragLockCtrl");

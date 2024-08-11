@@ -8,11 +8,9 @@ body {
   display: flex;
   justify-content: center;
 }
-nav {
-  /* background-color: rgb(174, 210, 255); */
-  /* box-shadow: 3px 3px 5px black; */
+#pageSelectMenuNav {
   width: 20rem;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: space-evenly;
   height: 2rem;
@@ -21,10 +19,10 @@ nav {
   justify-content: center;
   gap: 10px;
 }
-.menu {
+#pageSelectMenuButton {
   display: block;
   position: fixed;
-  bottom: 10px;
+  bottom: 20px;
 }
 #dragLockCtrl {
   border-radius: 15px;
@@ -94,24 +92,24 @@ nav {
   transform: rotate(45deg);
 }
 
-#dragContainer1 {
-  display: flex;
+#profileTabContainer {
+  display: none;
   background-color: fireBrick;
   top: 125px;
   left: 50%;
   width: 25rem;
   height: 30rem;
 }
-#dragContainer2 {
-  display: flex;
+#leaderboardsTabContainer {
+  display: none;
   background-color: forestGreen;
   top: 125px;
   left: 50%;
   width: 25rem;
   height: 30rem;
 }
-#dragContainer3 {
-  display: flex;
+#settingsTabContainer {
+  display: none;
   background-color: rgb(201, 201, 255);
   top: 125px;
   left: 50%;
