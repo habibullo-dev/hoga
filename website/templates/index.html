@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../static/css/animation.css" />
   <link rel="stylesheet" href="../static/css/DXM-toolBox.css" />
   <link rel="stylesheet" href="../static/css/w-themeOptions.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet" />
@@ -62,7 +63,8 @@
     <div id="popup-important">
       <div id="popup-imp-window">
         <div id="popup-imp-text"></div>
-        <button id="popup-button1" class="popup-button"></button><button id="popup-button2" class="popup-button"></button>
+        <button id="popup-button1" class="popup-button"></button><button id="popup-button2"
+          class="popup-button"></button>
       </div>
       <div id="popup-special1" class="popup-special" style="display: none"></div>
       <div id="popup-special2" class="popup-special" style="display: none"></div>
@@ -108,8 +110,8 @@
                 ">Themes</span>
           </div>
           <hr />
-          
-<!--           <br />
+
+          <!--           <br />
           <div class="nav-button">
             <span id="headerSide" style="
                   text-transform: uppercase;
@@ -133,7 +135,7 @@
             <span>Developer Picks</span><img src="../static/images/silverStar.svg"
               style="margin-left: 0.2rem; width: 1.05rem; height: 1.05rem">
           </div>
-         
+
           <div id="nav-themes-simple" class="display-toggle th-oblongBase"> <!-- WORKING ON THIS -->
             <div class="nav-button themeSwitch" data-themename="th-dreamy">
               <span>Dreamy</span>
@@ -169,69 +171,83 @@
             <div id="themeOptionsCont">Theme Options</div>
             <div id="themeParticles">
               <div class="optionCont" style="color:#8392a5;">Focus Mode
-                <label class="togSwitch"> 
-                    <input type="checkbox" id="focusModeSwitch" class="">
-                    <span class="togRound"></span>
+                <label class="togSwitch">
+                  <input type="checkbox" id="focusModeSwitch" class="">
+                  <span class="togRound"></span>
                 </label>
               </div>
               <div class="dropdown">
-                    <button class="dropbtn">Effects</button>
-                    <div class="dropdown-content" style="top: -220%;">
-                        <a class="selectFXBtn" style="color: red" onclick="(function() { setupFX('cancel'); })()">Remove</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('rain', 60); })()">Rain</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('fireflies', 14); })()">Fireflies</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('snowfall', 40); })()">Snowfall</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('pixie', 50); })()">Pixie</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('shootingstar', 20); })()">Shooting Stars</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('pug', 50); })()">Pug</a>
-                        <a class="selectFXBtn" onclick="(function() { setupFX('energy'); })()">Energy</a>
-                    </div>
-              </div>    
+                <button class="dropbtn">Effects</button>
+                <div class="dropdown-content" style="top: -220%;">
+                  <a class="selectFXBtn" style="color: red" onclick="(function() { setupFX('cancel'); })()">Remove</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('rain', 60); })()">Rain</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('fireflies', 14); })()">Fireflies</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('snowfall', 40); })()">Snowfall</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('pixie', 50); })()">Pixie</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('shootingstar', 20); })()">Shooting Stars</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('pug', 50); })()">Pug</a>
+                  <a class="selectFXBtn" onclick="(function() { setupFX('energy'); })()">Energy</a>
+                </div>
+              </div>
             </div>
             <div id="soundsOptionsAll">
-              <div id="SFXoptions"> 
+              <div id="SFXoptions">
                 <div class="dropdown">
                   <button class="dropbtn">Ambient Sounds</button>
                   <div class="dropdown-content">
-                      <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-sfx="cancel">Remove</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="rain">Rain</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="Coffee-Shop">Coffee Shop</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="office">Office</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="fields">Fields</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="train">Train</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="forest">Forest</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="sea">Sea</a>                    
+                    <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-sfx="cancel">Remove</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="rain">Rain</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="Coffee-Shop">Coffee Shop</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="office">Office</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="fields">Fields</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="train">Train</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="forest">Forest</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-sfx="sea">Sea</a>
                   </div>
-                </div> 
+                </div>
               </div>
-              <div id="musicOptions"> 
+              <div id="musicOptions">
                 <!-- TEMPORARY PLACEMENT -->
                 <input type="file" id="userMusicInput" multiple>
-                <button onclick="loadUserMusic()">Load Music</button> 
+                <button onclick="loadUserMusic()">Load Music</button>
 
                 <div class="dropdown">
                   <button class="dropbtn">🎵 Music</button>
                   <div class="dropdown-content" id="musicDropDown">
-                      <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-music="cancel">Remove</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander Nakarada - Free</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Traveler">Alexander Nakarada - Traveler</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin Macleod - Easy Lemon">Kevin Macleod - Easy Lemon</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin MacLeod - Life of Riley">Kevin MacLeod - Life of Riley</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="aKu - The Final Blow">aKu - The Final Blow</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Fortune Cookie - Golden Summer">Fortune Cookie - Golden Summer</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Christian Larssen - Kyoto">Christian Larssen - Kyoto</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse - Light Study</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="AVBE - Night in Tokyo">AVBE - Night in Tokyo</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Tropical Beach">Amaksi - Tropical Beach</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Lo-fi">Amaksi - Lo-fi</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>   
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Barradeen - Bedtime After A Coffee">Barradeen - Bedtime After A Coffee</a>    
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="WELC0MEN0 - 18021603">WELC0MEN0 - 18021603</a> 
-                      <a class="selectFXBtn" onclick="playSFX(event)" data-music="Ghostrifter - Morning Routine">Ghostrifter - Morning Routine</a>         
+                    <a class="selectFXBtn" style="color: red" onclick="(playSFX(event))" data-music="cancel">Remove</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Free">Alexander
+                      Nakarada - Free</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Alexander Nakarada - Traveler">Alexander
+                      Nakarada - Traveler</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse -
+                      Light Study</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin Macleod - Easy Lemon">Kevin
+                      Macleod - Easy Lemon</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Kevin MacLeod - Life of Riley">Kevin
+                      MacLeod - Life of Riley</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="aKu - The Final Blow">aKu - The Final
+                      Blow</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Fortune Cookie - Golden Summer">Fortune
+                      Cookie - Golden Summer</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Christian Larssen - Kyoto">Christian
+                      Larssen - Kyoto</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Chill Pulse - Light Study">Chill Pulse -
+                      Light Study</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="AVBE - Night in Tokyo">AVBE - Night in
+                      Tokyo</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Tropical Beach">Amaksi -
+                      Tropical Beach</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="Amaksi - Lo-fi">Amaksi - Lo-fi</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Aria Math">C418 - Aria Math</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="C418 - Sweden">C418 - Sweden</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)"
+                      data-music="Barradeen - Bedtime After A Coffee">Barradeen - Bedtime After A Coffee</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)" data-music="WELC0MEN0 - 18021603">WELC0MEN0 -
+                      18021603</a>
+                    <a class="selectFXBtn" onclick="playSFX(event)"
+                      data-music="Ghostrifter - Morning Routine">Ghostrifter - Morning Routine</a>
                   </div>
-                </div> 
+                </div>
               </div>
             </div>
             <br>
@@ -241,7 +257,9 @@
                 <button id="BGMPauseBtn" onclick="pauseBGM()" class="BGMBtn">&#10073; &#10073;</button>
                 <button id="BGMPlayBtn" onclick="playBGM()" class="BGMBtn">&#9658;</button>
               </div>
-              <div id="BGMBarContainer"> <div id="BGMBar"></div> </div>
+              <div id="BGMBarContainer">
+                <div id="BGMBar"></div>
+              </div>
               <div id="BGMtitle" style="font-size: 1rem; display: flex; flex-wrap: wrap;"></div>
               <p>Play Time: <span id="BGMCurrentTime">0:00</span> - <span id="BGMDuration">0:00</span></p>
               <br>
@@ -250,24 +268,34 @@
               <div id="themeMusicVolumeBox">
                 <button id="themeMusicInc">+</button>
                 <div class="volDialerCont">
-                  <svg id="themeMusicVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg" style="pointer-events: none;">
-                    <path d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z" fill="white" stroke="white" stroke-width="13.3333"/>
-                    </svg>
+                  <svg id="themeMusicVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="pointer-events: none;">
+                    <path
+                      d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z"
+                      fill="white" stroke="white" stroke-width="13.3333" />
+                  </svg>
                   <svg viewBox="0 0 814 427" fill="none" xmlns="http://www.w3.org/2000/svg" class="volDialerDec">
-                    <path d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z" fill="white" stroke="white" stroke-width="13.3333"/>
-                    </svg>
+                    <path
+                      d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z"
+                      fill="white" stroke="white" stroke-width="13.3333" />
+                  </svg>
                 </div>
                 <button id="themeMusicDec">-</button>
               </div>
               <div id="SFXVolumeBox">
                 <button id="SFXInc">+</button>
                 <div class="volDialerCont">
-                  <svg id="SFXVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg" style="pointer-events: none;">
-                    <path d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z" fill="white" stroke="white" stroke-width="13.3333"/>
-                    </svg>   
+                  <svg id="SFXVolumeDial" viewBox="0 0 468 467" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="pointer-events: none;">
+                    <path
+                      d="M247.332 233.326C247.334 237.003 245.846 240.342 243.433 242.757C241.021 245.171 237.684 246.663 234.007 246.665C226.635 246.669 220.673 240.713 220.669 233.34L220.551 7.33021C165.04 10.5648 113.263 33.4739 73.6389 73.1398C30.8484 115.975 7.30795 172.914 7.33022 233.452C7.37135 293.99 30.9714 350.904 73.8067 393.695C116.642 436.485 173.581 460.026 234.119 460.003C294.657 459.962 351.571 436.362 394.362 393.527C437.152 350.692 460.693 293.752 460.67 233.215C460.639 172.668 437.029 115.762 394.194 72.972C354.528 33.3476 302.728 10.4927 247.213 7.31625L247.332 233.326Z"
+                      fill="white" stroke="white" stroke-width="13.3333" />
+                  </svg>
                   <svg viewBox="0 0 814 427" fill="none" xmlns="http://www.w3.org/2000/svg" class="volDialerDec">
-                    <path d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z" fill="white" stroke="white" stroke-width="13.3333"/>
-                    </svg>
+                    <path
+                      d="M407 7C186.44 7 7 186.44 7 407C7 414.373 12.9733 420.333 20.3333 420.333C27.6933 420.333 33.6667 414.373 33.6667 407C33.6667 201.147 201.147 33.6667 407 33.6667C612.853 33.6667 780.333 201.147 780.333 407C780.333 414.373 786.293 420.333 793.667 420.333C801.04 420.333 807 414.373 807 407C807 186.44 627.56 7 407 7Z"
+                      fill="white" stroke="white" stroke-width="13.3333" />
+                  </svg>
                 </div>
                 <button id="SFXDec">-</button>
               </div>
@@ -345,6 +373,34 @@
         </div>
       </div>
     </div>
+    <div id="profileTabContainer">
+      <div class="dragLockPoint"></div>
+      <!-- <div class="minimiseProfile"></div> -->
+      <h1>Profile</h1>
+    </div>
+
+    <div id="leaderboardsTabContainer">
+      <div class="dragLockPoint"></div>
+      <!-- <div class="minimiseLeaderboards"></div> -->
+      <h1>Leaderboards</h1>
+    </div>
+
+    <div id="settingsTabContainer">
+      <div class="dragLockPoint"></div>
+      <!-- <div class="minimiseSettings"></div> -->
+      <h1>Settings</h1>
+    </div>
+
+    <button id="dragLockCtrl" data-mode="activate">Activate dragLock</button>
+
+
+    <nav id="pageSelectMenuNav">
+      <button class="pageSelectNavButton" id="profileTabButton">Profile</button>
+      <button class="pageSelectNavButton" id="leaderboardsTabButton">Leaderboards</button>
+      <button class="pageSelectNavButton" id="settingsTabButton">Settings</button>
+    </nav>
+    <br>
+    <button id="pageSelectMenuButton">MENU</button>
   </div>
   <!-- LIBRARIES -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -354,6 +410,7 @@
   <script src="../static/js/decoupler.js"></script>
   <script src="../static/js/DOM.js"></script>
   <!-- SCRIPTS -->
+  <script src="../static/page-select.js"></script>
   <script src="../static/js/widgets.js"></script>
   <script src="../static/js/size.js"></script>
   <script src="../static/js/th-logic.js"></script>

@@ -7,8 +7,6 @@ import json
 # db = sqlalchemy.create_engine("mariadb+mariadbconnector://root:@127.0.0.1:3306/final project")
 db = sqlalchemy.create_engine("mariadb+pymysql://root:@127.0.0.1:3306/final project")
 
-
-
 tasklist_bp = Blueprint('tasklist_bp', __name__)
 
 #user vars examples:
